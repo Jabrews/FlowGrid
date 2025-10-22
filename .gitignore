@@ -1,0 +1,59 @@
+# =========================
+# Global ignores
+# =========================
+__pycache__/
+*.py[cod]
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+*.db
+.DS_Store
+.env
+*.env
+.vscode/
+.idea/
+*.bak
+*.swp
+
+# =========================
+# Node / Frontend (React)
+# =========================
+frontend/node_modules/
+frontend/.npm/
+frontend/.parcel-cache/
+frontend/.vite/
+frontend/.next/
+frontend/.turbo/
+frontend/yarn-error.log
+frontend/package-lock.json
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
+# ✅ keep build folder for Azure Static Web Apps
+# (DO NOT ignore /frontend/build or /frontend/dist)
+# so no entries for them here.
+
+# =========================
+# Python / Backend (Django)
+# =========================
+backend/__pycache__/
+backend/staticfiles/
+backend/media/
+backend/*.sqlite3
+backend/db.sqlite3
+backend/venv/
+backend/env/
+backend/.venv/
+backend/.env
+
+# =========================
+# System / OS files
+# =========================
+Thumbs.db
+ehthumbs.db
+Desktop.ini
