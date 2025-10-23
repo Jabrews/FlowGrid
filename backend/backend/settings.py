@@ -31,7 +31,7 @@ INSTALLED_APPS = [
     # 'django_filters',
 
     # my apps
-    'Auth',
+    # 'Auth', # foes not work
     'Main',
 
 ]
