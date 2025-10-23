@@ -2,8 +2,7 @@ import os
 from pathlib import Path
 
 # DELETE FOR HOSTING
-import environ #type: ignore
-
+import environ 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -12,13 +11,11 @@ env = environ.Env(
     DEBUG=(bool, False)
 )
 
-print(BASE_DIR)
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
-
 
 SECRET_KEY = env('SECRET_KEY')
 DEBUG = env.bool('DEBUG') 
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 
 
 
