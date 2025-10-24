@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/4.2/howto/deployment/wsgi/
 bruh
 bruh
 bruh
+bruhs
 """
 
 import os
