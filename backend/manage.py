@@ -3,10 +3,15 @@
 import os
 import sys
 
-
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend.backend.settings')
+
+    if 'WEBSITE_HOSTNAME' in os.environ:
+        settings_module = 'backend.backend.settings'
+    else:
+        settings_module = 'backend.settings'
+
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', settings_module)
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:

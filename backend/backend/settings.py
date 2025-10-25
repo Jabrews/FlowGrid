@@ -2,8 +2,6 @@ import os
 from pathlib import Path
 
 # DELETE FOR HOSTING
-# test
-# test
 import environ 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -16,6 +14,27 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 SECRET_KEY = env('SECRET_KEY')
 DEBUG = env.bool('DEBUG') 
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
+
+if 'WEBSITE_HOSTNAME' in os.environ:
+    module_prefix = 'backend.backend'
+else:
+    module_prefix = 'backend'
+
+WSGI_APPLICATION = f'{module_prefix}.wsgi.application'
+ROOT_URLCONF = f'{module_prefix}.urls'
+
+
+# NOT SURE YET
+# CSRF_COOKIE_SAMESITE = None
+# SESSION_COOKIE_SAMESITE = None
+# CSRF_COOKIE_SECURE = False
+# SESSION_COOKIE_SECURE = False
+# TURN ON FOR PRODUCTION 
+# CSRF_COOKIE_SAMESITE = "None"
+# SESSION_COOKIE_SAMESITE = "None"
+# CSRF_COOKIE_SECURE = True
+# SESSION_COOKIE_SECURE = True
+
 
 
 INSTALLED_APPS = [
@@ -30,7 +49,7 @@ INSTALLED_APPS = [
     # 'django_filters',
 
     # my apps
-    # 'main',
+    'main',
 
 ]
 
@@ -55,7 +74,6 @@ REST_FRAMEWORK = {
     ],
 }
 
-ROOT_URLCONF = 'backend.backend.urls'
 
 TEMPLATES = [
     {
@@ -73,7 +91,6 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'backend.backend.wsgi.application'
 
 
 # Database
