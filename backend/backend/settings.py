@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     # 'django_filters',
 
     # my apps
-    # 'main',
+    'main.apps.MainConfig',
 
 ]
 
