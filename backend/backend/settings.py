@@ -45,11 +45,13 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     # 'django_filters',
-
-    # my apps
-    'main.apps.MainConfig',
-
 ]
+
+# my apps
+if 'WEBSITE_HOSTNAME' in os.environ:
+    INSTALLED_APPS.append('backend.main.apps.MainConfig')
+else:
+    INSTALLED_APPS.append('main.apps.MainConfig')
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',  
@@ -92,7 +94,7 @@ TEMPLATES = [
 
 
 # Database
-# test
+# te
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 if 'WEBSITE_HOSTNAME' in os.environ:
