@@ -92,14 +92,26 @@ TEMPLATES = [
 
 
 # Database
+# test
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if 'WEBSITE_HOSTNAME' in os.environ:
+    # Production on Azure → use PostgreSQL
+    DATABASES = {
+        'default': env.db(
+            'DATABASE_URL'
+        )
     }
-}
+else:
+    # Local development → use SQLite
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+
+
 
 
 # Password validation
