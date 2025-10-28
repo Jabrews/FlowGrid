@@ -49,7 +49,7 @@ INSTALLED_APPS = [
 
 # my apps
 if 'WEBSITE_HOSTNAME' in os.environ:
-    INSTALLED_APPS.append('backend.main.apps.MainConfig')
+    INSTALLED_APPS.append('backend.backend.main.apps.MainConfig')
 else:
     INSTALLED_APPS.append('main.apps.MainConfig')
 
