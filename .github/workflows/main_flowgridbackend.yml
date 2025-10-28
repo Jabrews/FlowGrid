@@ -35,7 +35,7 @@ jobs:
         with:
           name: python-app
           path: |
-            backend
+            backend/
             
   deploy:
     runs-on: ubuntu-latest
