@@ -13,13 +13,17 @@ ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 # CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS")
 # CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS")
 
-if 'WEBSITE_HOSTNAME' in os.environ:
-    module_prefix = 'backend.backend'
-else:
-    module_prefix = 'backend'
+# if 'WEBSITE_HOSTNAME' in os.environ:
+#     module_prefix = 'backend.backend'
+# else:
+#     module_prefix = 'backend'
 
-WSGI_APPLICATION = f'{module_prefix}.wsgi.application'
-ROOT_URLCONF = f'{module_prefix}.urls'
+# WSGI_APPLICATION = f'{module_prefix}.wsgi.application'
+# ROOT_URLCONF = f'{module_prefix}.urls'
+
+WSGI_APPLICATION = 'backend.wsgi.application'
+ROOT_URLCONF = 'backend.urls'
+
 
 
 # NOT SURE YET
@@ -48,10 +52,10 @@ INSTALLED_APPS = [
 ]
 
 # my apps
-if 'WEBSITE_HOSTNAME' in os.environ:
-    INSTALLED_APPS.append('backend.backend.main.apps.MainConfig')
-else:
-    INSTALLED_APPS.append('main.apps.MainConfig')
+# if 'WEBSITE_HOSTNAME' in os.environ:
+#     INSTALLED_APPS.append('backend.backend.main.apps.MainConfig')
+# else:
+#     INSTALLED_APPS.append('main.apps.MainConfig')
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',  
