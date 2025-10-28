@@ -33,7 +33,7 @@ jobs:
           name: python-app
           path: |
             backend/
-            backend/requirements.txt
+            requirements.txt
             backend/manage.py
             !**/venv/
             !**/antenv/
