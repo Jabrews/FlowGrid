@@ -9,8 +9,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
 
     steps:
       - uses: actions/checkout@v4
@@ -20,18 +18,20 @@ jobs:
         with:
           python-version: '3.12'
 
-      # This stays only to catch syntax errors before deploy
-      - name: Verify dependencies install locally (not used in deploy)
+      # quick syntax check
+      - name: Verify requirements install
         run: pip install -r requirements.txt
 
+      # Upload your Django app source code (not the virtual env)
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
         with:
           name: python-app
           path: |
             backend/
-            requirements.txt
+            main/
             manage.py
+            requirements.txt
             !**/venv/
             !**/antenv/
             !**/.python_packages/
@@ -40,14 +40,12 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
-    permissions:
-      id-token: write
-      contents: read
 
     steps:
       - uses: actions/download-artifact@v4
         with:
           name: python-app
+          path: ./deploy_source
 
       - name: Login to Azure
         uses: azure/login@v2
@@ -61,4 +59,4 @@ jobs:
         with:
           app-name: "FlowGridBackend"
           slot-name: "Production"
-          package: .
+          package: ./deploy_source
