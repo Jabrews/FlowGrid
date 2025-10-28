@@ -35,7 +35,7 @@ jobs:
             backend/backend/
             backend/main/
             backend/manage.py
-            backend/requirements.txt
+            requirements.txt
             !**/venv/
             !**/antenv/
             !**/.python_packages/
