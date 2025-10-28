@@ -13,6 +13,7 @@ ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 # CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS")
 # CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS")
 #test
+#test
 
 # if 'WEBSITE_HOSTNAME' in os.environ:
 #     module_prefix = 'backend.backend'
