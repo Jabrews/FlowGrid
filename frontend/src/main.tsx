@@ -9,10 +9,6 @@ import './styles/main.scss'
 
 const queryClient = new QueryClient()
 
-// yo test delete me 
-
-console.log('yoooo')
-
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
