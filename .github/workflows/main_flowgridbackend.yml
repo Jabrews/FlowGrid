@@ -28,15 +28,15 @@ jobs:
 
       - name: Copy requirements.txt up for Azure
         run: cp backend/backend/requirements.txt ./requirements.txt
-        
+
       # Upload your Django source code (not the virtual env)
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
         with:
           name: python-app
           path: |
-            backend/backend/
-            backend/main/
+            backend/backend
+            backend/main
             backend/manage.py
             requirements.txt
             !**/venv/
