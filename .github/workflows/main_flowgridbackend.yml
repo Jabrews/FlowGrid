@@ -22,16 +22,12 @@ jobs:
       - name: Verify requirements install
         run: pip install -r requirements.txt
 
-      # Upload your Django app source code (not the virtual env)
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
         with:
           name: python-app
           path: |
             backend/
-            main/
-            manage.py
-            requirements.txt
             !**/venv/
             !**/antenv/
             !**/.python_packages/
@@ -54,9 +50,15 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_0D95C4D5656D4AAF97D010932B314244 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_7E1EDDC4369E412D9BB28A3797F42DA2 }}
 
+      - uses: actions/download-artifact@v4
+        with:
+          name: python-app
+          path: ./deploy_source
+
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: "FlowGridBackend"
           slot-name: "Production"
           package: ./deploy_source
+
