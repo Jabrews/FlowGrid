@@ -98,7 +98,6 @@ TEMPLATES = [
 
 
 # Database
-# te
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 if 'WEBSITE_HOSTNAME' in os.environ:
