@@ -35,14 +35,8 @@ jobs:
         with:
           name: python-app
           path: |
-            backend/backend
-            backend/main
-            backend/manage.py
-            requirements.txt
-            !**/venv/
-            !**/antenv/
-            !**/.python_packages/
-            !oryx-manifest.toml
+            backend
+            
   deploy:
     runs-on: ubuntu-latest
     needs: build
