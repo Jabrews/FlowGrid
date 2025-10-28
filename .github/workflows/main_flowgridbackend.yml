@@ -24,7 +24,7 @@ jobs:
 
       # quick syntax check
       - name: Verify requirements install
-        run: pip install -r requirements.txt
+        run: pip install -r backend/requirements.txt
 
       # - name: Copy requirements.txt up for Azure
       #   run: cp backend/backend/requirements.txt ./requirements.txt
