@@ -24,7 +24,7 @@ jobs:
 
       # quick syntax check
       - name: Verify requirements install
-        run: pip install -r requirements.txt
+        run: pip install -r backend/requirements.txt
 
       # Upload your Django source code (not the virtual env)
       - name: Upload artifact for deployment jobs
@@ -35,7 +35,7 @@ jobs:
             backend/backend/
             backend/main/
             backend/manage.py
-            requirements.txt
+            backend/requirements.txt
             !**/venv/
             !**/antenv/
             !**/.python_packages/
