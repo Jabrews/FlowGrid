@@ -26,6 +26,7 @@
       color: #f9fafb;
     }
 
+  
     button {
       padding: 0.75rem;
       border: none;
@@ -55,4 +56,17 @@
       text-decoration: underline;
     }
   }
+}
+
+.guest-text {
+  color : #facc15;
+  font-weight: bolder;
+
+  &:hover {
+    color : #ffefb0;
+    cursor : pointer;
+    text-decoration: underline;
+  }
+
+
 }

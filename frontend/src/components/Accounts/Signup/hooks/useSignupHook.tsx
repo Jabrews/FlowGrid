@@ -4,6 +4,7 @@ import { getCookie } from '../../../util/get_cookie';
 type SignupData = {
     username : string,
     password : string,
+    email : string,
 }
 
 const api_url = import.meta.env.VITE_API_URL

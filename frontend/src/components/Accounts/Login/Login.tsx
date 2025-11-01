@@ -3,7 +3,7 @@ import {useNavigate } from "react-router-dom";
 
 // hooks
 import useLoginHook from "./hooks/useLoginHook";
-import { useToggleIsAuth, useSetUserName } from '../../stores/AccountsStore/AccountsStore'
+import { useToggleIsAuth, useSetUserName, useToggleIsGuest} from '../../stores/AccountsStore/AccountsStore'
 
 export default function Login() {
   const navigate = useNavigate();
@@ -14,6 +14,7 @@ export default function Login() {
   const loginHook = useLoginHook();
   const toggleIsAuth = useToggleIsAuth();
   const setUserName = useSetUserName();
+  const toggleIsGuest = useToggleIsGuest()
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,6 +31,7 @@ export default function Login() {
         console.log("Login successful:", data);
         toggleIsAuth(true);
         setUserName(username);
+        toggleIsGuest(false)
         navigate("/");
       },
       onError: (error) => {
@@ -38,6 +40,13 @@ export default function Login() {
       },
     });
   };
+
+  const handleGuestContinue = () => {
+    toggleIsGuest(true)
+    toggleIsAuth(false)
+    navigate('/')
+  }
+
 
   return (
     <div className="auth-container">
@@ -70,6 +79,14 @@ export default function Login() {
           Sign up here
         </span>
       </p>
+
+      <p 
+        className='guest-text'
+        onClick={handleGuestContinue}
+      > 
+        Continue as a guest
+      </p>
+
     </div>
   );
 }

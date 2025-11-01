@@ -2,22 +2,54 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
+  Navigate,
 } from 'react-router-dom'
 
 // components
 import Login from './components/Accounts/Login/Login'
 import Signup from './components/Accounts/Signup/Signup'
 
+// hooks
+import { useIsAuth, useIsGuest } from './components/stores/AccountsStore/AccountsStore'
+
 function App() {
+  const isAuth = useIsAuth()
+  const isGuest = useIsGuest()
+  console.log('is auth : ', isAuth)
+
   return (
     <Router>
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/home" element={<p>Home Page</p>} />
-        <Route path="/" element={<p>Home Page</p>} />
-        <Route path="/whiteboard" element={<p>Whiteboard Page</p>} />
-        <Route path="*" element={<p>404 Not Found</p>} />
+
+        {/* Redirect guests (not logged in) to login/signup */}
+        {!isAuth && !isGuest && (
+          <>
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="*" element={<Navigate to="/login" replace />} />
+          </>
+        )}
+
+        {/* Authenticated users */}
+        {isAuth && (
+          <>
+            <Route path="/home" element={<p>Home Page</p>} />
+            <Route path="/whiteboard" element={<p>Whiteboard Page</p>} />
+            <Route path="/" element={<Navigate to="/home" replace />} />
+            <Route path="*" element={<p>404 Not Found</p>} />
+          </>
+        )}
+
+        {/* Guest users */}
+        {isGuest && (
+          <>
+            <Route path="/home" element={<p>Home Page</p>} />
+            <Route path="/whiteboard" element={<p>Whiteboard Page</p>} />
+            <Route path="/" element={<Navigate to="/home" replace />} />
+            <Route path="*" element={<p>404 Not Found</p>} />
+          </>
+        )}
+
       </Routes>
     </Router>
   )
