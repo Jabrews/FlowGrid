@@ -2,6 +2,7 @@ import { useCookies } from "react-cookie";
 import { useQuery } from "@tanstack/react-query";
 
 const api_url = import.meta.env.VITE_API_URL;
+// test
 
 export default function useGetCsrf() {
   const [cookies, setCookie] = useCookies(["csrftoken"]);
