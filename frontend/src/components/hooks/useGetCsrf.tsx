@@ -5,7 +5,7 @@ const api_url = import.meta.env.VITE_API_URL;
 // test
 
 export default function useGetCsrf() {
-  const [cookies, setCookie] = useCookies(["csrftoken"]);
+  const [, setCookie] = useCookies(["csrftoken"]);
 
   return useQuery({
     queryKey: ["csrftoken"],

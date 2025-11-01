@@ -6,7 +6,6 @@ import useSignupHook from './hooks/useSignupHook';
 import useGetCrsf from "../../hooks/useGetCsrf";
 import { useToggleIsAuth } from "../../stores/AccountsStore/AccountsStore";
 import { useSetUserName } from "../../stores/AccountsStore/AccountsStore";
-import { useToggleIsGuest } from "../../stores/AccountsStore/AccountsStore";
 
 
 export default function Signup() {
