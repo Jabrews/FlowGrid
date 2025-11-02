@@ -2,56 +2,43 @@ name: Azure Static Web Apps CI/CD
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
     types: [opened, synchronize, reopened, closed]
-    branches:
-      - main
+    branches: [main]
 
 jobs:
   build_and_deploy_job:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
-    name: Build and Deploy Job
+
     steps:
-      # 1️⃣ Checkout code
       - uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          submodules: true
-          lfs: false
-        
-      # 2️⃣ Debug env variable (sanity check)
-      - name: Debug Environment
+          node-version: 20
+
+      - name: Debug Environment (non-secret ok)
         run: echo "VITE_API_URL is $VITE_API_URL"
         env:
           VITE_API_URL: ${{ secrets.VITE_API_URL }}
 
-      # 3️⃣ Build and Deploy to Azure Static Web Apps
-      - name: Build And Deploy
-        id: builddeploy
-        uses: Azure/static-web-apps-deploy@v1
-        env: 
-          # ✅ Pass your secret into Azure's remote build environment
+      - name: Install & Build (Vite)
+        working-directory: ./frontend
+        run: |
+          npm ci
+          npm run build
+        env:
           VITE_API_URL: ${{ secrets.VITE_API_URL }}
-        with:
-          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_GENTLE_SKY_0768BA11E }}
-          repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
-          action: "upload"
-          ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
-          app_location: "./frontend" # App source code path
-          api_location: "" # Api source code path - optional
-          output_location: "dist" # Built app content directory - optional
-          ###### End of Repository/Build Configurations ######
 
-  close_pull_request_job:
-    if: github.event_name == 'pull_request' && github.event.action == 'closed'
-    runs-on: ubuntu-latest
-    name: Close Pull Request Job
-    steps:
-      - name: Close Pull Request
-        id: closepullrequest
+      # IMPORTANT: deploy the already-built files
+      # Easiest way: point app_location to the built folder directly
+      - name: Deploy to Azure Static Web Apps
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_GENTLE_SKY_0768BA11E }}
-          action: "close"
+          action: "upload"
+          app_location: "./frontend/dist"   # <-- prebuilt assets live here
+          output_location: ""               # <-- nothing to build
