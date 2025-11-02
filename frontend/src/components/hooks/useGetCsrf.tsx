@@ -9,6 +9,7 @@ console.log('api url : ', api_url)
 // test 4
 // test 5
 // test 6
+// test 7
 
 export default function useGetCsrf() {
   const [, setCookie] = useCookies(["csrftoken"]);
