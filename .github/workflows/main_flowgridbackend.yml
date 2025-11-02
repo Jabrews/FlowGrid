@@ -64,8 +64,4 @@ jobs:
           slot-name: "Production"
           package: ./deploy_source
 
-      - name: Run Django Migrations
-        run: |
-          cd deploy_source/backend
-          pip install -r backend/requirements.txt
-          python manage.py migrate --noinput
+
