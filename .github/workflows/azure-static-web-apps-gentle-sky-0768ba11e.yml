@@ -28,7 +28,7 @@ jobs:
       - name: Install & Build (Vite)
         working-directory: ./frontend
         run: |
-          npm ci
+          npm install
           npm run build
         env:
           VITE_API_URL: ${{ secrets.VITE_API_URL }}
