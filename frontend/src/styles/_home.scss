@@ -1,0 +1,206 @@
+.home-container {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    flex-direction: row;
+    min-height: 100vh;
+    background-color: #1e293b; // deep navy background
+    color: #f9fafb; // light text
+    font-family: "Inter", sans-serif;
+
+  .toggle-navigator-btn {
+    position: fixed;
+    top: 2rem;
+    left: 1rem;
+    padding: 0.75rem;
+    height: fit-content;
+    border-radius: 0.5rem;
+    border: none;
+    background-color: rgba(159, 170, 169, 1);
+    color: #ced6dd;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      background-color: rgb(173, 187, 186);
+      transform: scale(1.05);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+
+  .folder-navigator {
+    width: 20em;
+    position: relative;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    height: 100vh;
+    background-color: rgba(159, 170, 169, 1); // soft grey-blue tone
+    padding: 1.5rem;
+    padding: clamp(0.3em, 0.6em, 2em);
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+
+    /* scroll bar styles */
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+      border-radius: 3px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #235555;
+      border-radius: 3px;
+      transition: background 0.2s ease;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background-color: #1e2d3b;
+    }
+
+    .folder-header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+      h1 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #ffffff;
+        margin: 0;
+      }
+
+      .folder-close-btn {
+        padding: 0.5rem;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        color: #e5e7eb;
+        border-radius: 0.375rem;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+          color: #badaff;
+          background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        &:active {
+          transform: scale(0.95);
+        }
+      }
+    }
+
+    .folder-body {
+      flex: 1;
+      overflow-x: visible;
+    }
+
+    .folder-item-container {
+      background-color: #3b4f63; // slightly darker tone for contrast
+      margin-bottom: 0.75rem;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: 2px solid transparent;
+
+      &:hover {
+        background-color: #4a6379;
+        transform: translateX(4px);
+      }
+
+      .folder-item-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .item-label {
+            font-size: clamp(0.90em, 0.8em, 0.6em);
+            font-weight: 500;
+            color: #f9fafb;
+            margin: 0;
+        }
+      }
+
+      &.selected {
+        background-color: #3b82f6; // vibrant blue from your theme
+        border: 2px solid #60a5fa; // glowing light blue border
+        box-shadow: 0 0 12px rgba(96, 165, 250, 0.4);
+        transform: translateX(4px);
+
+        .item-label {
+          color: #ffffff;
+          font-weight: 600;
+        }
+
+        &:hover {
+          background-color: #2563eb;
+        }
+      }
+    }
+  }
+
+  .project-menu {
+    padding-top: 3em;
+    padding-left: 2em;
+    height: 100vh;
+    width: 100vw;
+    display: grid;
+    gap: 3em;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    overflow-y: scroll;
+    overflow-x: scroll;
+    
+    .project-container {
+        border-radius: 1em;
+        padding: 1em;
+        background-color: #152c3b;
+        display: flex;
+        flex-direction: column;
+
+        img {
+            width: 12em;
+            height: auto;
+        }
+
+        h1 {
+            color: #badaff;
+            font-size: 1.2rem;
+            margin: 0;
+        }
+
+        p {
+           font-size: 0.8em;
+        }
+
+        &:hover {
+            background-color: #1f3b4e;
+        }
+
+        &.active-project {
+            background-color: #235555;
+        }
+
+    }
+  }
+}
