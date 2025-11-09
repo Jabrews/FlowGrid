@@ -41,15 +41,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
-    'accounts',
     # 'django_filters',
-]
 
-# my apps
-# if 'WEBSITE_HOSTNAME' in os.environ:
-#     INSTALLED_APPS.append('backend.backend.main.apps.MainConfig')
-# else:
-#     INSTALLED_APPS.append('main.apps.MainConfig')
+    # my apps
+    'accounts',
+    'projects',
+
+
+]
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',  
