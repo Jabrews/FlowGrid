@@ -17,7 +17,7 @@ interface FolderItemProps {
 
 export default function FolderItem({selectedFolderId, onSelectedFolderId, title, id} : FolderItemProps) {
 
-  const [showBtns, toggleShowBtns] = useState(false)
+  const [, toggleShowBtns] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const [value, setValue] = useState(title)
 
