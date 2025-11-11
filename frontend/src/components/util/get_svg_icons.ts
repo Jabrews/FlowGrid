@@ -19,6 +19,7 @@ import {Move} from 'lucide-react'
 import { ChevronDown } from 'lucide-react';
 import { ChevronUp } from 'lucide-react';
 import { X } from 'lucide-react';
+import { Pen } from 'lucide-react';
 
 
 
@@ -40,6 +41,8 @@ export function get_svg_icons({ icon, size }: UseSvgIconArguments) {
       return React.createElement(X, {size})
     case 'Folder-Nav-Open' :
         return React.createElement(PanelLeftOpen, { size });    
+    case 'Change-Input' :
+        return React.createElement(Pen, {size})
 
     // Grid And Workspace Components
     case 'Timer':

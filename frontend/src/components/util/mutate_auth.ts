@@ -20,7 +20,7 @@ export async function mutate_auth({ queryUrl, init = {}, csrf_token}: MutateProp
         },
         });
 
-        if (!res.ok) {
+        if (!res.ok && init.method != 'DELETE') {
         const errorText = await res.text();
         console.error(" fetch_auth failed:", res.status, res.statusText);
         console.error(" Error response:", errorText);

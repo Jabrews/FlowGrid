@@ -1,12 +1,110 @@
+import { useState, useRef } from 'react'
+import image from '../../../../../assets/example.png'
+import {motion} from 'framer-motion'
 
-export default function Project() {
+// hooks
+import { useConfirmStore } from '../../../../stores/ConfirmStore/ConfirmStore'
+import { useToggleShowDeleteModal } from '../../../../stores/ModalRendererStore/ModelRendererStore'
+import useMutateDeleteProject from './hooks/useMutateDeleteProject'
+import useMutateChangeProjectName from './hooks/useMutateChangeProjectName'
+
+// util
+import { get_svg_icons } from '../../../../util/get_svg_icons'
+
+type Project = { 
+    name : string, 
+    last_used : string,
+    id : string,
+    selectedProjectId : string;
+    onSelectProjectId : (newId : string) => void 
+    selectedFolderId : string,
+}   
+export default function Project({name, id, last_used, selectedProjectId, onSelectProjectId, selectedFolderId} : Project) {
+    const toggleShowDeleteModal = useToggleShowDeleteModal()
+    const {ask} = useConfirmStore()
+    const mutateDeleteProject = useMutateDeleteProject()
+    const mutateChangeProjectName = useMutateChangeProjectName()
+
+    const [isHovered, toggleIsHovered] = useState(false)
+    const [isEditing, setIsEditing] = useState(false)
+
+    const [editValue, setEditValue] = useState(name)
+
+    const inputRef = useRef<HTMLInputElement>(null)
+
+    const handlePenClick = (e: React.MouseEvent) => {
+        e.stopPropagation()
+        setIsEditing(true)
+        setTimeout(() => inputRef.current?.focus(), 0)
+    }
+
+    const handleBlur = () => {
+        setIsEditing(false)
+
+        if (!editValue.trim() || editValue.trim() === name) return
+
+        mutateChangeProjectName.mutate({
+            selectedFolderId : selectedFolderId,
+            selectedProjectId : id,
+            newName: editValue.trim(),
+        })
+    }
+
+    const handleDeleteBtn = async () => {
+        const waitForConfirm = ask()  
+        toggleShowDeleteModal(true)
+        const confirmed = await waitForConfirm
+        if (confirmed) {
+            mutateDeleteProject.mutate({selectedFolderId, selectedProjectId: id})
+        }
+        toggleShowDeleteModal(false)
+    }
 
     return (
-        <div className='project-container active-project'>
-            <img src={image}/>
-            <h1> Example Project</h1>
-            <p> 1/1/2009</p>
-        </div>
-    )
+        <motion.div 
+            className={`project-container ${selectedProjectId == id ? 'active-project' : ''}`} 
+            key={id}
+            onClick={() => onSelectProjectId(id)}
+            onHoverStart={() => toggleIsHovered(true)}
+            onHoverEnd={() => toggleIsHovered(false)}
+            onTapStart={() => toggleIsHovered(true)}
+            onTapCancel={() => toggleIsHovered(false)}
+        >
+            <motion.button
+                onClick={handleDeleteBtn}
+                className='del-btn'
+                style={{ opacity: isHovered && !isEditing ? 1 : 0 }}
+                whileHover={{ scale: 1.25 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            >
+               X 
+            </motion.button>
 
+            <img src={image}/>
+
+            <div className='project-label'>
+                <input
+                    ref={inputRef}
+                    value={editValue}         
+                    disabled={!isEditing}
+                    onChange={(e) => setEditValue(e.currentTarget.value)} 
+                    onBlur={handleBlur}
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter") e.currentTarget.blur()
+                    }}
+                />
+
+                <motion.div 
+                    style={{ opacity: isHovered && !isEditing ? 1 : 0 }}
+                    whileHover={{ scale: 1.15 }}
+                    onClick={handlePenClick}
+                >
+                    {get_svg_icons({icon : 'Change-Input', size : 18})}
+                </motion.div>
+            </div>
+
+            <p className='date'>{last_used}</p>
+        </motion.div>
+    )
 }

@@ -10,8 +10,8 @@ import FolderItem from "./FolderItem/FolderItem"
 
 
 interface FolderNavigatorProps {
-    selected: string
-    onSelect: (id: string) => void
+    selectedFolderId: string
+    onSelectFolderId: (id: string) => void
 }
 
 export type ProjectFolderPartial = {
@@ -19,7 +19,7 @@ export type ProjectFolderPartial = {
     name : string,
 }
 
-export default function FolderNavigator({selected, onSelect }: FolderNavigatorProps) {
+export default function FolderNavigator({selectedFolderId, onSelectFolderId}: FolderNavigatorProps) {
     const [isOpen, setIsOpen] = useState(true)
 
     const toggleOpen = () => {
@@ -31,7 +31,7 @@ export default function FolderNavigator({selected, onSelect }: FolderNavigatorPr
         
 
     // query projectfolder names
-    const {data,  isLoading, error} = useQueryProjectFolderNames()
+    const {data,  isLoading} = useQueryProjectFolderNames()
 
     // handle project folder add
     const handleAddProjectFolder = () => {
@@ -61,8 +61,8 @@ export default function FolderNavigator({selected, onSelect }: FolderNavigatorPr
                         {data.map((folder : ProjectFolderPartial) => (
                             <FolderItem
                                 key={folder.id}
-                                selected={selected}
-                                onSelect={onSelect}
+                                selectedFolderId={selectedFolderId}
+                                onSelectedFolderId={onSelectFolderId}
                                 title={folder.name}
                                 id={folder.id}
                             />

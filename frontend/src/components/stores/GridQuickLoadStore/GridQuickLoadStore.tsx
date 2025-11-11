@@ -3,15 +3,21 @@ import { persist, createJSONStorage } from 'zustand/middleware'
 
 type GridQuickLoadStore = {
   lastActiveFolderItemId: string
+  lastActiveProjectId : string
   setLastActiveFolderItemId: (newId: string) => void
+  setLastActiveProjectId : (newId : string) => void
 }
 
 export const useGridQuickLoadStore = create<GridQuickLoadStore>()(
   persist(
     (set) => ({
       lastActiveFolderItemId: '',
+      lastActiveProjectId : '',
       setLastActiveFolderItemId: (newId: string) => {
         set({ lastActiveFolderItemId: newId }) 
+      },
+      setLastActiveProjectId: (newId : string) => {
+        set({lastActiveProjectId : newId })
       }
     }),
     {
@@ -19,16 +25,22 @@ export const useGridQuickLoadStore = create<GridQuickLoadStore>()(
       storage: createJSONStorage(() => localStorage),
 
       partialize: (state) => ({
-        lastActiveFolderItemId: state.lastActiveFolderItemId
+        lastActiveFolderItemId: state.lastActiveFolderItemId,
+        lastActiveProjectId : state.lastActiveProjectId,
       })
     }
   )
 )
 
-// State selector
+// state
 export const useLastActiveFolderItemId = () =>
   useGridQuickLoadStore((s) => s.lastActiveFolderItemId)
+export const useLastActiveProjectId = () =>
+  useGridQuickLoadStore((s) => s.lastActiveProjectId)
 
-// Action selector - using shallow equality for function reference
+
+// actions
 export const useSetLastActiveFolderItemId = () =>
   useGridQuickLoadStore((s) => s.setLastActiveFolderItemId)
+export const useSetLastActiveProjectId = () =>
+  useGridQuickLoadStore((s) => s.setLastActiveProjectId)

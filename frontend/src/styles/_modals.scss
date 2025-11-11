@@ -1,0 +1,38 @@
+
+.modal-renderer {
+    position: absolute;
+}
+
+.delete-modal {
+    display: flex;
+    width: 100vw;
+    background-color: gray;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+
+    .big-h2 {
+        font-size: 2em;
+    }
+
+    .tiny-h2 {
+        font-size: 1.2em;    
+    }
+
+    .btn-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        button {
+            padding: 1em;
+            margin : 1em;
+            border-radius: 1em;
+            border : none;
+        }
+
+    }
+
+}

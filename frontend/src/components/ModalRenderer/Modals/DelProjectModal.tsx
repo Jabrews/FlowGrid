@@ -1,31 +1,50 @@
+import { motion } from 'framer-motion'
+
 // hooks
 import { useToggleShowDeleteModal } from "../../stores/ModalRendererStore/ModelRendererStore"
-import { useToggleConfirmDeleteProjectFolder } from "../../stores/DeleteProjectFolderStore/DeleteProjectFolderStore"
-import { useSetDeleteProjectFolderId } from "../../stores/DeleteProjectFolderStore/DeleteProjectFolderStore"
+import { useConfirmStore } from "../../stores/ConfirmStore/ConfirmStore"
 
 export default function DelProjectModal () {
 
-    // hook init
-    const toggleDeleteProjectFolder = useToggleConfirmDeleteProjectFolder()
     const toggleShowDeleteModal = useToggleShowDeleteModal()
-    const setDeleteProjectFolderId = useSetDeleteProjectFolderId()
+    const { confirm, cancel } = useConfirmStore()
 
     const handleToggleDeleteBtnConfirm = () => {
-        toggleDeleteProjectFolder(true)
-        setDeleteProjectFolderId('')
+        confirm()
+        toggleShowDeleteModal(false)
+    }
+
+    const handleCancelBtn = () => {
+        cancel()
         toggleShowDeleteModal(false)
     }
 
     return (
         <div className='delete-modal'>
-            <h1> Are you sure you want to delete this</h1>
-            <h1> All projects inside this folder will also be deleted</h1>
+            <h1 className='big-h2'>This action cannot be undone. Continue?</h1>
+
             <div className='btn-container'>
-                {/* closes modal*/}
-                <button onClick={() => {toggleShowDeleteModal(false)}}> Cancel</button>
-                <button onClick={handleToggleDeleteBtnConfirm}> Delete </button>
+
+                <motion.button
+                    onClick={handleCancelBtn}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ type: "spring", stiffness: 250, damping: 18 }}
+                >
+                    Cancel
+                </motion.button>
+
+                <motion.button
+                    onClick={handleToggleDeleteBtnConfirm}
+                    style={{ backgroundColor: "red", color: "white" }}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    transition={{ type: "spring", stiffness: 250, damping: 18 }}
+                >
+                    Delete
+                </motion.button>
+
             </div>
         </div>
     )
-
 }
