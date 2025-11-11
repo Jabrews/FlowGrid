@@ -30,6 +30,27 @@ ROOT_URLCONF = 'backend.urls'
 # CSRF_COOKIE_SECURE = True
 # SESSION_COOKIE_SECURE = True
 
+CORS_ALLOW_HEADERS = [          
+    "accept",
+    "accept-encoding",
+    "authorization",
+    "content-type",
+    "dnt",
+    "origin",
+    "user-agent",
+    "x-csrftoken",
+    'X-CSRFToken',
+    "x-requested-with",
+]
+
+CORS_ALLOW_METHODS = [
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+]
 
 
 INSTALLED_APPS = [

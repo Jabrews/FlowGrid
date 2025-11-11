@@ -8,7 +8,7 @@ from .models import ProjectFolder, Project
 
 # serializers
 from .serializers import ProjectFolderSerializer, PartialProjectFolderSerializer
-from .serializers import ProjectSerializer
+from .serializers import ProjectSerializer, PartialProjectSerializer
 
 class ProjectFolderView(viewsets.ModelViewSet) :
     serializer_class = ProjectFolderSerializer
@@ -28,6 +28,7 @@ class ProjectFolderView(viewsets.ModelViewSet) :
 
 
     def get_serializer_class(self): #type: ignore
+        # used within home menu on frontend
         if self.action == "folder_names":
             return PartialProjectFolderSerializer
         else :
@@ -41,11 +42,37 @@ class ProjectFolderView(viewsets.ModelViewSet) :
         return Response(serializer.data)
 
 class ProjectView(viewsets.ModelViewSet):
-    serializer_class = ProjectSerializer
     permission_classes = [permissions.IsAuthenticated]
- 
+
     def get_queryset(self):#type: ignore
-        return Project.objects.filter(folder_id=self.kwargs["folder_id"])
+        return Project.objects.filter(
+            user=self.request.user,
+            folder_id=self.kwargs["folder_pk"],   
+        )
 
     def perform_create(self, serializer):
-        serializer.save(folder_id=self.kwargs["folder_id"])
+        user = self.request.user
+        serializer.is_valid(raise_exception=True)
+
+        existing_count = Project.objects.filter(
+            user=user,
+            folder_id=self.kwargs['folder_pk']).count()
+
+        default_name = f"Project-{existing_count + 1}"
+        name = serializer.validated_data.get("name", default_name)
+        serializer.save(
+            name=name,
+            folder_id=self.kwargs["folder_pk"],   
+            user=self.request.user,             
+        )
+
+    def get_serializer_class(self):#type: ignore
+        if self.action == "project_names":
+            return PartialProjectSerializer 
+        return ProjectSerializer
+
+    @action(methods=['get'], detail=False)
+    def project_names(self, request, folder_pk=None):
+        projects = self.get_queryset()
+        serializer = self.get_serializer(projects, many=True)
+        return Response(serializer.data)

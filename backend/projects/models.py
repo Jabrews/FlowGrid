@@ -10,11 +10,17 @@ class ProjectFolder(models.Model) :
     )
 
 class Project(models.Model) :
-    ProjectFolder = models.ForeignKey(
+    folder = models.ForeignKey(
         ProjectFolder,
         on_delete=models.CASCADE, 
         related_name='project' 
     )
+    user = models.ForeignKey(
+        AUTH_USER_MODEL,
+        on_delete=models.CASCADE, 
+        related_name='project' ,
+    )
     last_used = models.DateField(auto_now_add=True)
+    name = models.CharField(max_length=20)
 
 

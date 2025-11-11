@@ -1,15 +1,17 @@
 from django.urls import path, include
+from rest_framework.routers import SimpleRouter
+from rest_framework_nested.routers import NestedSimpleRouter
+from .views import ProjectFolderView, ProjectView
 
-from rest_framework.routers import DefaultRouter
-from .views import ProjectFolderView, ProjectView 
+# main router
+router = SimpleRouter()
+router.register("project_folders", ProjectFolderView, basename="project_folders")
 
-router = DefaultRouter()
-router.register('project_folders', ProjectFolderView, basename='project_folders')
-router.register(r'folders/(?P<folder_id>\d+)/projects', ProjectView, basename='folder-projects')
-
+# nested router
+projects_router = NestedSimpleRouter(router, "project_folders", lookup="folder")
+projects_router.register("projects", ProjectView, basename="projects")
 
 urlpatterns = [
-    path('', include(router.urls))
+    path("", include(router.urls)),
+    path("", include(projects_router.urls)),
 ]
-
-
