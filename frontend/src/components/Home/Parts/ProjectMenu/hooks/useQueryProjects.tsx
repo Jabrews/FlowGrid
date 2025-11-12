@@ -16,12 +16,16 @@ export default function useQueryProjects(folderId : string) {
     return useQuery({
         queryKey: ['projects', folderId],  
         queryFn: async () => {
+
+        if (!csrf_token) throw new Error('could not find csrf token  ')
+
         return await fetch_auth({
             queryUrl: `api/project_folders/${folderId}/projects/project_names`,
             init: QueryProjectsInit,
             csrf_token,
         })
         },
+        enabled : !!folderId,
     })
 
 
