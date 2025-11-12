@@ -55,32 +55,34 @@ export default function FolderNavigator({selectedFolderId, onSelectFolderId}: Fo
                         {get_svg_icons({ icon: 'Folder-Close', size: 28 })}
                     </button>
                 </div>    
-                {/* Folder Body */}
-                {data && !isLoading &&
-                    <div className='folder-body'>
-                        {data.map((folder : ProjectFolderPartial) => (
-                            <FolderItem
-                                key={folder.id}
-                                selectedFolderId={selectedFolderId}
-                                onSelectedFolderId={onSelectFolderId}
-                                title={folder.name}
-                                id={folder.id}
-                            />
-                        ))}
-                        {/* add button*/}
-                        <button 
-                            className='add-btn'
-                            onClick={handleAddProjectFolder}
-                        >
-                             + 
-                        </button>
-                    </div>
-                }
-                {isLoading &&
-                    <div className='folder-body'>
-                        <p> is loading</p>
-                    </div>
-                }
+               <div className='folder-body'>
+                {isLoading && <p>Loading folders...</p>}
+
+                {!isLoading && data && data.length > 0 && (
+                    data.map((folder: ProjectFolderPartial) => (
+                    <FolderItem
+                        key={folder.id}
+                        selectedFolderId={selectedFolderId}
+                        onSelectedFolderId={onSelectFolderId}
+                        title={folder.name}
+                        id={folder.id}
+                    />
+                    ))
+                )}
+
+                {!isLoading && (!data || data.length === 0) && (
+                    <p className="empty-message">No folders yet</p>
+                )}
+
+                    {/* Always render the add button */}
+                    <button 
+                        className='add-btn'
+                        onClick={handleAddProjectFolder}
+                    >
+                        +
+                    </button>
+                </div>
+
 
             </div>
             {!isOpen && 
