@@ -1,3 +1,6 @@
+import { useQueryClient } from '@tanstack/react-query';
+
+// hooks
 import useGetCsrf from '../../../hooks/useGetCsrf';
 import {useMutation} from '@tanstack/react-query'
 
@@ -10,7 +13,9 @@ const api_url = import.meta.env.VITE_API_URL
 
 export default function useLoginHook() {
 
+    // hook init
     const { data: csrfData } = useGetCsrf();
+    const queryClient = useQueryClient()
 
     return useMutation({
         mutationFn: async (loginData: LoginData) => {
@@ -40,6 +45,9 @@ export default function useLoginHook() {
             const data = await res.json()
             console.log('Login successful:', data)
             return data
+        },
+        onSuccess : () => {
+            queryClient.invalidateQueries({queryKey : ['csrftoken']})
         }
     })
 }
