@@ -24,7 +24,7 @@ export default function ProjectMenu({selectedFolderId, selectedProjectId, onSele
     // hooks
     const mutateCreateProject = useMutateCreateProject()    
 
-    const {data, isLoading, error} = useQueryProjects(selectedFolderId)
+    const {data, isLoading, error, isPending} = useQueryProjects(selectedFolderId)
 
     const handleCreateBtnDown = () => {
         mutateCreateProject.mutate(selectedFolderId)
@@ -51,6 +51,7 @@ export default function ProjectMenu({selectedFolderId, selectedProjectId, onSele
 
         {data && !error && !isLoading &&
             <motion.button 
+            disabled={isPending}
                 onClick={handleCreateBtnDown}
                 className='add-project-btn'
                 whileHover={{ scale: 1.15 }}     // increase size on hover

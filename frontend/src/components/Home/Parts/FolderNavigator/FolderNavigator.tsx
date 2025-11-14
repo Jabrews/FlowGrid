@@ -31,7 +31,7 @@ export default function FolderNavigator({selectedFolderId, onSelectFolderId}: Fo
         
 
     // query projectfolder names
-    const {data,  isLoading} = useQueryProjectFolderNames()
+    const {data,  isLoading, isPending} = useQueryProjectFolderNames()
 
     // handle project folder add
     const handleAddProjectFolder = () => {
@@ -78,6 +78,7 @@ export default function FolderNavigator({selectedFolderId, onSelectFolderId}: Fo
                     <button 
                         className='add-btn'
                         onClick={handleAddProjectFolder}
+                        disabled={isPending}
                     >
                         +
                     </button>
