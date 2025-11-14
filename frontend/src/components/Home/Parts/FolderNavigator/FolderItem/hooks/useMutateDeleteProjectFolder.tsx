@@ -19,13 +19,13 @@ export default function useMutateDeleteProjectFolder() {
                 body : JSON.stringify(id),
             }
 
-            mutate_auth({
+            return mutate_auth({
                 queryUrl : `api/project_folders/${id}/`,
                 init: deleteProjectFolderInit,
                 csrf_token : csrf_token,
             })
         },
-        onSettled: () => {
+        onSuccess: () => {
             queryClient.invalidateQueries({queryKey : ['project_folders']})
         }
     })

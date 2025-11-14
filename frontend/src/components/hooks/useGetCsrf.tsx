@@ -47,7 +47,9 @@ export default function useGetCsrf() {
       return data;
     },
     // enabled: !cookies.csrftoken,
-    staleTime: Infinity,
+    refetchOnMount: true,
+    refetchOnWindowFocus: false,
+    staleTime: 0, 
   });
 
 }
