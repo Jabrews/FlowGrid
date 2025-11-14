@@ -4,7 +4,7 @@
     justify-items: center;
     flex-direction: row;
     min-height: 100vh;
-    background-color: #1e293b; // deep navy background
+    background-color: #2e293b; // deep navy background
     color: #f9fafb; // light text
     font-family: "Inter", sans-serif;
 
@@ -36,6 +36,7 @@
   }
 
   .folder-navigator {
+    margin-top: 3vh;
     width: 20em;
     position: relative;
     left: 0;

@@ -1,3 +1,4 @@
+// Grid
 // side dropper display
 import React from 'react';
 import { AlarmClock } from 'lucide-react';
@@ -21,6 +22,10 @@ import { ChevronUp } from 'lucide-react';
 import { X } from 'lucide-react';
 import { Pen } from 'lucide-react';
 
+// Navbar
+import {User} from 'lucide-react'
+import { Settings } from 'lucide-react';
+
 
 
 
@@ -43,6 +48,12 @@ export function get_svg_icons({ icon, size }: UseSvgIconArguments) {
         return React.createElement(PanelLeftOpen, { size });    
     case 'Change-Input' :
         return React.createElement(Pen, {size})
+
+    // Navbar
+    case 'User-Logo' :
+        return React.createElement(User, { size });    
+    case 'Settings' :
+        return React.createElement(Settings, {size})
 
     // Grid And Workspace Components
     case 'Timer':

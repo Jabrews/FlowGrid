@@ -1,0 +1,95 @@
+.navbar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    position: absolute;
+    top: 0;
+    width: 100vw;
+    height: 3vh;
+    font-size: 0.8em;
+    background-color: #396168;
+
+    .navbar-left {
+        padding-left: 1em;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        
+        p {
+            cursor : pointer;
+            font-weight: 700;
+
+            &:hover {
+                color: cyan;
+            }
+
+        }
+
+    }
+    
+    .navbar-right {
+        
+        padding-right: 1em;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        /* Each icon container must be relative */
+        .user,
+        .settings {
+            position: relative;
+            cursor: pointer;
+
+        }
+
+        .settings {
+            margin-left: 1em;
+
+        }
+
+        .user {
+            margin-right: 1em;
+        }
+
+        /* FLOATING MENUS */
+        .user-menu,
+        .settings-menu {
+            position: absolute;
+            top: 100%;       /* directly under the icon */
+            right: 0;        /* align right edge */
+            background: #28494e;
+            padding: 0.5em 1em;
+            border-radius: 6px;
+            margin-top: 0.3em;
+            box-shadow: 0 2px 5px rgba(0,0,0,.25);
+            z-index: 20;
+            display: none;   /* default hidden */
+
+            p {
+                &:hover {
+                    color: cyan;
+                    text-decoration: underline;
+                }
+            }
+        }
+
+        .user svg,
+        .settings svg {
+            stroke: white;
+            transition: stroke 0.15s ease;
+        }
+
+        /* Hover = cyan */
+        .user:hover svg,
+        .settings:hover svg {
+            stroke: cyan;
+        }
+
+        /* Active (menu open) = cyan */
+        .user.active svg,
+        .settings.active svg {
+            stroke: cyan;
+        }
+
+
+    }
+}

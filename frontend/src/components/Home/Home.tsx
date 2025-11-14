@@ -2,6 +2,7 @@
 import FolderNavigator from "./Parts/FolderNavigator/FolderNavigator"
 import ProjectMenu from './Parts/ProjectMenu/ProjectMenu'
 import ModalRenderer from '../ModalRenderer/ModalRenderer'
+import Navbar from "../Navbar/Navbar"
 
 // store hooks
 import { useSetLastActiveFolderItemId } from "../stores/GridQuickLoadStore/GridQuickLoadStore"
@@ -33,6 +34,8 @@ export default function Home() {
                 onSelectProjectId={setLastActiveProjectId}
             />
             <ModalRenderer />
+
+            <Navbar />
 
         </div>
     )
