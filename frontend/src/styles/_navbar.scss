@@ -57,7 +57,7 @@
             top: 100%;       /* directly under the icon */
             right: 0;        /* align right edge */
             background: #28494e;
-            padding: 0.5em 1em;
+            padding: 1em 1em;
             border-radius: 6px;
             margin-top: 0.3em;
             box-shadow: 0 2px 5px rgba(0,0,0,.25);
@@ -65,6 +65,7 @@
             display: none;   /* default hidden */
 
             p {
+                white-space: nowrap;
                 &:hover {
                     color: cyan;
                     text-decoration: underline;

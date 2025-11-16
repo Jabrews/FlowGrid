@@ -1,25 +1,38 @@
 import { create } from "zustand";
 
 type NavbarStore = {
-    activeUrl : string
-    setActiveUrl : (newUrl : string) => void
+    activeFolder : string,
+    activeProject: string
+    setActiveFolder : (folder : string) => void
+    setActiveProject: (project: string) => void
 
 }
 
 
 export const useNavbarStore = create<NavbarStore>((set) => ({
-    activeUrl : '',
-    setActiveUrl : (newUrl) => set((s) => ({
+    activeFolder : 'test',
+    activeProject: 'test',
+    setActiveFolder: (folder: string) => set((s) => ({
         ...s,
-        activeUrl : newUrl
+        activeFolder: folder 
+    })),
+    setActiveProject: (project : string) => set((s) => ({
+        ...s,
+        activeProject : project 
     }))
 
 
 
 }))
 
-export const useActiveUrl = () => 
-    useNavbarStore((s) => s.activeUrl) 
+export const useActiveProject= () => 
+    useNavbarStore((s) => s.activeProject) 
 
-export const useSetActiveUrl = () => 
-    useNavbarStore((s) => s.setActiveUrl) 
+export const useSetActiveProject= () => 
+    useNavbarStore((s) => s.setActiveProject) 
+
+export const useActiveFolder= () =>
+    useNavbarStore((s) => s.activeFolder)
+
+export const useSetActiveFolder= () =>
+    useNavbarStore((s) => s.setActiveFolder)

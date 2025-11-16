@@ -20,6 +20,9 @@ type Project = {
     selectedFolderId : string,
 }   
 export default function Project({name, id, last_used, selectedProjectId, onSelectProjectId, selectedFolderId} : Project) {
+    
+    
+    // delete hooks
     const toggleShowDeleteModal = useToggleShowDeleteModal()
     const {ask} = useConfirmStore()
     const mutateDeleteProject = useMutateDeleteProject()
@@ -68,6 +71,7 @@ export default function Project({name, id, last_used, selectedProjectId, onSelec
             onHoverStart={() => toggleIsHovered(true)}
             onHoverEnd={() => toggleIsHovered(false)}
             onTapStart={() => toggleIsHovered(true)}
+            onTouchCancel={() => toggleIsHovered(true)}
             onTapCancel={() => toggleIsHovered(false)}
         >
             <motion.button
@@ -96,7 +100,8 @@ export default function Project({name, id, last_used, selectedProjectId, onSelec
                 />
 
                 <motion.div 
-                    style={{ opacity: isHovered && !isEditing ? 1 : 0 }}
+                    className='svg-div'
+                    style={{ opacity: isHovered && !isEditing && selectedProjectId == id? 1 : 0 }}
                     whileHover={{ scale: 1.15 }}
                     onClick={handlePenClick}
                 >
