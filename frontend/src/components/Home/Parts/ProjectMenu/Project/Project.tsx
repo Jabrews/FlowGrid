@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react'
 import image from '../../../../../assets/example.png'
 import {motion} from 'framer-motion'
+import {useNavigate} from 'react-router-dom'
 
 // hooks
 import { useConfirmStore } from '../../../../stores/ConfirmStore/ConfirmStore'
@@ -19,8 +20,8 @@ type Project = {
     onSelectProjectId : (newId : string) => void 
     selectedFolderId : string,
 }   
+
 export default function Project({name, id, last_used, selectedProjectId, onSelectProjectId, selectedFolderId} : Project) {
-    
     
     // delete hooks
     const toggleShowDeleteModal = useToggleShowDeleteModal()
@@ -30,10 +31,26 @@ export default function Project({name, id, last_used, selectedProjectId, onSelec
 
     const [isHovered, toggleIsHovered] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
-
     const [editValue, setEditValue] = useState(name)
 
     const inputRef = useRef<HTMLInputElement>(null)
+    const navigate = useNavigate()
+
+    // ---- DOUBLE TAP LOGIC ----
+    const lastTapRef = useRef(0)
+
+    const handleDoubleTapOrClick = () => {
+        const now = Date.now()
+        const diff = now - lastTapRef.current
+
+        // desktop double-click triggers two click events too (very fast)
+        if (diff < 250) {
+            navigate('/workspace')
+        }
+
+        lastTapRef.current = now
+    }
+    // --------------------------
 
     const handlePenClick = (e: React.MouseEvent) => {
         e.stopPropagation()
@@ -63,53 +80,56 @@ export default function Project({name, id, last_used, selectedProjectId, onSelec
         toggleShowDeleteModal(false)
     }
 
+
     return (
-        <motion.div 
-            className={`project-container ${selectedProjectId == id ? 'active-project' : ''}`} 
-            key={id}
-            onClick={() => onSelectProjectId(id)}
-            onHoverStart={() => toggleIsHovered(true)}
-            onHoverEnd={() => toggleIsHovered(false)}
-            onTapStart={() => toggleIsHovered(true)}
-            onTouchCancel={() => toggleIsHovered(true)}
-            onTapCancel={() => toggleIsHovered(false)}
-        >
-            <motion.button
-                onClick={handleDeleteBtn}
-                className='del-btn'
-                style={{ opacity: isHovered && !isEditing ? 1 : 0 }}
-                whileHover={{ scale: 1.25 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+        <div onClick={handleDoubleTapOrClick}>  
+            <motion.div 
+                className={`project-container ${selectedProjectId == id ? 'active-project' : ''}`} 
+                key={id}
+                onClick={() => onSelectProjectId(id)}
+                onHoverStart={() => toggleIsHovered(true)}
+                onHoverEnd={() => toggleIsHovered(false)}
+                onTapStart={() => toggleIsHovered(true)}
+                onTouchCancel={() => toggleIsHovered(true)}
+                onTapCancel={() => toggleIsHovered(false)}
             >
-               X 
-            </motion.button>
-
-            <img src={image}/>
-
-            <div className='project-label'>
-                <input
-                    ref={inputRef}
-                    value={editValue}         
-                    disabled={!isEditing}
-                    onChange={(e) => setEditValue(e.currentTarget.value)} 
-                    onBlur={handleBlur}
-                    onKeyDown={(e) => {
-                        if (e.key === "Enter") e.currentTarget.blur()
-                    }}
-                />
-
-                <motion.div 
-                    className='svg-div'
-                    style={{ opacity: isHovered && !isEditing && selectedProjectId == id? 1 : 0 }}
-                    whileHover={{ scale: 1.15 }}
-                    onClick={handlePenClick}
+                <motion.button
+                    onClick={handleDeleteBtn}
+                    className='del-btn'
+                    style={{ opacity: isHovered && !isEditing ? 1 : 0 }}
+                    whileHover={{ scale: 1.25 }}
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
                 >
-                    {get_svg_icons({icon : 'Change-Input', size : 18})}
-                </motion.div>
-            </div>
+                X 
+                </motion.button>
 
-            <p className='date'>{last_used}</p>
-        </motion.div>
+                <img src={image}/>
+
+                <div className='project-label'>
+                    <input
+                        ref={inputRef}
+                        value={editValue}         
+                        disabled={!isEditing}
+                        onChange={(e) => setEditValue(e.currentTarget.value)} 
+                        onBlur={handleBlur}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter") e.currentTarget.blur()
+                        }}
+                    />
+
+                    <motion.div 
+                        className='svg-div'
+                        style={{ opacity: isHovered && !isEditing && selectedProjectId == id? 1 : 0 }}
+                        whileHover={{ scale: 1.15 }}
+                        onClick={handlePenClick}
+                    >
+                        {get_svg_icons({icon : 'Change-Input', size : 18})}
+                    </motion.div>
+                </div>
+
+                <p className='date'>{last_used}</p>
+            </motion.div>
+        </div>
     )
 }
