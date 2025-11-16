@@ -1,20 +1,15 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { motion } from "framer-motion"
-import { useLocation } from 'react-router-dom'
-import { useNavigate } from "react-router-dom"
-
-
+import { useLocation, useNavigate } from "react-router-dom"
 
 // hooks
-import { useActiveFolder, useSetActiveFolder } from "../stores/NavbarStore/NavbarStore"
-import { useActiveProject, useSetActiveProject } from "../stores/NavbarStore/NavbarStore"
+import { useActiveFolder } from "../stores/NavbarStore/NavbarStore"
+import { useActiveProject } from "../stores/NavbarStore/NavbarStore"
 import { useUserName } from "../stores/AccountsStore/AccountsStore"
-// logout hooks
-import useLogout from "./hooks/useLogout" 
-import { useToggleIsAuth } from "../stores/AccountsStore/AccountsStore"
-import { useSetUserName } from "../stores/AccountsStore/AccountsStore"
+import useLogout from "./hooks/useLogout"
+import { useToggleIsAuth, useSetUserName } from "../stores/AccountsStore/AccountsStore"
 
-//util
+// util
 import { get_svg_icons } from "../util/get_svg_icons"
 
 export default function Navbar() {
@@ -23,48 +18,42 @@ export default function Navbar() {
     const [accountMenuOpen, toggleAccountMenuOpen] = useState(false)
 
     const navigate = useNavigate()
+    const location = useLocation()
 
-    // hooks init
+    // zustand data
     const activeFolder = useActiveFolder()
     const activeProject = useActiveProject()
-    const setActiveFolder = useSetActiveFolder()
-    const setActiveProject = useSetActiveProject()
     const userName = useUserName()
     const logoutMutation = useLogout()
     const toggleIsAuth = useToggleIsAuth()
     const setUserName = useSetUserName()
 
-    // when at home set navabar to empty on default
-    const location = useLocation()
-    useEffect(() => {
-        if (location.pathname === '/' || location.pathname === '/home') {
-            setActiveFolder('')
-            setActiveProject('')
-        }
-    }, [location.pathname, setActiveFolder, setActiveProject])
-
     const handleLogoutBtnDown = () => {
-       logoutMutation.mutate() 
-       toggleIsAuth(false)
-       setUserName('')
+        logoutMutation.mutate()
+        toggleIsAuth(false)
+        setUserName("")
     }
+
+    // determine if home
+    const isHome = location.pathname === "/" || location.pathname === "/home"
 
     return (
         <div className='navbar'>
             
             <div className='navbar-left'>
-                <p  onClick={() => navigate("/home")}>
-                FlowGrid
-                {activeFolder && ` / ${activeFolder}`}
-                {activeProject && ` / ${activeProject}`}
-                </p>            
+                <p onClick={() => navigate("/home")}>
+                    {isHome
+                        ? "FlowGrid"
+                        : `FlowGrid${activeFolder ? ` / ${activeFolder}` : ""}${activeProject ? ` / ${activeProject}` : ""}`
+                    }
+                </p>
             </div>
 
             <div></div> {/* blank center */}
 
             <div className='navbar-right'>
 
-                {/* ------------------ ACCOUNT  ------------------ */}
+                {/* ------------------ ACCOUNT ------------------ */}
                 <motion.div
                     className={`user ${accountMenuOpen ? "active" : ""}`}
                     onClick={() => toggleAccountMenuOpen(prev => !prev)}
@@ -78,7 +67,7 @@ export default function Navbar() {
                     </div>
                 </motion.div>
 
-                {/* ------------------ Settings  ------------------ */}
+                {/* ------------------ SETTINGS ------------------ */}
                 <motion.div
                     className={`settings ${settingsMenuOpen ? "active" : ""}`}
                     onClick={() => toggleSettingsMenuOpen(prev => !prev)}
@@ -92,7 +81,6 @@ export default function Navbar() {
                         <p>shortcuts</p>
                     </div>
                 </motion.div>
-
 
             </div>
         </div>

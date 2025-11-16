@@ -66,6 +66,7 @@ export default function FolderNavigator({selectedFolderId, onSelectFolderId}: Fo
                         onSelectedFolderId={onSelectFolderId}
                         title={folder.name}
                         id={folder.id}
+                        name={folder.name}
                     />
                     ))
                 )}

@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     # my apps
     'accounts',
     'projects',
+    'grid',
 
 
 ]

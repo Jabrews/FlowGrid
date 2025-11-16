@@ -8,6 +8,11 @@ import { useConfirmStore } from '../../../../stores/ConfirmStore/ConfirmStore'
 import { useToggleShowDeleteModal } from '../../../../stores/ModalRendererStore/ModelRendererStore'
 import useMutateDeleteProject from './hooks/useMutateDeleteProject'
 import useMutateChangeProjectName from './hooks/useMutateChangeProjectName'
+// for setting names in NAVBAR
+import { useSetActiveProject} from '../../../../stores/NavbarStore/NavbarStore'
+// for setting ids in projects for grid querying
+import { useSetProjectId } from '../../../../stores/ProjectStore/ProjectStore'
+import { useSetGridUrl } from '../../../../stores/ProjectStore/ProjectStore'
 
 // util
 import { get_svg_icons } from '../../../../util/get_svg_icons'
@@ -29,6 +34,10 @@ export default function Project({name, id, last_used, selectedProjectId, onSelec
     const mutateDeleteProject = useMutateDeleteProject()
     const mutateChangeProjectName = useMutateChangeProjectName()
 
+    // setting projecti info when loading grid hooks
+    const setActiveProject = useSetActiveProject()
+    const setProjectId = useSetProjectId()
+
     const [isHovered, toggleIsHovered] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
     const [editValue, setEditValue] = useState(name)
@@ -45,6 +54,8 @@ export default function Project({name, id, last_used, selectedProjectId, onSelec
 
         // desktop double-click triggers two click events too (very fast)
         if (diff < 250) {
+            setActiveProject(name)
+            setProjectId(selectedProjectId)
             navigate('/workspace')
         }
 

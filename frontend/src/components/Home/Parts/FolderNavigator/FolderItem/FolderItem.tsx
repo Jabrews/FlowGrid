@@ -6,7 +6,8 @@ import useMutateDeleteProjectFolder from "./hooks/useMutateDeleteProjectFolder"
 import useMutatePatchProjectFolder from './hooks/useMutatePatchProjectFolder'
 import { useToggleShowDeleteModal} from '../../../../stores/ModalRendererStore/ModelRendererStore'
 import { useConfirmStore } from '../../../../stores/ConfirmStore/ConfirmStore'
-
+import { useSetActiveFolder } from '../../../../stores/NavbarStore/NavbarStore'
+import { useSetFolderId } from '../../../../stores/ProjectStore/ProjectStore'
 
 interface FolderItemProps {
     selectedFolderId: string
@@ -21,14 +22,22 @@ export default function FolderItem({selectedFolderId, onSelectedFolderId, title,
   const [isEditing, setIsEditing] = useState(false)
   const [value, setValue] = useState(title)
 
+  // hook init
   const deleteProjectFolder = useMutateDeleteProjectFolder()
   const patchProjectFolder = useMutatePatchProjectFolder()
   const toggleShowDeleteModal = useToggleShowDeleteModal()
   const { ask } = useConfirmStore()
+  const setActiveFolder = useSetActiveFolder()
+  const setFolderId = useSetFolderId()
+
+
 
 
   const handleItemClick = (id: string) => {
     onSelectedFolderId(id)
+    setActiveFolder(title)
+    setFolderId(selectedFolderId)
+
     setIsEditing(true)
   }
 
