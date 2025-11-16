@@ -9,9 +9,9 @@ An Obsidian-inspired markdown note app with a drag-and-drop editor for note-taki
 - Note Taking Interface : 
 
 # Tech Stack
-**Frontend:** React, Zustand, React-Query Sass(css)
-**Backend:** Django w/ REST Framework  
-**Database:** PostgreSQL
+- **Frontend:** React, Zustand, React-Query, Sass(css)
+- **Backend:** Django w/ REST Framework  
+- **Database:** PostgreSQL
 
 ## Installation
 ```bash
