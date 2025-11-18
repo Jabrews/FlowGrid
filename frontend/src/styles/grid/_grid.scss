@@ -1,0 +1,52 @@
+.grid-container {
+    width: 2500px;
+    height: 2000px;
+    background-image:
+    linear-gradient(to right, rgba(0, 0, 0, 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+    background-size: 3.8em 3.8em;
+    margin: 2.5em;
+}
+
+/* item */
+
+.grid-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+
+/* item header */
+
+.grid-item-header {
+    display: flex;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    flex-direction: row;
+
+    p {
+        cursor: pointer;
+        padding-left: 0.5em;
+        padding-right: 0.5em;
+    }
+
+    .move-icon {
+        &:hover {
+            color : rgb(24, 116, 228);
+        }
+    }
+
+
+    .del-icon {
+        &:hover {
+            color : red;
+        }
+    }
+
+}
+
+.grid-item:hover .grid-item-header {
+    opacity: 1;
+}

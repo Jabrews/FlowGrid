@@ -1,8 +1,70 @@
+import GridLayout from 'react-grid-layout';
+import type {Layout} from 'react-grid-layout'
+import {gridLayoutProps} from '../util/gridLayoutProps.ts'
+
+// meta store hooks 
+// import {useGetMetaElements} from '../../../cross-platform/stores/MetaFactory/MetaFactory'
+// import type {ElementMeta} from '../../../cross-platform/stores/MetaFactory/MetaFactory'
+
+// hooks
+import useQueryGrid from '../hooks/useQueryGrid.tsx';
+// import useDesktopLayout from './hooks/useDesktopLayout.tsx'
+// import useGridListeners from './hooks/useGridListeners.tsx'
+// import useHandleLayoutChange from '../../../cross-platform/workspace-components/Editor/Grid/hooks/useHandleLayoutChange.tsx'
+
+// components
+import GridItemDesktop from './GridItemDesktop/GridItemDesktop.tsx'
 
 export default function GridDesktop() {
 
+    const {data}= useQueryGrid()
+    console.log(data)
+
+    //layout **eventually seperate into seperate hook 
+    const layout : Layout[] = [{
+        i: 'id',
+        x: 0,
+        y: 0,
+        w: 0,
+        h: 0,
+        static: false,
+        isResizable: false,
+    }]
+
+
+    // hooks init
+    // const layout = useDesktopLayout()
+    // const handleLayoutChange = useHandleLayoutChange()
+    // const {handleOnDropElementCreation} = useGridListeners()
+    // const metaElements = useGetMetaElements()
+
+    // const handleLayoutChangeTrigger = (newLayout : Layout[]) => {
+    //     handleLayoutChange({newLayout : newLayout, oldLayout : layout})
+    // }
+
     return (
-        <p> Grid Desktop </p>
+        <div 
+        className='grid-container grid-desktop'
+        >
+            <GridLayout
+                {...gridLayoutProps}
+                layout={layout}
+                // onDrop={handleOnDropElementCreation}
+                // onLayoutChange={handleLayoutChangeTrigger}
+            > 
+                {/* {metaElements.map((metaElement: ElementMeta) => (
+                    <div key={metaElement.id}>
+                        <GridItemDesktop metaElement={metaElement} />
+                    </div>
+                ))} */}
+                <div key='123'>
+                    <GridItemDesktop />
+                </div>
+
+            </GridLayout>
+        </div>
+
     )
+    
 
 }

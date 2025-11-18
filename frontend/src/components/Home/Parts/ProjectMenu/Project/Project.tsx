@@ -37,6 +37,7 @@ export default function Project({name, id, last_used, selectedProjectId, onSelec
     // setting projecti info when loading grid hooks
     const setActiveProject = useSetActiveProject()
     const setProjectId = useSetProjectId()
+    const setGridUrl = useSetGridUrl()
 
     const [isHovered, toggleIsHovered] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
@@ -56,6 +57,7 @@ export default function Project({name, id, last_used, selectedProjectId, onSelec
         if (diff < 250) {
             setActiveProject(name)
             setProjectId(selectedProjectId)
+            setGridUrl()
             navigate('/workspace')
         }
 

@@ -1,12 +1,13 @@
 .navbar {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
-    position: absolute;
+    position: fixed;
     top: 0;
     width: 100vw;
     height: 3vh;
     font-size: 0.8em;
     background-color: #396168;
+    color: white;
 
     .navbar-left {
         padding-left: 1em;

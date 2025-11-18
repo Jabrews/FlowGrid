@@ -3,6 +3,11 @@
 @use './scrollbar';
 @use './modals' as *;
 @use './navbar' as *;
+@use './workspace' as *;
+
+// Grid
+@use './grid/grid' as *;
+@use './grid/grid-mobile' as *;
 
 /* Import a clean UI font */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');

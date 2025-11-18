@@ -5,6 +5,7 @@ from rest_framework.response import Response
 
 # models
 from .models import ProjectFolder, Project
+from grid.models import Grid #we only create here
 
 # serializers
 from .serializers import ProjectFolderSerializer, PartialProjectFolderSerializer
@@ -52,19 +53,34 @@ class ProjectView(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         user = self.request.user
+        folder_id = self.kwargs["folder_pk"]
+
+        # validate first
         serializer.is_valid(raise_exception=True)
 
+        # generate default project name
         existing_count = Project.objects.filter(
             user=user,
-            folder_id=self.kwargs['folder_pk']).count()
-
+            folder_id=folder_id
+        ).count()
         default_name = f"Project-{existing_count + 1}"
         name = serializer.validated_data.get("name", default_name)
-        serializer.save(
+
+        # save  project first
+        project = serializer.save(
             name=name,
-            folder_id=self.kwargs["folder_pk"],   
-            user=self.request.user,             
+            folder_id=folder_id,
+            user=user,
         )
+
+        # create the one-to-one grid
+        Grid.objects.create(
+            user=user,
+            project=project
+        )
+
+        return project
+
 
     def get_serializer_class(self):#type: ignore
         if self.action == "project_names":

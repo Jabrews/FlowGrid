@@ -32,7 +32,7 @@ export const useProjectStore = create<ProjectStore>((set, get) => ({
                 throw new Error("Missing folderId or projectId")
             }
 
-            const url = `api/project_folders/${folderId}/projects/${projectId}/grid/`
+            const url = `project_folders/${folderId}/projects/${projectId}`
 
             set({ gridUrl: url })
         },

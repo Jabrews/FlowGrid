@@ -4,7 +4,7 @@ from rest_framework import viewsets, permissions
 
 
 # models
-from .models import Project
+from .models import Grid 
 
 # serializer
 from .serializers import GridSerializer 
@@ -14,6 +14,9 @@ class GridView(viewsets.ModelViewSet) :
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):#type: ignore
-        return Project.objects.filter(user=self.request.user)
+        return Grid.objects.filter(
+            user=self.request.user,
+            project_id=self.kwargs['project_pk'],
+        )
     
 

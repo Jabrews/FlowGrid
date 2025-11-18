@@ -1,27 +1,61 @@
+import { useRef } from "react";
+
 // hooks
 import useIsMobileScreen from "../hooks/useIsMobileScreen"; 
+import { useEditorScrollEventActive } from "./hooks/useEdgeScrollStore";
+import { useEditorEdgeDraggingStore } from "./hooks/useEditorEdgeDraggingScroll";
+import useMiddleWheelPan from "./hooks/useMiddleWheelPan";
 
-// Grid
+// components 
 import GridMobile from "../Grid/GridMobile/GridMobile";
 import GridDesktop from "../Grid/GridDesktop/GridDesktop";
+import Navbar from "../Navbar/Navbar";
+
 
 export default function WorkSpace() {
 
+    // ------------------ NEEED ------------------- //
+    // - item preview logic
+    // - mobile scroll on item preview active to middle  
+
+
     // hook init
     const isMobileScreen = useIsMobileScreen()
+    const editorScrollEventActive = useEditorScrollEventActive()
 
-    console.log('is mobile screen : ', isMobileScreen)
+    // refs
+    const editorRef = useRef<HTMLDivElement>(null)
+    const cursorRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 })
+
+    // MOVEMENT STUFF //
+    useEditorEdgeDraggingStore({editorScrollEventActive, editorRef});
+    // desktop 
+    useMiddleWheelPan({ editorRef, cursorRef, isMobileScreen, speed: 1, useRafThrottle: true });
 
     return (
-        <>
-        {isMobileScreen &&
-            <GridMobile />
-        }
-        {!isMobileScreen &&
-            <GridDesktop />
-        }
-        </>
-           )
+        <div 
+            className='workspace-container'
+            ref={editorRef}
+        >
+
+            {/* All */}
+            <Navbar />
+
+            {/* mobile */}
+            {isMobileScreen &&
+            <>
+                <GridMobile />
+            </>
+            }
+
+            {/* desktop*/}
+            {!isMobileScreen &&
+            <>
+                <GridDesktop />
+            </>
+            }
+        </div>
+    )
 
 
 

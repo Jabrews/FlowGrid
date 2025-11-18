@@ -5,15 +5,13 @@ import { fetch_auth } from "../../util/fetch_auth";
 
 // hooks 
 import useCsrf from "../../hooks/useCsrf";
-import { useActiveFolder } from "../../stores/NavbarStore/NavbarStore";
-import { useActiveProject } from "../../stores/NavbarStore/NavbarStore";
+import { useGridUrl } from "../../stores/ProjectStore/ProjectStore";
 
 export default function useQueryGrid() {
 
     // hook init
     const csrf_token = useCsrf()
-    const active_folder = useActiveFolder()
-    const active_project = useActiveProject()
+    const gridUrl = useGridUrl()
     
 
     return useQuery({
@@ -21,14 +19,17 @@ export default function useQueryGrid() {
         queryFn : async () => {
 
             if (!csrf_token) throw new Error('could not find csrf token')
-            if (!active_folder || !active_project) throw new Error('could not find active folder or project')
+            if (!gridUrl) throw new Error('could not find grid url')
+
 
             const QueryGridInit : RequestInit = {
                 method : 'Get'
             }
 
-            fetch_auth({
-                queryUrl: `api/project_folders/${active_folder}/projects/${active_project}`,
+            return fetch_auth({
+                queryUrl: `api/${gridUrl}/grid/`,
+                init : QueryGridInit,
+                csrf_token : csrf_token,
             })
 
         }
