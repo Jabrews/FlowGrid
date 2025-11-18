@@ -1,0 +1,126 @@
+
+.side-dropper-content {
+    width: 100%;
+    background-color: rgb(185, 199, 198);
+
+    .side-dropper-content-buttons-container {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+
+
+        button {
+            font-size: 1em;
+            margin : 0.6em;
+            padding: 1em;
+            border-radius: 1.4em;
+            border: none;
+            padding-left: 2em;
+            padding-right: 2em;
+        }
+
+            .close-all-btn {
+                background-color: #B3E3D2;
+            }
+
+            .workshop-btn {
+                background: linear-gradient(to right, #B3E3D2 0%, #466D89 100%);
+                padding-left: 2.5em;
+                padding-right: 2.5em;
+            }
+
+
+    }
+
+    .side-dropper-content-droppable-container {
+        padding: 0.4em;
+        width : 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        overflow-x:hidden;
+    
+        .droppable-table-container {
+            width: 95%;
+            padding: 0.2em;
+            overflow-x: hidden;
+
+            .droppable-table-header {
+                width: 100%;
+                padding: 0.4em;
+                display: grid;
+                align-items: center;
+                justify-content: space-between;
+                grid-template-columns: 1fr 1fr 1fr;
+                background-color: #E2E2E2;
+
+
+                .header-name {
+                    color: rgb(0, 0, 0);
+                    font-weight: 700;
+                    height: 100%;
+                    width: 100%;
+                    text-align: center;
+                }
+                
+                .header-length  {
+                    font-size: 0.8em;
+                    padding-left: 0.2em;
+                    color: rgb(131, 129, 129);
+                }
+
+                .header-icon {
+                    cursor: pointer;
+                    padding-bottom: 0.4em;
+                    font-weight: 1000;
+                    height: 100%;
+                    width: 100%;
+                    text-align: center;
+
+
+                }
+
+
+            }
+
+            .droppable-table-body {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                background-color: #d3d2d2;
+                overflow-y: scroll;
+                height: 12em;
+                overflow-x: hidden;
+
+                .droppable-table-item {
+                    margin: 1em;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-direction: column;
+
+                    &:hover {
+                        background-color: #e9e8e8;
+                    }
+
+                }
+
+
+            }
+
+        }
+
+        
+
+
+    }
+
+
+}
+
+
+
+

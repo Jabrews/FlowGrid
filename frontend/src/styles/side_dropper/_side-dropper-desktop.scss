@@ -1,0 +1,59 @@
+.side-dropper-container-desktop {
+  margin-top: 1.6em;
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  width : 256px;
+  bottom: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+
+  /* smooth width/bg tween (Framer can still override values) */
+  transition: width 0.3s cubic-bezier(0.22, 0.61, 0.36, 1),
+  background-color 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  /* avoid content peeking during width animation */
+  overflow: hidden;
+
+  /* small perf hint */
+  will-change: width, background-color;
+
+  // shared child styles
+  .side-dropper-header {
+    margin-top: 1em;
+    justify-items: center;
+    display: flex;
+
+    p {
+      padding-left: 1em;
+      padding-right: 0.8em;
+      padding-top: 0.2em;
+      font-size: 1.2em;
+      font-weight: 700;
+    }
+
+    h1 {
+      padding-left: 1em;
+      padding-right: 1em;
+      justify-self: flex-end;
+
+      &:hover {
+        color: rgb(88, 88, 88);
+      }
+    }
+  }
+
+  &.in-active {
+    width: 80px;
+    background-color: rgba(159, 170, 169, 0.5);
+  }
+
+  &.active {
+    width : 256px;
+    background-color: rgba(159, 170, 169, 1);
+  }
+}

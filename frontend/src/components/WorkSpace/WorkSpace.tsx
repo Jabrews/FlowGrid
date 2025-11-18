@@ -10,7 +10,8 @@ import useMiddleWheelPan from "./hooks/useMiddleWheelPan";
 import GridMobile from "../Grid/GridMobile/GridMobile";
 import GridDesktop from "../Grid/GridDesktop/GridDesktop";
 import Navbar from "../Navbar/Navbar";
-
+import SideDropperMobile from "../SideDropper/SideDropperMobile/SideDropperMobile";
+import SideDropperDesktop from "../SideDropper/SideDropperDesktop/SideDropperDesktop";
 
 export default function WorkSpace() {
 
@@ -45,6 +46,7 @@ export default function WorkSpace() {
             {isMobileScreen &&
             <>
                 <GridMobile />
+                <SideDropperMobile />
             </>
             }
 
@@ -52,6 +54,7 @@ export default function WorkSpace() {
             {!isMobileScreen &&
             <>
                 <GridDesktop />
+                <SideDropperDesktop />
             </>
             }
         </div>

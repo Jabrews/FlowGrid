@@ -30,7 +30,7 @@ export default function GridMobile() {
 
     return (
         <div 
-        className='grid-container grid-desktop'
+        className='grid-container grid-mobile'
         >
             <GridLayout
                 {...gridLayoutProps}

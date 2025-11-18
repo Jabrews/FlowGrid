@@ -1,0 +1,46 @@
+
+.side-dropper-container-mobile {
+    margin-top: 1.5em;
+    z-index: 100;
+    position: fixed;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(159, 170, 169, 1);
+    flex-direction: column;
+
+    .side-dropper-header {
+        align-self: center;
+        justify-self: center;
+
+        h1 {
+            padding-top: 0.2em;
+
+            &:hover {
+                color: rgb(88, 88, 88);
+            }
+
+        }
+
+
+    }
+
+    .side-dropper-title{
+        padding : 0.4em;
+        width : 100%;
+        text-align: center;
+        background-color: rgb(184, 196, 195);
+
+        h1 {
+            font-size: 1.4em;
+        }
+
+
+    }
+
+
+}
