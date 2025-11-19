@@ -8,6 +8,7 @@ import {gridLayoutProps} from '../util/gridLayoutProps.ts'
 
 // hooks
 import useQueryGrid from '../hooks/useQueryGrid.tsx';
+import useQueryLayout from '../hooks/useQueryLayout.tsx';
 // import useDesktopLayout from './hooks/useDesktopLayout.tsx'
 // import useGridListeners from './hooks/useGridListeners.tsx'
 // import useHandleLayoutChange from '../../../cross-platform/workspace-components/Editor/Grid/hooks/useHandleLayoutChange.tsx'
@@ -17,19 +18,11 @@ import GridItemDesktop from './GridItemDesktop/GridItemDesktop.tsx'
 
 export default function GridDesktop() {
 
-    const {data}= useQueryGrid()
-    console.log(data)
+    const {data : gridData}= useQueryGrid()
+    console.log(gridData)
+    const {data : layoutData} = useQueryLayout()
+    console.log(layoutData)
 
-    //layout **eventually seperate into seperate hook 
-    const layout : Layout[] = [{
-        i: 'id',
-        x: 0,
-        y: 0,
-        w: 0,
-        h: 0,
-        static: false,
-        isResizable: false,
-    }]
 
 
     // hooks init
@@ -48,7 +41,7 @@ export default function GridDesktop() {
         >
             <GridLayout
                 {...gridLayoutProps}
-                layout={layout}
+                layout={layoutData}
                 // onDrop={handleOnDropElementCreation}
                 // onLayoutChange={handleLayoutChangeTrigger}
             > 

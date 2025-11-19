@@ -5,3 +5,13 @@ export type Grid = {
     created : string,
     project : ProjectData
 }
+
+export type Layout = {
+    i : string,
+    x : number,
+    y : number,
+    w : number,
+    h : number,
+    static : boolean,
+    isResizeable : string,
+}

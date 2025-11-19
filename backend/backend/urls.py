@@ -29,7 +29,8 @@ urlpatterns = [
     # projects
     path("api/", include(router.urls)),
     path("api/", include(projects_router.urls)),
-    # grids
+    # grid + layout
     path("api/", include(grid_router.urls)),
+    path('api/', include('grid.urls')),
 
 ]

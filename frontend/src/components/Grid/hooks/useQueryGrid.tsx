@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 
 // util
 import { fetch_auth } from "../../util/fetch_auth";
+import type { Grid } from "../util/types";
 
 // hooks 
 import useCsrf from "../../hooks/useCsrf";
@@ -14,7 +15,7 @@ export default function useQueryGrid() {
     const gridUrl = useGridUrl()
     
 
-    return useQuery({
+    return useQuery<Grid>({
         queryKey : ['Grid'],
         queryFn : async () => {
 

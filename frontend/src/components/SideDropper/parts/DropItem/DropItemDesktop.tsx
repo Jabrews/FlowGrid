@@ -17,6 +17,7 @@ export default function DropItemDesktop({type} :DroppableItemDesktopProps){
   const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
     const payload = { type }; // add anything else you need
     e.dataTransfer.setData('application/json', JSON.stringify(payload));
+    console.log(payload)
     toggleEditorScrollEventActive(true)
   };
 
