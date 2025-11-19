@@ -5,8 +5,8 @@ import useCsrf from "../../../../../hooks/useCsrf";
 import { mutate_auth } from "../../../../../util/mutate_auth";
 
 type DeleteProjectForm = {
-    selectedFolderId : string,
-    selectedProjectId : string,
+    activeFolderId : string,
+    activeProjectId : string,
 }
     
 export default function useMutateDeleteProject() {
@@ -25,7 +25,7 @@ export default function useMutateDeleteProject() {
             }
 
             return await mutate_auth({
-                queryUrl: `api/project_folders/${deleteProjectForm.selectedFolderId}/projects/${deleteProjectForm.selectedProjectId}/`,
+                queryUrl: `api/project_folders/${deleteProjectForm.activeFolderId}/projects/${deleteProjectForm.selectedProjectId}/`,
                 init : DeleteProjectInit,
                 csrf_token : csrf_token,
             })
@@ -34,7 +34,7 @@ export default function useMutateDeleteProject() {
         },
         onSettled: (_data, _error, variables) => {
             queryClient.invalidateQueries({
-                queryKey: ['projects', variables.selectedFolderId]
+                queryKey: ['projects', variables.activeProjectId]
             })
         },
 

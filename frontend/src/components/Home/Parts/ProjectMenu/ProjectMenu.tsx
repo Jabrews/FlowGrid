@@ -3,15 +3,12 @@ import {motion} from 'framer-motion'
 // hooks
 import useQueryProjects from "./hooks/useQueryProjects"
 import useMutateCreateProject from './hooks/useMutateCreateProject'
+// for setting ids in projects for grid querying
+import { useActiveFolderId } from '../../../stores/ProjectAndFolderStore/ProjectAndFolderStore'
 
 // components
 import Project from "./Project/Project"
 
-type ProjectMenu = {
-    selectedFolderId : string;
-    selectedProjectId : string;
-    onSelectProjectId : (newId : string) => void
-}
 
 export type ProjectData = {
     last_used : string,
@@ -19,15 +16,16 @@ export type ProjectData = {
     id : string,
 }
 
-export default function ProjectMenu({selectedFolderId, selectedProjectId, onSelectProjectId} : ProjectMenu) {
+export default function ProjectMenu() {
 
     // hooks
+    const activeFolderId = useActiveFolderId()
     const mutateCreateProject = useMutateCreateProject()    
 
-    const {data, isLoading, error, isPending} = useQueryProjects(selectedFolderId)
+    const {data, isLoading, error, isPending} = useQueryProjects(activeFolderId)
 
     const handleCreateBtnDown = () => {
-        mutateCreateProject.mutate(selectedFolderId)
+        mutateCreateProject.mutate(activeFolderId)
     }
 
 
@@ -40,12 +38,9 @@ export default function ProjectMenu({selectedFolderId, selectedProjectId, onSele
 
         {data && !error && !isLoading && data.map((project : ProjectData) => 
                 <Project key={project.id}
-                    name={project.name} 
-                    last_used={project.last_used} 
-                    id={project.id}
-                    selectedProjectId={selectedProjectId}
-                    onSelectProjectId={onSelectProjectId}
-                    selectedFolderId={selectedFolderId}
+                    projectName={project.name} 
+                    projectId={project.id}
+                    project_last_used={project.last_used} 
                 />
         )}
 

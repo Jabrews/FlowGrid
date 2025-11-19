@@ -9,24 +9,23 @@ import { useToggleShowDeleteModal } from '../../../../stores/ModalRendererStore/
 import useMutateDeleteProject from './hooks/useMutateDeleteProject'
 import useMutateChangeProjectName from './hooks/useMutateChangeProjectName'
 // for setting names in NAVBAR
-import { useSetActiveProject} from '../../../../stores/NavbarStore/NavbarStore'
+import { useSetActiveProjectName } from '../../../../stores/ProjectAndFolderStore/ProjectAndFolderStore'
 // for setting ids in projects for grid querying
-import { useSetProjectId } from '../../../../stores/ProjectStore/ProjectStore'
-import { useSetGridUrl } from '../../../../stores/ProjectStore/ProjectStore'
+import { useSetActiveProjectId } from '../../../../stores/ProjectAndFolderStore/ProjectAndFolderStore'
+import { useSetGridUrl } from '../../../../stores/ProjectAndFolderStore/ProjectAndFolderStore'
+import { useActiveFolderId } from '../../../../stores/ProjectAndFolderStore/ProjectAndFolderStore'
+import { useActiveProjectId } from '../../../../stores/ProjectAndFolderStore/ProjectAndFolderStore'
 
 // util
 import { get_svg_icons } from '../../../../util/get_svg_icons'
 
 type Project = { 
-    name : string, 
-    last_used : string,
-    id : string,
-    selectedProjectId : string;
-    onSelectProjectId : (newId : string) => void 
-    selectedFolderId : string,
+    projectName : string, 
+    projectId : string,
+    project_last_used : string,
 }   
 
-export default function Project({name, id, last_used, selectedProjectId, onSelectProjectId, selectedFolderId} : Project) {
+export default function Project({projectName, projectId, project_last_used} : Project) {
     
     // delete hooks
     const toggleShowDeleteModal = useToggleShowDeleteModal()
@@ -35,13 +34,17 @@ export default function Project({name, id, last_used, selectedProjectId, onSelec
     const mutateChangeProjectName = useMutateChangeProjectName()
 
     // setting projecti info when loading grid hooks
-    const setActiveProject = useSetActiveProject()
-    const setProjectId = useSetProjectId()
+    const setActiveProjectName = useSetActiveProjectName()
+    const setActiveProjectId = useSetActiveProjectId()
     const setGridUrl = useSetGridUrl()
+    
+    // other getters
+    const activeFolderId = useActiveFolderId()
+    const activeProjectId = useActiveProjectId()
 
     const [isHovered, toggleIsHovered] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
-    const [editValue, setEditValue] = useState(name)
+    const [editValue, setEditValue] = useState(projectName)
 
     const inputRef = useRef<HTMLInputElement>(null)
     const navigate = useNavigate()
@@ -55,8 +58,8 @@ export default function Project({name, id, last_used, selectedProjectId, onSelec
 
         // desktop double-click triggers two click events too (very fast)
         if (diff < 250) {
-            setActiveProject(name)
-            setProjectId(selectedProjectId)
+            setActiveProjectName(projectName)
+            setActiveProjectId(projectId)
             setGridUrl()
             navigate('/workspace')
         }
@@ -74,11 +77,11 @@ export default function Project({name, id, last_used, selectedProjectId, onSelec
     const handleBlur = () => {
         setIsEditing(false)
 
-        if (!editValue.trim() || editValue.trim() === name) return
+        if (!editValue.trim() || editValue.trim() === projectName) return
 
         mutateChangeProjectName.mutate({
-            selectedFolderId : selectedFolderId,
-            selectedProjectId : id,
+            selectedFolderId : activeFolderId,
+            selectedProjectId : activeProjectId,
             newName: editValue.trim(),
         })
     }
@@ -88,7 +91,7 @@ export default function Project({name, id, last_used, selectedProjectId, onSelec
         toggleShowDeleteModal(true)
         const confirmed = await waitForConfirm
         if (confirmed) {
-            mutateDeleteProject.mutate({selectedFolderId, selectedProjectId: id})
+            mutateDeleteProject.mutate({activeFolderId, activeProjectId})
         }
         toggleShowDeleteModal(false)
     }
@@ -97,9 +100,9 @@ export default function Project({name, id, last_used, selectedProjectId, onSelec
     return (
         <div onClick={handleDoubleTapOrClick}>  
             <motion.div 
-                className={`project-container ${selectedProjectId == id ? 'active-project' : ''}`} 
-                key={id}
-                onClick={() => onSelectProjectId(id)}
+                className={`project-container ${activeProjectId == projectId ? 'active-project' : ''}`} 
+                key={projectId}
+                onClick={() => setActiveProjectId(projectId)}
                 onHoverStart={() => toggleIsHovered(true)}
                 onHoverEnd={() => toggleIsHovered(false)}
                 onTapStart={() => toggleIsHovered(true)}
@@ -133,7 +136,7 @@ export default function Project({name, id, last_used, selectedProjectId, onSelec
 
                     <motion.div 
                         className='svg-div'
-                        style={{ opacity: isHovered && !isEditing && selectedProjectId == id? 1 : 0 }}
+                        style={{ opacity: isHovered && !isEditing && activeProjectId == projectId ? 1 : 0 }}
                         whileHover={{ scale: 1.15 }}
                         onClick={handlePenClick}
                     >
@@ -141,7 +144,7 @@ export default function Project({name, id, last_used, selectedProjectId, onSelec
                     </motion.div>
                 </div>
 
-                <p className='date'>{last_used}</p>
+                <p className='date'>{project_last_used}</p>
             </motion.div>
         </div>
     )

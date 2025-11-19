@@ -2,24 +2,20 @@ import { useState } from "react"
 
 // utill
 import { get_svg_icons } from "../../../util/get_svg_icons"
+
 // hooks
 import useQueryProjectFolderNames from "./hooks/useQueryProjectFolderNames"
 import useMutateCreateProjectFolder from "./hooks/useMutateCreateProjectFolder"
+
 // components
 import FolderItem from "./FolderItem/FolderItem"
-
-
-interface FolderNavigatorProps {
-    selectedFolderId: string
-    onSelectFolderId: (id: string) => void
-}
 
 export type ProjectFolderPartial = {
     id  : string, 
     name : string,
 }
 
-export default function FolderNavigator({selectedFolderId, onSelectFolderId}: FolderNavigatorProps) {
+export default function FolderNavigator() {
     const [isOpen, setIsOpen] = useState(true)
 
     const toggleOpen = () => {
@@ -62,11 +58,8 @@ export default function FolderNavigator({selectedFolderId, onSelectFolderId}: Fo
                     data.map((folder: ProjectFolderPartial) => (
                     <FolderItem
                         key={folder.id}
-                        selectedFolderId={selectedFolderId}
-                        onSelectedFolderId={onSelectFolderId}
-                        title={folder.name}
-                        id={folder.id}
-                        name={folder.name}
+                        folderId={folder.id}
+                        folderName={folder.name}
                     />
                     ))
                 )}

@@ -3,8 +3,8 @@ import { motion } from "framer-motion"
 import { useLocation, useNavigate } from "react-router-dom"
 
 // hooks
-import { useActiveFolder } from "../stores/NavbarStore/NavbarStore"
-import { useActiveProject } from "../stores/NavbarStore/NavbarStore"
+import { useActiveFolderName } from "../stores/ProjectAndFolderStore/ProjectAndFolderStore"
+import { useActiveProjectName } from "../stores/ProjectAndFolderStore/ProjectAndFolderStore"
 import { useUserName } from "../stores/AccountsStore/AccountsStore"
 import useLogout from "./hooks/useLogout"
 import { useToggleIsAuth, useSetUserName } from "../stores/AccountsStore/AccountsStore"
@@ -21,8 +21,8 @@ export default function Navbar() {
     const location = useLocation()
 
     // zustand data
-    const activeFolder = useActiveFolder()
-    const activeProject = useActiveProject()
+    const activeFolderName = useActiveFolderName()
+    const activeProjectName = useActiveProjectName()
     const userName = useUserName()
     const logoutMutation = useLogout()
     const toggleIsAuth = useToggleIsAuth()
@@ -44,7 +44,7 @@ export default function Navbar() {
                 <p onClick={() => navigate("/home")}>
                     {isHome
                         ? "FlowGrid"
-                        : `FlowGrid${activeFolder ? ` / ${activeFolder}` : ""}${activeProject ? ` / ${activeProject}` : ""}`
+                        : `FlowGrid${activeFolderName ? ` / ${activeFolderName}` : ""}${activeProjectName ? ` / ${activeProjectName}` : ""}`
                     }
                 </p>
             </div>

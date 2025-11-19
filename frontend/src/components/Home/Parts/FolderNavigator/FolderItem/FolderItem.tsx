@@ -4,40 +4,39 @@ import {motion} from 'framer-motion'
 // hooks
 import useMutateDeleteProjectFolder from "./hooks/useMutateDeleteProjectFolder"
 import useMutatePatchProjectFolder from './hooks/useMutatePatchProjectFolder'
+// delete modal
 import { useToggleShowDeleteModal} from '../../../../stores/ModalRendererStore/ModelRendererStore'
 import { useConfirmStore } from '../../../../stores/ConfirmStore/ConfirmStore'
-import { useSetActiveFolder } from '../../../../stores/NavbarStore/NavbarStore'
-import { useSetFolderId } from '../../../../stores/ProjectStore/ProjectStore'
+// activeProjectStuff
+import { useSetActiveFolderName } from '../../../../stores/ProjectAndFolderStore/ProjectAndFolderStore'
+import { useSetActiveFolderId } from '../../../../stores/ProjectAndFolderStore/ProjectAndFolderStore'
+import { useActiveFolderId } from '../../../../stores/ProjectAndFolderStore/ProjectAndFolderStore'
 
-interface FolderItemProps {
-    selectedFolderId: string
-    onSelectedFolderId: (id: string) => void
-    title : string
-    id : string
+type FolderItemProps = {
+  folderId : string,
+  folderName : string,
 }
 
-export default function FolderItem({selectedFolderId, onSelectedFolderId, title, id} : FolderItemProps) {
+export default function FolderItem({folderId, folderName} : FolderItemProps) {
 
   const [, toggleShowBtns] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
-  const [value, setValue] = useState(title)
+  const [value, setValue] = useState(folderName)
 
   // hook init
   const deleteProjectFolder = useMutateDeleteProjectFolder()
   const patchProjectFolder = useMutatePatchProjectFolder()
   const toggleShowDeleteModal = useToggleShowDeleteModal()
   const { ask } = useConfirmStore()
-  const setActiveFolder = useSetActiveFolder()
-  const setFolderId = useSetFolderId()
+  const setActiveFolderName = useSetActiveFolderName()
+  const setActiveFolderId = useSetActiveFolderId()
+  const activeFolderId = useActiveFolderId()
 
 
 
-
-  const handleItemClick = (id: string) => {
-    onSelectedFolderId(id)
-    setActiveFolder(title)
-    setFolderId(selectedFolderId)
-
+  const handleItemClick = () => {
+    setActiveFolderName(folderName)
+    setActiveFolderId(folderId)
     setIsEditing(true)
   }
 
@@ -45,27 +44,35 @@ export default function FolderItem({selectedFolderId, onSelectedFolderId, title,
     const waitForConfirm = ask()  
     toggleShowDeleteModal(true)
     const confirmed = await waitForConfirm
-    if (confirmed) deleteProjectFolder.mutate(id)
+    if (confirmed) deleteProjectFolder.mutate(folderId)
     toggleShowDeleteModal(false)
   }
 
   const handleSubmit = () => {
     setIsEditing(false)
 
-    if (!value.trim() || value.trim() === title) return
+    if (!value.trim() || value.trim() === folderName) return
 
-    patchProjectFolder.mutate({
-      folderId: id,
-      newText: value.trim(),
-    })
+    patchProjectFolder.mutate(
+      {
+        folderId,
+        newText: value.trim(),
+      },
+      {
+        onSuccess: () => {
+          setActiveFolderName(value.trim())
+        },
+      }
+    )
+    
   }
 
 
   return (
     <div className="folder-body">
       <motion.div
-        className={`folder-item-container ${selectedFolderId == id ? 'selected' : ''}`}
-        onClick={() => handleItemClick(id)}
+        className={`folder-item-container ${activeFolderId == folderId ? 'selected' : ''}`}
+        onClick={() => handleItemClick()}
         onHoverStart={() => toggleShowBtns(true)}
         onHoverEnd={() => toggleShowBtns(false)}
       >
@@ -73,7 +80,7 @@ export default function FolderItem({selectedFolderId, onSelectedFolderId, title,
 
           <p
             className="delete-btn"
-            style={{ display: selectedFolderId == id ? 'block' : 'none' }}
+            style={{ display: activeFolderId == folderId ? 'block' : 'none' }}
             onClick={(e) => {
               e.stopPropagation()
               handleDeleteBtn()
@@ -83,7 +90,7 @@ export default function FolderItem({selectedFolderId, onSelectedFolderId, title,
           </p>
 
           <input
-            id={id}
+            id={folderId}
             className="item-label"
             value={value}
             disabled={!isEditing}
