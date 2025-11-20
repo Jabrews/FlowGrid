@@ -31,7 +31,6 @@ class LayoutItem(models.Model) :
         on_delete=models.CASCADE,
         related_name='layout_items'
     )
-    i = models.CharField(max_length=10)
     x = models.IntegerField()
     y = models.IntegerField()
     w = models.IntegerField()
