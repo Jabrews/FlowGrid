@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid";
 
 // hooks
 import useMutateCreateElement from "../../hooks/useMutateCreateElement";
@@ -22,8 +23,12 @@ export default function useDesktopHandleOnDrop(layout: Layout[], droppedItem: La
     } catch {
         throw new Error('Coudlnt parse json')
     }
+
+    // needed for linking both layoutItem and droppable Element
+    const linkedId = `${newElementType}-${nanoid()}`
     
     const layoutItem : Layout = {
+        i : linkedId,
         x : droppedItem.x,
         y : droppedItem.y,
         w : droppedItem.w,
@@ -32,13 +37,17 @@ export default function useDesktopHandleOnDrop(layout: Layout[], droppedItem: La
         isResizeable: false,
     }
 
+    const newElementPartial = {
+        i : linkedId,
+        newElementType, 
+    }
+
 
     // create layout    
 
-    // how to deal with oid 
     // create element
     mutateCreateLayout.mutate(layoutItem)
-    mutateCreateElement.mutate(newElementType)
+    mutateCreateElement.mutate(newElementPartial)
     
 
 }

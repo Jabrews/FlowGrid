@@ -15,8 +15,9 @@ export default function useQueryLayout() {
     const gridId = useGridId()
 
     return useQuery<Layout[]>({
-        queryKey : ['layout'],
+        queryKey : ['layout', gridId],
         queryFn : async () => {
+
             if (!csrf_token) throw new Error('Can not find csrf_token')
 
             const queryLayoutInit : RequestInit = {
@@ -29,7 +30,8 @@ export default function useQueryLayout() {
                 csrf_token : csrf_token,
             })
 
-        }
+        },
+        enabled: Boolean(gridId),
     })
 
 

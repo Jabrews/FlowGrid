@@ -18,6 +18,8 @@ export default function useMutateCreateLayout() {
         mutationFn : async (layout :  Layout) => {
 
             if (!csrf_token) throw new Error('Could not find csrf token')
+            if (gridId == undefined) throw new Error('Could not find grid Id ')
+
 
             const createLayoutInit = {
                 method : 'Post',
@@ -25,7 +27,7 @@ export default function useMutateCreateLayout() {
             }
 
             return mutate_auth({
-                queryUrl : `api/layout/${gridId}`,
+                queryUrl : `api/layout/${gridId}/`,
                 init : createLayoutInit,
                 csrf_token : csrf_token,
             })

@@ -8,18 +8,25 @@ import { mutate_auth } from "../../util/mutate_auth";
 // util
 import type { ItemProps } from "../util/types";
 
+type MuateCreateElementProps = {
+    i : string,
+    newElementType : string,
+}
+
+
 export default function useMutateCreateElement() {
     const queryClient = useQueryClient()
     const csrf_token = useCsrf()
 
     return useMutation({
 
-        mutationFn: async (newElementType: string) => {
+        mutationFn: async (createElementProps : MuateCreateElementProps) => {
+
             if (!csrf_token) throw new Error('No csrf token found')
 
             const createElementInit: RequestInit = {
                 method: 'Post',
-                body: JSON.stringify(newElementType),
+                body: JSON.stringify(createElementProps),
             }
 
             return mutate_auth({

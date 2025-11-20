@@ -7,6 +7,7 @@ import { fetch_auth } from "../../util/fetch_auth";
 import useCsrf from "../../hooks/useCsrf";
 import { useGridUrl } from "../../stores/ProjectAndFolderStore/ProjectAndFolderStore";
 
+
 export default function useQueryGrid() {
 
     // hook init

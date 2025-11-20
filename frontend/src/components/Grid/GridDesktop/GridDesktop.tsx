@@ -29,14 +29,15 @@ export default function GridDesktop() {
 
     // set grid ID in context
     useEffect(() => {
-        setGridId(gridData.id)
+    console.log('grid data : ', gridData)
+    setGridId(String(gridData.id))
     }, [gridData, setGridId])
 
-    // const layout = useDesktopLayout()
-    // const handleLayoutChange = useHandleLayoutChange()
-    // const {handleOnDropElementCreation} = useGridListeners()
-    // const metaElements = useGetMetaElements()
+    console.log(gridData, layoutData)
 
+
+
+    // const handleLayoutChange = useHandleLayoutChange()
     // const handleLayoutChangeTrigger = (newLayout : Layout[]) => {
     //     handleLayoutChange({newLayout : newLayout, oldLayout : layout})
     // }

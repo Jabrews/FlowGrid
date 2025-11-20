@@ -7,7 +7,7 @@ export type Grid = {
 }
 
 export type Layout = {
-    i? : string,
+    i : string,
     x : number,
     y : number,
     w : number,
