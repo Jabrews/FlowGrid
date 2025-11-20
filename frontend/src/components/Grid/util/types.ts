@@ -7,11 +7,16 @@ export type Grid = {
 }
 
 export type Layout = {
-    i : string,
+    i? : string,
     x : number,
     y : number,
     w : number,
     h : number,
     static : boolean,
-    isResizeable : string,
+    isResizeable : boolean,
+}
+
+export type ItemProps = {
+    type : string,
+    position : Layout,
 }

@@ -6,12 +6,14 @@ type ProjectFolderStore = {
   ActiveProjectName: string
   ActiveFolderId: string
   ActiveFolderName: string
+  gridId : string,
   GridUrl: string
 
   setActiveProjectId: (id: string) => void
   setActiveProjectName: (name: string) => void
   setActiveFolderId: (id: string) => void
   setActiveFolderName: (name: string) => void
+  setGridId : (id : string) => void
 
   setGridUrl: () => void
 }
@@ -23,12 +25,14 @@ export const useProjectAndFolderStore = create<ProjectFolderStore>()(
       ActiveProjectName: '',
       ActiveFolderId: '',
       ActiveFolderName: '',
+      gridId : '',
       GridUrl: '',
 
       setActiveProjectId: (id: string) => set({ ActiveProjectId: id }),
       setActiveProjectName: (name: string) => set({ ActiveProjectName: name }),
       setActiveFolderId: (id: string) => set({ ActiveFolderId: id }),
       setActiveFolderName: (name: string) => set({ ActiveFolderName: name }),
+      setGridId : (id : string) => set({gridId : id}),
 
       setGridUrl: () => {
         const { ActiveFolderId, ActiveProjectId } = get()
@@ -74,6 +78,10 @@ export const useActiveFolderId = () =>
 export const useActiveFolderName = () =>
   useProjectAndFolderStore((s) => s.ActiveFolderName)
 
+export const useGridId = () => {
+  useProjectAndFolderStore((s) => s.gridId)
+}
+
 export const useGridUrl = () =>
   useProjectAndFolderStore((s) => s.GridUrl)
 
@@ -91,5 +99,9 @@ export const useSetActiveFolderId = () =>
 export const useSetActiveFolderName = () =>
   useProjectAndFolderStore((s) => s.setActiveFolderName)
 
+export const useSetGridId = () =>
+  useProjectAndFolderStore((s) => s.setGridId)
+
 export const useSetGridUrl = () =>
   useProjectAndFolderStore((s) => s.setGridUrl)
+

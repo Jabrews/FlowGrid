@@ -1,0 +1,37 @@
+import { useMutation } from "@tanstack/react-query";
+
+// hooks
+import useCsrf from "../../hooks/useCsrf";
+import { useGridId } from "../../stores/ProjectAndFolderStore/ProjectAndFolderStore";
+
+// util
+import { mutate_auth } from "../../util/mutate_auth";
+import type { Layout } from "../util/types";
+
+export default function useMutateCreateLayout() {
+
+    // hook init
+    const csrf_token = useCsrf()
+    const gridId = useGridId()
+
+    return useMutation({
+        mutationFn : async (layout :  Layout) => {
+
+            if (!csrf_token) throw new Error('Could not find csrf token')
+
+            const createLayoutInit = {
+                method : 'Post',
+                body : JSON.stringify(layout),
+            }
+
+            return mutate_auth({
+                queryUrl : `api/layout/${gridId}`,
+                init : createLayoutInit,
+                csrf_token : csrf_token,
+            })
+
+        }
+    })
+
+
+}

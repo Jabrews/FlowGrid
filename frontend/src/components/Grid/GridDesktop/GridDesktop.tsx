@@ -1,6 +1,6 @@
+import { useEffect } from 'react';
 import GridLayout from 'react-grid-layout';
 import type {Layout} from 'react-grid-layout'
-import {gridLayoutProps} from '../util/gridLayoutProps.ts'
 
 // meta store hooks 
 // import {useGetMetaElements} from '../../../cross-platform/stores/MetaFactory/MetaFactory'
@@ -9,23 +9,29 @@ import {gridLayoutProps} from '../util/gridLayoutProps.ts'
 // hooks
 import useQueryGrid from '../hooks/useQueryGrid.tsx';
 import useQueryLayout from '../hooks/useQueryLayout.tsx';
-// import useDesktopLayout from './hooks/useDesktopLayout.tsx'
-// import useGridListeners from './hooks/useGridListeners.tsx'
+import useDesktopHandleOnDrop from './hooks/useDesktopHandleOnDrop.tsx';
+import { useSetGridId } from '../../stores/ProjectAndFolderStore/ProjectAndFolderStore.tsx';
 // import useHandleLayoutChange from '../../../cross-platform/workspace-components/Editor/Grid/hooks/useHandleLayoutChange.tsx'
+
+// util
+import {gridLayoutProps} from '../util/gridLayoutProps.ts'
 
 // components
 import GridItemDesktop from './GridItemDesktop/GridItemDesktop.tsx'
 
 export default function GridDesktop() {
 
-    const {data : gridData}= useQueryGrid()
-    console.log(gridData)
-    const {data : layoutData} = useQueryLayout()
-    console.log(layoutData)
-
-
-
     // hooks init
+    const setGridId = useSetGridId()
+    
+    const {data : gridData}= useQueryGrid()
+    const {data : layoutData} = useQueryLayout()
+
+    // set grid ID in context
+    useEffect(() => {
+        setGridId(gridData.id)
+    }, [gridData, setGridId])
+
     // const layout = useDesktopLayout()
     // const handleLayoutChange = useHandleLayoutChange()
     // const {handleOnDropElementCreation} = useGridListeners()
@@ -39,9 +45,15 @@ export default function GridDesktop() {
         <div 
         className='grid-container grid-desktop'
         >
+
+            {!layoutData && !gridData &&
+                (<p> Loading </p>)
+            }
+
             <GridLayout
                 {...gridLayoutProps}
                 layout={layoutData}
+                onDrop={useDesktopHandleOnDrop} 
                 // onDrop={handleOnDropElementCreation}
                 // onLayoutChange={handleLayoutChangeTrigger}
             > 

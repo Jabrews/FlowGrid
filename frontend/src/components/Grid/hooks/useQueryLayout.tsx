@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 
 // hooks
 import useCsrf from "../../hooks/useCsrf";
-import { useActiveProjectId } from "../../stores/ProjectAndFolderStore/ProjectAndFolderStore";
+import { useGridId } from "../../stores/ProjectAndFolderStore/ProjectAndFolderStore";
 
 // util
 import type { Layout } from "../util/types";
@@ -12,8 +12,7 @@ export default function useQueryLayout() {
 
     // hook init
     const csrf_token = useCsrf()
-    const projectId = useActiveProjectId()
-
+    const gridId = useGridId()
 
     return useQuery<Layout[]>({
         queryKey : ['layout'],
@@ -25,7 +24,7 @@ export default function useQueryLayout() {
             } 
 
             return fetch_auth({
-                queryUrl : `api/layout/${projectId}`,
+                queryUrl : `api/layout/${gridId}`,
                 init : queryLayoutInit,
                 csrf_token : csrf_token,
             })
