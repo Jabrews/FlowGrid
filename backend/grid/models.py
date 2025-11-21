@@ -38,3 +38,5 @@ class LayoutItem(models.Model) :
     h = models.IntegerField()
     static = models.BooleanField(default=False)
     isResizeable = models.BooleanField(default=False)
+
+
