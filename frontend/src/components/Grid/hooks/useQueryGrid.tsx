@@ -19,7 +19,7 @@ export default function useQueryGrid() {
         queryKey : ['grid'],
         queryFn : async () => {
             if (!csrf_token) throw new Error('could not find csrf token')
-            if (!gridUrl) throw new Error('could not find grid url')
+            if (gridUrl == undefined) throw new Error('could not find grid url')
 
             const QueryGridInit : RequestInit = {
                 method : 'GET'

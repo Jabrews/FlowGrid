@@ -35,7 +35,7 @@ export async function mutate_auth({ queryUrl, init = {}, csrf_token}: MutateProp
             return
         }
 
-        console.error("error fetching with:", queryUrl, "\nerror body:", err);
+        console.error("error fetching with:", queryUrl);
         throw err;
     }
     }

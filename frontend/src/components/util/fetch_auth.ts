@@ -31,7 +31,7 @@ export async function fetch_auth({ queryUrl, init = {}, csrf_token}: FetchProps)
 
     } catch (err) {
 
-        console.error("error fetching with:", queryUrl, "\nerror body:", err);
+        console.error("error fetching with:", queryUrl);
         throw err;
     }
     }

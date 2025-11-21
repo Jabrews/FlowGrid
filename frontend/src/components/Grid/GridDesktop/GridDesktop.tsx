@@ -9,6 +9,7 @@ import type {Layout} from 'react-grid-layout'
 // hooks
 import useQueryGrid from '../hooks/useQueryGrid.tsx';
 import useQueryLayout from '../hooks/useQueryLayout.tsx';
+import useQueryGridItems from '../hooks/useQueryGridItems.tsx';
 import useDesktopHandleOnDrop from './hooks/useDesktopHandleOnDrop.tsx';
 import { useSetGridId } from '../../stores/ProjectAndFolderStore/ProjectAndFolderStore.tsx';
 // import useHandleLayoutChange from '../../../cross-platform/workspace-components/Editor/Grid/hooks/useHandleLayoutChange.tsx'
@@ -26,14 +27,16 @@ export default function GridDesktop() {
     
     const {data : gridData}= useQueryGrid()
     const {data : layoutData} = useQueryLayout()
+    const {data : gridItems} = useQueryGridItems()
 
     // set grid ID in context
     useEffect(() => {
-    console.log('grid data : ', gridData)
-    setGridId(String(gridData.id))
+        if (gridData == undefined) return
+        setGridId(String(gridData.id))
     }, [gridData, setGridId])
 
-    console.log(gridData, layoutData)
+    // console.log(layoutData)
+    console.log(gridItems)
 
 
 

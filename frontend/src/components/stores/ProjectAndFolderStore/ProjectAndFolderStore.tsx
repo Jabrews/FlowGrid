@@ -78,9 +78,8 @@ export const useActiveFolderId = () =>
 export const useActiveFolderName = () =>
   useProjectAndFolderStore((s) => s.ActiveFolderName)
 
-export const useGridId = () => {
+export const useGridId = () =>
   useProjectAndFolderStore((s) => s.gridId)
-}
 
 export const useGridUrl = () =>
   useProjectAndFolderStore((s) => s.GridUrl)
