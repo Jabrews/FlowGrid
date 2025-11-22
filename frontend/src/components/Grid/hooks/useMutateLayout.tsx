@@ -2,7 +2,6 @@ import { useMutation } from "@tanstack/react-query";
 
 // hooks
 import useCsrf from "../../hooks/useCsrf";
-import 
 
 // util
 import { mutate_auth } from "../../util/mutate_auth";
@@ -24,7 +23,7 @@ export default function useMutateLayout() {
             }
 
             mutate_auth({
-                queryUrl : ``
+                queryUrl : ``,
                 init : mutateLayoutInit,
                 csrf_token : csrf_token,
             })

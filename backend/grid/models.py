@@ -40,27 +40,7 @@ class LayoutItem(models.Model) :
     y = models.IntegerField()
     w = models.IntegerField()
     h = models.IntegerField()
+    type = models.CharField(max_length=20) 
     static = models.BooleanField(default=False)
     isResizeable = models.BooleanField(default=False)
 
-
-class GridItem(models.Model) :
-    user = models.ForeignKey(
-        AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name='items',
-    )
-    grid = models.ForeignKey(
-        Grid, 
-        on_delete=models.CASCADE, 
-        related_name="items"
-    )
-
-    # generic relation fields
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField()
-
-    # actual referenced model (LayoutItem, TextItem, etc)
-    element = GenericForeignKey("content_type", "object_id")
-
-    created = models.DateTimeField(auto_now_add=True)

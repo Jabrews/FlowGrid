@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import GridLayout from 'react-grid-layout';
-import type {Layout} from 'react-grid-layout'
 
 // meta store hooks 
 // import {useGetMetaElements} from '../../../cross-platform/stores/MetaFactory/MetaFactory'
@@ -9,13 +8,13 @@ import type {Layout} from 'react-grid-layout'
 // hooks
 import useQueryGrid from '../hooks/useQueryGrid.tsx';
 import useQueryLayout from '../hooks/useQueryLayout.tsx';
-import useQueryGridItems from '../hooks/useQueryGridItems.tsx';
 import useDesktopHandleOnDrop from './hooks/useDesktopHandleOnDrop.tsx';
 import { useSetGridId } from '../../stores/ProjectAndFolderStore/ProjectAndFolderStore.tsx';
 // import useHandleLayoutChange from '../../../cross-platform/workspace-components/Editor/Grid/hooks/useHandleLayoutChange.tsx'
 
 // util
 import {gridLayoutProps} from '../util/gridLayoutProps.ts'
+import type { Layout } from '../util/types.ts';
 
 // components
 import GridItemDesktop from './GridItemDesktop/GridItemDesktop.tsx'
@@ -24,10 +23,10 @@ export default function GridDesktop() {
 
     // hooks init
     const setGridId = useSetGridId()
+    const desktopHandleOnDrop = useDesktopHandleOnDrop()
     
     const {data : gridData}= useQueryGrid()
     const {data : layoutData} = useQueryLayout()
-    const {data : gridItems} = useQueryGridItems()
 
     // set grid ID in context
     useEffect(() => {
@@ -35,8 +34,8 @@ export default function GridDesktop() {
         setGridId(String(gridData.id))
     }, [gridData, setGridId])
 
-    // console.log(layoutData)
-    console.log(gridItems)
+    console.log('grid layout : ', layoutData)
+
 
 
 
@@ -57,7 +56,7 @@ export default function GridDesktop() {
             <GridLayout
                 {...gridLayoutProps}
                 layout={layoutData}
-                onDrop={useDesktopHandleOnDrop} 
+                onDrop={desktopHandleOnDrop} 
                 // onDrop={handleOnDropElementCreation}
                 // onLayoutChange={handleLayoutChangeTrigger}
             > 
@@ -66,9 +65,12 @@ export default function GridDesktop() {
                         <GridItemDesktop metaElement={metaElement} />
                     </div>
                 ))} */}
-                <div key='123'>
-                    <GridItemDesktop />
-                </div>
+                    {layoutData?.map((layoutItem : Layout) => (
+                        <div key={layoutItem.id}>
+                            <GridItemDesktop layout={layoutItem}/>                        
+                        </div>
+                    ))}
+
 
             </GridLayout>
         </div>

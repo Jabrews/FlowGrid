@@ -1,22 +1,28 @@
-// // meta store hooks
-// import type { ElementMeta } from '../../../../../cross-platform/stores/MetaFactory/MetaFactory'
-
-// // desktops
-// import RenderElementMap from '../../../../../cross-platform/workspace-components/Grid/util/RenderElementMap'
+// hooks
+import useRenderElementMap from "../../hooks/useRenderElementMap"
 
 // // components
 // import GridItemHeader from '../../../../../cross-platform/workspace-components/Grid/GridItemHeader/GridItemHeader'
 
-// { metaElement }: { metaElement: ElementMeta } PROP DRILL ARGUMENTS
-export default function GridItemDesktop() {
+// util
+import type { Layout } from "../../util/types"
+
+type GridItemDesktopProps = {
+  layout : Layout
+}
+
+export default function GridItemDesktop({layout} : GridItemDesktopProps) {
+
+  // hook init
+
   return (
     <div className="grid-item">
         {/* <GridItemHeader id={metaElement.id} type={metaElement.type} /> */}
         <div className="grid-item-content">
-            {/* {RenderElementMap({
-                id : metaElement.id,
-                type : metaElement.type
-            })} */}
+            {useRenderElementMap({
+                i : layout.i,
+                type : layout.type
+            })}
             <p> grid Item</p>
         </div>
     </div>
