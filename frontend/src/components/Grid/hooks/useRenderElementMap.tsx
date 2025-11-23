@@ -51,6 +51,6 @@ export default function useRenderElementMap({ type, i, isMobilePreview = false }
     //     </>
     //   )
     default:
-      return <div key={id}>Unknown Element</div>;
+      return <div key={i}>Unknown Element</div>;
   }
 }

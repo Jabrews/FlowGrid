@@ -2,10 +2,10 @@
 
 
 const firstItems = [
-    'Timer',
-    'Tracker',
-    'Sticky-Notes',
-    'Table-List',
+    'timer',
+    'tracker',
+    'sticky-notes',
+    'table-list',
 ]
 
 export const itemTable = {

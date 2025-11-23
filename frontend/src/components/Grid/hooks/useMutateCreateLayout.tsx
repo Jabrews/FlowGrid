@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient} from "@tanstack/react-query";
 
 // hooks
 import useCsrf from "../../hooks/useCsrf";
@@ -13,6 +13,7 @@ export default function useMutateCreateLayout() {
     // hook init
     const csrf_token = useCsrf()
     const gridId = useGridId()
+    const queryClient = useQueryClient()
 
     return useMutation({
         mutationFn : async (layout :  Layout) => {
@@ -34,6 +35,9 @@ export default function useMutateCreateLayout() {
                 csrf_token : csrf_token,
             })
 
+        },
+        onSuccess : () => {
+            queryClient.invalidateQueries({queryKey : ['layout', gridId]})
         }
     })
 

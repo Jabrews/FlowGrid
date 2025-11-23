@@ -26,7 +26,7 @@ class GridView(viewsets.ModelViewSet):
         serializer = self.get_serializer(grid)
         return Response(serializer.data)
 
-class LayoutView(generics.ListCreateAPIView):
+class LayoutListView(generics.ListCreateAPIView):
     serializer_class = LayoutItemSerializer
 
     def get_queryset(self):#type: ignore
@@ -37,6 +37,15 @@ class LayoutView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(
+            grid_id=self.kwargs["grid_id"],
+            user=self.request.user
+        )
+
+class LayoutDetailView(generics.RetrieveUpdateAPIView):
+    serializer_class = LayoutItemSerializer
+
+    def get_queryset(self):#type: ignore
+        return LayoutItem.objects.filter(
             grid_id=self.kwargs["grid_id"],
             user=self.request.user
         )

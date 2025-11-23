@@ -56,13 +56,13 @@ export function get_svg_icons({ icon, size }: UseSvgIconArguments) {
         return React.createElement(Settings, {size})
 
     // Grid And Workspace Components
-    case 'Timer':
+    case 'timer':
       return React.createElement(AlarmClock, { size });
-    case 'Tracker':
+    case 'tracker':
       return React.createElement(Cable, { size });
-    case 'Sticky-Notes':
+    case 'sticky-notes':
       return React.createElement(StickyNote, { size });
-    case 'Table-List':
+    case 'table-list':
       return React.createElement(TableProperties, { size });
     case 'Side-Dropper-Open':
       return React.createElement(PanelLeftOpen, { size });

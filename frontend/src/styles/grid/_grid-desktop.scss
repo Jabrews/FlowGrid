@@ -2,3 +2,11 @@
 .grid-container-desktop {
     
 }
+
+.react-grid-placeholder {
+    background-color: rgba(239, 68, 68, 0.3) !important; // red with transparency
+    border: 2px dashed rgba(239, 68, 68, 0.8) !important; // red dashed border
+    opacity: 1 !important;
+    z-index: 2;
+    transition: all 0.2s ease;
+}

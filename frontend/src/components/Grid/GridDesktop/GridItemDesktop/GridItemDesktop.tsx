@@ -2,7 +2,7 @@
 import useRenderElementMap from "../../hooks/useRenderElementMap"
 
 // // components
-// import GridItemHeader from '../../../../../cross-platform/workspace-components/Grid/GridItemHeader/GridItemHeader'
+import GridItemHeader from "../../GridItemHeader/GridItemHeader"
 
 // util
 import type { Layout } from "../../util/types"
@@ -17,7 +17,7 @@ export default function GridItemDesktop({layout} : GridItemDesktopProps) {
 
   return (
     <div className="grid-item">
-        {/* <GridItemHeader id={metaElement.id} type={metaElement.type} /> */}
+        <GridItemHeader i={layout.i} type={layout.type} />
         <div className="grid-item-content">
             {useRenderElementMap({
                 i : layout.i,

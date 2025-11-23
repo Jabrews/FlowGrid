@@ -10,7 +10,7 @@ import useQueryGrid from '../hooks/useQueryGrid.tsx';
 import useQueryLayout from '../hooks/useQueryLayout.tsx';
 import useDesktopHandleOnDrop from './hooks/useDesktopHandleOnDrop.tsx';
 import { useSetGridId } from '../../stores/ProjectAndFolderStore/ProjectAndFolderStore.tsx';
-// import useHandleLayoutChange from '../../../cross-platform/workspace-components/Editor/Grid/hooks/useHandleLayoutChange.tsx'
+import useHandleLayoutChange from '../hooks/useHandleLayoutChange.tsx';
 
 // util
 import {gridLayoutProps} from '../util/gridLayoutProps.ts'
@@ -24,6 +24,7 @@ export default function GridDesktop() {
     // hooks init
     const setGridId = useSetGridId()
     const desktopHandleOnDrop = useDesktopHandleOnDrop()
+    const handleLayoutChange = useHandleLayoutChange() // in helper func
     
     const {data : gridData}= useQueryGrid()
     const {data : layoutData} = useQueryLayout()
@@ -39,10 +40,13 @@ export default function GridDesktop() {
 
 
 
-    // const handleLayoutChange = useHandleLayoutChange()
-    // const handleLayoutChangeTrigger = (newLayout : Layout[]) => {
-    //     handleLayoutChange({newLayout : newLayout, oldLayout : layout})
-    // }
+    // helper function`
+    const handleLayoutChangeTrigger = (newLayout : Layout[]) => {
+        if (layoutData == undefined) {
+            return
+        }
+        handleLayoutChange({newLayout : newLayout, oldLayout : layoutData})
+    }
 
     return (
         <div 
@@ -57,16 +61,10 @@ export default function GridDesktop() {
                 {...gridLayoutProps}
                 layout={layoutData}
                 onDrop={desktopHandleOnDrop} 
-                // onDrop={handleOnDropElementCreation}
-                // onLayoutChange={handleLayoutChangeTrigger}
+                onLayoutChange={handleLayoutChangeTrigger}
             > 
-                {/* {metaElements.map((metaElement: ElementMeta) => (
-                    <div key={metaElement.id}>
-                        <GridItemDesktop metaElement={metaElement} />
-                    </div>
-                ))} */}
                     {layoutData?.map((layoutItem : Layout) => (
-                        <div key={layoutItem.id}>
+                        <div key={layoutItem.i}>
                             <GridItemDesktop layout={layoutItem}/>                        
                         </div>
                     ))}
