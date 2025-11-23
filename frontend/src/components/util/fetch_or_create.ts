@@ -9,6 +9,8 @@ const api_url = import.meta.env.VITE_API_URL;
 
 export async function fetch_or_create({ queryUrl, init = {}, csrf_token, i }: FetchProps) {
 
+    console.log(i)
+
     try {
 
         const res = await fetch(`${api_url}${queryUrl}`, {

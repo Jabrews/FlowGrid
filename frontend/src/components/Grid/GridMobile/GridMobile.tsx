@@ -5,7 +5,7 @@ import type {Layout} from 'react-grid-layout'
 import useQueryGrid from "../hooks/useQueryGrid"
 
 // util
-import type { Grid } from "../util/types"
+// import type { Grid } from "../util/types"
 import { gridLayoutProps } from '../util/gridLayoutProps'
 
 // components

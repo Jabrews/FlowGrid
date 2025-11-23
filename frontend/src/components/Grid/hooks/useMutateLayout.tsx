@@ -27,6 +27,8 @@ export default function useMutateLayout() {
         mutationFn : async (layoutForm : MutateLayoutForm) => {
 
             if (!csrf_token) throw new Error('Could not find csrf token')
+            if (!layoutForm.id) throw new Error('Could not find layout id')
+
 
             const mutateLayoutInit : RequestInit  = {
                 method : 'PATCH',

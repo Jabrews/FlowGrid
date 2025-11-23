@@ -11,7 +11,7 @@ type EdgeScrollStore = {
 
 
 
-export const useEdgeScrollStore = create<EdgeScrollStore>((set, get) => ({
+export const useEdgeScrollStore = create<EdgeScrollStore>((set) => ({
     scrollEventActive : false,
     actions : {
         toggleScrollEventActive: (toggleValue: boolean) => set(() => ({ scrollEventActive : toggleValue })),

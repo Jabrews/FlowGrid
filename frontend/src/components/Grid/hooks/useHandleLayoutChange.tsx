@@ -20,6 +20,8 @@ export default function useHandleLayoutChange() {
         };
         const hasMoved = oldItem.x !== newItem.x || oldItem.y !== newItem.y;
 
+          if (!oldItem.id) throw new Error('Could not find layout id')
+
         if (hasMoved) {
             mutateLayout.mutate({
               id : oldItem.id,

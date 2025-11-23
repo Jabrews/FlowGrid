@@ -1,10 +1,10 @@
-import {nanoid} from 'nanoid'
+//import {nanoid} from 'nanoid'
 
 // utlill
-import getCenterPos from '../util/getCenterPos.ts'
+//import getCenterPos from '../util/getCenterPos.ts'
 
 // side open store hooks
-import { useToggleSideOpen } from '../../../../stores/SideDropperStore/SideDropperStore.tsx'
+//import { useToggleSideOpen } from '../../../../stores/SideDropperStore/SideDropperStore.tsx'
 
 // item preview store
 // import {useToggleItemPreviewActive} from '../../../../../stores/ItemPreviewStore/ItemPreviewStore'
@@ -17,14 +17,14 @@ import { useToggleSideOpen } from '../../../../stores/SideDropperStore/SideDropp
 
 export default function useOnClickMobile(type: string) {
 
-    const id = `${type}-${nanoid()}`
+    //const id = `${type}-${nanoid()}`
 
     // init  hooks
-    const toggleSideOpen = useToggleSideOpen()
+    //const toggleSideOpen = useToggleSideOpen()
     // const toggleItemPreviewActive = useToggleItemPreviewActive()
     // const setActiveItemPreviewId = useSetActiveItemPreviewId()
     // const setActiveItemPreviewType = useSetActiveItemPreviewType()
-    const centerPos = getCenterPos(id)
+    //const centerPos = getCenterPos(id)
     // const addMetaElement = useAddMetaElement()
 
     return () => {

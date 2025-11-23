@@ -22,6 +22,8 @@ export default function useRenderElementMap({ type, i, isMobilePreview = false }
 //     return <ItemPreviewMobile key={id} id={id} type={type} />;
 //   }
 
+  console.log('is mobile item preview : ', isMobilePreview)
+
   switch (type) {
     case 'timer':
       return (

@@ -1,5 +1,5 @@
 // editor edge scroll store hook
-import { useToggleEditorScrollEventActive } from '../../WorkSpace/hooks/useEdgeScrollStore';
+// import { useToggleEditorScrollEventActive } from '../../WorkSpace/hooks/useEdgeScrollStore';
 
 // delete modal toggle
 // import {useToggleDeleteModal, useSetDeleteTargetId, useSetDeleteTargetType} from '../../ModalRenderer/hooks/useModalRendererStore'
@@ -12,7 +12,8 @@ type GridItemHeaderProps = {
 export default function GridItemHeader({ i, type }: GridItemHeaderProps) {
   
   // edge scroll hook
-  const toggleEditorScrollEventActive = useToggleEditorScrollEventActive();
+  console.log(type)
+  // const toggleEditorScrollEventActive = useToggleEditorScrollEventActive();
   
   // del modal hook
 //   const toggleDeleteModal = useToggleDeleteModal()

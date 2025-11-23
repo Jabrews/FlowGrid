@@ -25,7 +25,7 @@ export default function useMutateDeleteProject() {
             }
 
             return await mutate_auth({
-                queryUrl: `api/project_folders/${deleteProjectForm.activeFolderId}/projects/${deleteProjectForm.selectedProjectId}/`,
+                queryUrl: `api/project_folders/${deleteProjectForm.activeFolderId}/projects/${deleteProjectForm.activeProjectId}/`,
                 init : DeleteProjectInit,
                 csrf_token : csrf_token,
             })
