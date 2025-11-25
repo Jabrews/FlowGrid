@@ -16,7 +16,7 @@ export default function useDesktopHandleOnDrop() {
       e.dataTransfer?.getData("text/plain");
 
     if (!json) throw new Error("Could not find payload json");
-    if (!layout) throw new Error('create layout failed')
+    if (!layout) throw new Error('create layout')
 
     let newElementType: { type: string };
     try {

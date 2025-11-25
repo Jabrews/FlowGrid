@@ -1,7 +1,7 @@
 // elements 
 // import PlaceholderElement from '../../../../cross-platform/elements/PlaceholderElement/PlaceholderElement'
 // import ItemPreviewMobile from '../../../../mobile/elements/ItemPreviewMobile/ItemPreviewMobile'
-import Timer from "../../Elements/Timer/Timer";
+import Timer from "../../gridItems/Timer/Timer";
 // import Tracker from '../../../elements/Tracker/Tracker'
 // import StickyNotes from '../../../elements/StickyNotes/StickyNotes'
 // import TableList from '../../../elements/TableList/TableList'
@@ -22,7 +22,6 @@ export default function useRenderElementMap({ type, i, isMobilePreview = false }
 //     return <ItemPreviewMobile key={id} id={id} type={type} />;
 //   }
 
-  console.log('is mobile item preview : ', isMobilePreview)
 
   switch (type) {
     case 'timer':

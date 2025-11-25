@@ -25,7 +25,7 @@ export default function useQueryGrid() {
                 method : 'GET'
             }
 
-            return  fetch_auth({
+            return fetch_auth({
                 queryUrl: `api/${gridUrl}/grid/`,
                 init : QueryGridInit,
                 csrf_token : csrf_token,

@@ -35,8 +35,6 @@ export default function GridDesktop() {
         setGridId(String(gridData.id))
     }, [gridData, setGridId])
 
-    console.log('grid layout : ', layoutData)
-
 
 
 

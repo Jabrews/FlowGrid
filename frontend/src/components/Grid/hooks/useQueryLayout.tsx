@@ -18,8 +18,6 @@ export default function useQueryLayout() {
         queryKey : ['layout', gridId],
         queryFn : async () => {
 
-            console.log('grid id ' , gridId)
-
             if (!csrf_token) throw new Error('Can not find csrf_token')
             if (gridId == undefined) throw new Error('No grid ID')
 

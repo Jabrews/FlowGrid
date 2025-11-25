@@ -17,7 +17,6 @@ import { useIsAuth, useIsGuest } from './components/stores/AccountsStore/Account
 function App() {
   const isAuth = useIsAuth()
   const isGuest = useIsGuest()
-  console.log('is auth : ', isAuth)
 
   return (
     <Router>

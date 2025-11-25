@@ -12,7 +12,7 @@ type GridItemHeaderProps = {
 export default function GridItemHeader({ i, type }: GridItemHeaderProps) {
   
   // edge scroll hook
-  console.log(type)
+  //console.log(type)
   // const toggleEditorScrollEventActive = useToggleEditorScrollEventActive();
   
   // del modal hook
