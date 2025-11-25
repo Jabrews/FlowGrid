@@ -13,7 +13,7 @@ export default function useQueryTimer(i: string) {
     const gridId = useGridId();
 
     return useQuery({
-        queryKey: ["timer", i],   // include i so react-query caches per timer
+        queryKey: ["timer", i],
         queryFn: async () => {
             if (!csrf_token) throw new Error("No csrf token found");
             if (!gridId) throw new Error("No Grid Id found");

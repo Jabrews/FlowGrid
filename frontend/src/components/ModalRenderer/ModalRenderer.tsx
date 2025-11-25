@@ -4,7 +4,7 @@ import DeleteModal from "./Modals/DelProjectModal";
 // store hooks for using
 import { useShowDeleteModal } from "../stores/ModalRendererStore/ModelRendererStore";
 
-export default function ModolRenderer() {
+export default function ModalRenderer() {
 
     // hook init
     const showDeleteModal = useShowDeleteModal()    

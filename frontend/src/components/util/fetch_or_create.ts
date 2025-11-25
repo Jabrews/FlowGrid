@@ -1,3 +1,4 @@
+
 type FetchProps = {
   queryUrl: string;
   csrf_token : string;
@@ -8,6 +9,8 @@ type FetchProps = {
 const api_url = import.meta.env.VITE_API_URL;
 
 export async function fetch_or_create({ queryUrl, csrf_token, i, gridId }: FetchProps) {
+
+
     try {
         if (!i || !gridId) throw new Error('no "i" or "gridId"');
 

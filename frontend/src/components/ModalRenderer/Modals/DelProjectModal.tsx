@@ -20,30 +20,32 @@ export default function DelProjectModal () {
     }
 
     return (
-        <div className='delete-modal'>
-            <h1 className='big-h2'>This action cannot be undone. Continue?</h1>
+        <div className='center-modal'>
+            <div className='delete-modal'>
+                <h1 className='big-h2'>This action cannot be undone. Continue?</h1>
 
-            <div className='btn-container'>
+                <div className='btn-container'>
 
-                <motion.button
-                    onClick={handleCancelBtn}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    transition={{ type: "spring", stiffness: 250, damping: 18 }}
-                >
-                    Cancel
-                </motion.button>
+                    <motion.button
+                        onClick={handleCancelBtn}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        transition={{ type: "spring", stiffness: 250, damping: 18 }}
+                    >
+                        Cancel
+                    </motion.button>
 
-                <motion.button
-                    onClick={handleToggleDeleteBtnConfirm}
-                    style={{ backgroundColor: "red", color: "white" }}
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    transition={{ type: "spring", stiffness: 250, damping: 18 }}
-                >
-                    Delete
-                </motion.button>
+                    <motion.button
+                        onClick={handleToggleDeleteBtnConfirm}
+                        style={{ backgroundColor: "red", color: "white" }}
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        transition={{ type: "spring", stiffness: 250, damping: 18 }}
+                    >
+                        Delete
+                    </motion.button>
 
+                </div>
             </div>
         </div>
     )

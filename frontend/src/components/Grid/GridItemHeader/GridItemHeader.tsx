@@ -1,31 +1,43 @@
-// editor edge scroll store hook
-// import { useToggleEditorScrollEventActive } from '../../WorkSpace/hooks/useEdgeScrollStore';
+// hooks
+import { useConfirmStore } from "../../stores/ConfirmStore/ConfirmStore"; 
+import { useToggleShowDeleteModal } from "../../stores/ModalRendererStore/ModelRendererStore";
+import useMutateDeleteLayout from "./hooks/useMutateDeleteLayout";
+import useMutateDeleteGridItem from "./hooks/useMutateDeleteGridItem"; 
 
-// delete modal toggle
-// import {useToggleDeleteModal, useSetDeleteTargetId, useSetDeleteTargetType} from '../../ModalRenderer/hooks/useModalRendererStore'
 
 type GridItemHeaderProps = {
   i: string;
   type: string;
+  layoutId : string | null;
 };
 
-export default function GridItemHeader({ i, type }: GridItemHeaderProps) {
-  
-  // edge scroll hook
-  //console.log(type)
-  // const toggleEditorScrollEventActive = useToggleEditorScrollEventActive();
-  
-  // del modal hook
-//   const toggleDeleteModal = useToggleDeleteModal()
-//   const setDeleteTargetId = useSetDeleteTargetId()  
-//   const setDeleteTargetType = useSetDeleteTargetType()
+export default function GridItemHeader({ i, type, layoutId}: GridItemHeaderProps) {
+
+  // hook init
+  const {ask} = useConfirmStore()  
+  const toggleShowDeleteModal = useToggleShowDeleteModal()
+  const mutateDeleteLayout = useMutateDeleteLayout()
+  const mutateDeleteGridItem = useMutateDeleteGridItem()
 
 
-  const handleDeleteBtnDown = () => {
-    console.log('deleting : ', i)
-//     setDeleteTargetId(i)
-//     setDeleteTargetType(type)
-//     toggleDeleteModal(true)
+  const handleDeleteBtnDown = async () => {
+    if (!layoutId) {
+      throw new Error('Could not find layout id')
+    }
+    const waitForConfirm = ask()
+    toggleShowDeleteModal(true)
+    const confirmed = await waitForConfirm
+    if (confirmed) {
+      mutateDeleteLayout.mutate({
+        layoutId : layoutId,
+      })
+      mutateDeleteGridItem.mutate({
+        i : i,
+        type : type,
+      })
+
+    }
+    toggleShowDeleteModal(false)
   }
 
 
@@ -33,9 +45,6 @@ export default function GridItemHeader({ i, type }: GridItemHeaderProps) {
     <div className="grid-item-header">
       <p
         className="drag-handle move-icon"
-        // onPointerDown={() => toggleEditorScrollEventActive(true)}
-        // onPointerUp={() => toggleEditorScrollEventActive(false)}
-        // onPointerCancel={() => toggleEditorScrollEventActive(false)}
       >
         ::
       </p>

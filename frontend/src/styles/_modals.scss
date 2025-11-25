@@ -1,38 +1,50 @@
+/* FULLSCREEN OVERLAY */
+.center-modal {
+  position: fixed;
+  inset: 0;                 /* top:0, left:0, width:100vw, height:100vh */
+  background: rgba(0, 0, 0, 0.6);
+  color: black;
 
-.modal-renderer {
-    position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 1000;
 }
 
+/* ACTUAL MODAL BOX */
 .delete-modal {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid black;
+
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: 100%;
+  max-width: 90vw;
+
+  .big-h2 {
+    font-size: 1em;
+    margin-bottom: 0.25em;
+  }
+
+  .tiny-h2 {
+    font-size: 1em;
+    margin-bottom: 1.5em;
+  }
+
+  .btn-container {
     display: flex;
-    width: 100vw;
-    background-color: gray;
-    align-items: center;
     justify-content: center;
-    flex-direction: column;
-    text-align: center;
+    gap: 1rem;
 
-    .big-h2 {
-        font-size: 2em;
+    button {
+      padding: 1em;
+      border-radius: 1em;
+      border: none;
+      cursor: pointer;
     }
-
-    .tiny-h2 {
-        font-size: 1.2em;    
-    }
-
-    .btn-container {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-
-        button {
-            padding: 1em;
-            margin : 1em;
-            border-radius: 1em;
-            border : none;
-        }
-
-    }
-
+  }
 }

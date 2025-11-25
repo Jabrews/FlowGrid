@@ -12,6 +12,7 @@ import GridDesktop from "../Grid/GridDesktop/GridDesktop";
 import Navbar from "../Navbar/Navbar";
 import SideDropperMobile from "../SideDropper/SideDropperMobile/SideDropperMobile";
 import SideDropperDesktop from "../SideDropper/SideDropperDesktop/SideDropperDesktop";
+import ModalRenderer from "../ModalRenderer/ModalRenderer";
 
 export default function WorkSpace() {
 
@@ -41,6 +42,7 @@ export default function WorkSpace() {
 
             {/* All */}
             <Navbar />
+            <ModalRenderer />
 
             {/* mobile */}
             {isMobileScreen &&
