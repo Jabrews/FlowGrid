@@ -1,33 +1,40 @@
-// // meta store hooks
-// import type { ElementMeta } from '../../../../../cross-platform/stores/MetaFactory/MetaFactory'
+// hooks
+import type { Layout } from "../../util/types"
 
-// // components
-// import PreviewItemHeader from '../../PreviewItemHeader/PreviewItemHeader'
-// import GridItemHeader from '../../../../../cross-platform/workspace-components/Grid/GridItemHeader/GridItemHeader'
+// util 
+import useRenderElementMap from "../../hooks/useRenderElementMap"
 
-// // util 
-// import RenderElementMap from '../../../../../cross-platform/workspace-components/Grid/util/RenderElementMap'
+// components
+import GridItemHeader from "../../GridItemHeader/GridItemHeader"
+import PreviewItemHeader from '../PreviewItemHeader/PreviewItemHeader'
 
-//{ metaElement }: { metaElement: ElementMeta } PROP STUIFF
-export default function GridItemMobile() {
+type GridItemMobileProps = {
+  layout : Layout
+}
+
+
+export default function GridItemMobile({layout} : GridItemMobileProps) {
+  
+
   return (
     <div className="grid-item">
     
     {/* Other attached componentss*/}
-    {/* {metaElement.isItemPreview ? (
-    <PreviewItemHeader id={metaElement.id} type={metaElement.type} />
-    ) : (
-    <GridItemHeader id={metaElement.id} type={metaElement.type} />
-    )} */}
-
+      {layout.isMobileItemPreview
+        ?
+        (
+          <PreviewItemHeader i={layout.i} type={layout.type} />
+        ) 
+        : (
+          <GridItemHeader i={layout.i} type={layout.type} layoutId={layout.id || null} />
+        )
+      }
       <div className="grid-item-content">
-        <p> grid item</p>
-        {/* rendering stuff */}
-        {/* {RenderElementMap({
-          id: metaElement.id,
-          type: metaElement.type,
-          isMobilePreview: metaElement.isItemPreview || false,
-        })} */}
+        {useRenderElementMap({
+          i : layout.i,
+          type : layout.type
+
+        })}
       </div>
     </div>
   )

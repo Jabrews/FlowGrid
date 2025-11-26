@@ -1,19 +1,20 @@
-import type { Layout } from '../util/types';
+import type { Layout } from '../../util/types';
 
 // meta elements store hooks
-import useMutateLayout from './useMutateLayout';
+import useMutateLayout from '../../hooks/useMutateLayout';
 
 type UseHandleLayoutChangeArguments = {
   newLayout: Layout[];
   oldLayout: Layout[];
 };
 
-export default function useHandleLayoutChange() {
+export default function useDesktopHandleLayoutChange() {
   const mutateLayout = useMutateLayout();
   
   const handleLayoutChange = ({ newLayout, oldLayout }: UseHandleLayoutChangeArguments) => {
     
     newLayout.forEach((newItem) => {
+ 
         const oldItem = oldLayout.find((item) => item.i === newItem.i);
         if (!oldItem) {
             return

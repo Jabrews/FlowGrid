@@ -1,11 +1,14 @@
+import { useEffect } from 'react'
 import GridLayout from 'react-grid-layout'
-import type {Layout} from 'react-grid-layout'
+import type { Layout } from '../util/types'
 
 // hooks
 import useQueryGrid from "../hooks/useQueryGrid"
+import { useSetGridId } from '../../stores/ProjectAndFolderStore/ProjectAndFolderStore'
+import useQueryLayout from '../hooks/useQueryLayout'
+import useMobileHandleOnDrop from './hooks/useMobileHandleOnDrop'
 
 // util
-// import type { Grid } from "../util/types"
 import { gridLayoutProps } from '../util/gridLayoutProps'
 
 // components
@@ -14,40 +17,39 @@ import GridItemMobile from './GridItemMobile/GridItemMobile'
 export default function GridMobile() {
 
     // hook init
-    const {data : Grid}= useQueryGrid()
-    console.log('grid data : ', Grid)
+    const setGridId = useSetGridId()
+    const handleOnDropElementCreation = useMobileHandleOnDrop()
 
-    //layout **eventually seperate into seperate hook 
-    const layout : Layout[] = [{
-        i: 'id',
-        x: 0,
-        y: 0,
-        w: 0,
-        h: 0,
-        static: false,
-        isResizable: false,
-    }]
+    // queries
+    const {data : gridData}= useQueryGrid()
+    const {data : layoutData} = useQueryLayout()
+
+    // set grid ID in context
+    useEffect(() => {
+        if (gridData == undefined) return
+        setGridId(String(gridData.id))
+    }, [gridData, setGridId])
 
     return (
         <div 
         className='grid-container grid-mobile'
         >
+
+            {!layoutData && !gridData &&
+                (<p> Loading </p>)
+            }
+
             <GridLayout
                 {...gridLayoutProps}
-                layout={layout}
-                // onDrop={handleOnDropElementCreation}
+                layout={layoutData}
+                onDrop={handleOnDropElementCreation}
                 // onLayoutChange={handleLayoutChangeTrigger}
             > 
-                <div key='123'>
-                    <GridItemMobile />
-                </div>
-
-                 {/* {metaElements.map((metaElement: ElementMeta) => (
-                    <div key={metaElement.id}>
-                        <GridItemDesktop metaElement={metaElement} />
+                {layoutData.map((layoutItem : Layout) => 
+                    <div key={layoutItem.i}>
+                        <GridItemMobile layout={layoutItem}/>
                     </div>
-                ))} */}
- 
+                )}
             </GridLayout>
         </div>
     )

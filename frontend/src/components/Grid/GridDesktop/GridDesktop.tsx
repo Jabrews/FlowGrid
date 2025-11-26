@@ -10,7 +10,7 @@ import useQueryGrid from '../hooks/useQueryGrid.tsx';
 import useQueryLayout from '../hooks/useQueryLayout.tsx';
 import useDesktopHandleOnDrop from './hooks/useDesktopHandleOnDrop.tsx';
 import { useSetGridId } from '../../stores/ProjectAndFolderStore/ProjectAndFolderStore.tsx';
-import useHandleLayoutChange from '../hooks/useHandleLayoutChange.tsx';
+import useDesktopHandleLayoutChange from './hooks/useDesktopHandleLayoutChange.tsx';
 
 // util
 import {gridLayoutProps} from '../util/gridLayoutProps.ts'
@@ -24,7 +24,7 @@ export default function GridDesktop() {
     // hooks init
     const setGridId = useSetGridId()
     const desktopHandleOnDrop = useDesktopHandleOnDrop()
-    const handleLayoutChange = useHandleLayoutChange() // in helper func
+    const handleDesktopLayoutChange = useDesktopHandleLayoutChange() // in helper func
     
     const {data : gridData}= useQueryGrid()
     const {data : layoutData} = useQueryLayout()
@@ -43,7 +43,7 @@ export default function GridDesktop() {
         if (layoutData == undefined) {
             return
         }
-        handleLayoutChange({newLayout : newLayout, oldLayout : layoutData})
+        handleDesktopLayoutChange({newLayout : newLayout, oldLayout : layoutData})
     }
 
     return (

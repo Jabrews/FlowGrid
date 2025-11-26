@@ -16,5 +16,6 @@ export type Layout = {
     static : boolean,
     isResizeable : boolean,
     type : string,
+    isMobileItemPreview? : boolean;
 }
 

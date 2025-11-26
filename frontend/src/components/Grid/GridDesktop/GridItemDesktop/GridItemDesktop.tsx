@@ -17,7 +17,7 @@ export default function GridItemDesktop({layout} : GridItemDesktopProps) {
 
   return (
     <div className="grid-item">
-        <GridItemHeader i={layout.i} type={layout.type} layoutId={layout.id} />
+        <GridItemHeader i={layout.i} type={layout.type} layoutId={layout.id || null} />
         <div className="grid-item-content">
             {useRenderElementMap({
                 i : layout.i,
