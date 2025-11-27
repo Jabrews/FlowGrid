@@ -1,11 +1,10 @@
 
-export default function getCenterPos(id : string) {
+export default function getCenterPos() {
     const pos = {
-        x : 12,
+        x : 10,
         y : 9,
         w : 1,
         h : 1,
-        i : id,
     }
 
 

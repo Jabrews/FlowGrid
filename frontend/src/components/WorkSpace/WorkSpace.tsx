@@ -5,6 +5,8 @@ import useIsMobileScreen from "../hooks/useIsMobileScreen";
 import { useEditorScrollEventActive } from "./hooks/useEdgeScrollStore";
 import { useEditorEdgeDraggingStore } from "./hooks/useEditorEdgeDraggingScroll";
 import useMiddleWheelPan from "./hooks/useMiddleWheelPan";
+import { useItemPreviewEventActive } from "../stores/ItemPreviewStore/ItemPreviewStore";
+import useScrollOnPreviewActive from "./hooks/useScrollOnPreviewActive";
 
 // components 
 import GridMobile from "../Grid/GridMobile/GridMobile";
@@ -16,14 +18,11 @@ import ModalRenderer from "../ModalRenderer/ModalRenderer";
 
 export default function WorkSpace() {
 
-    // ------------------ NEEED ------------------- //
-    // - item preview logic
-    // - mobile scroll on item preview active to middle  
-
 
     // hook init
     const isMobileScreen = useIsMobileScreen()
     const editorScrollEventActive = useEditorScrollEventActive()
+    const itemPreviewEventActive = useItemPreviewEventActive() // mobile only
 
     // refs
     const editorRef = useRef<HTMLDivElement>(null)
@@ -31,8 +30,17 @@ export default function WorkSpace() {
 
     // MOVEMENT STUFF //
     useEditorEdgeDraggingStore({editorScrollEventActive, editorRef});
+
     // desktop 
     useMiddleWheelPan({ editorRef, cursorRef, isMobileScreen, speed: 1, useRafThrottle: true });
+
+    // only runs on mobile
+    useScrollOnPreviewActive({
+        isMobile : isMobileScreen,
+        isActive: itemPreviewEventActive,
+        scrollTargetRef: editorRef,
+        scrollTo: { top: 650, left: 1000 },
+    })
 
     return (
         <div 

@@ -15,9 +15,14 @@
 @use './side_dropper/side-dropper-mobile' as *;
 @use './side_dropper/side-dropper-desktop' as *;
 
+// Grid item
+@use './mobile_preview_item' as *; // mobile only btw
+
 
 /* Import a clean UI font */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+
 
 /* Reset and box sizing */
 *,

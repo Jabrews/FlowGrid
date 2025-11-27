@@ -1,0 +1,28 @@
+
+.item-preview-header {
+    align-self: center;
+    justify-self: center;
+    
+    p {
+        background-color: rgb(94, 147, 172, 0.3);
+        padding: 0.2em;
+
+    }
+}
+
+
+.item-preview-mobile-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: rgb(201, 198, 198);
+    padding: 1em;
+    border: 0.2em solid black;
+    
+    p {
+        font-size: 0.8em;
+        word-wrap: break-word;
+    }
+
+}

@@ -1,8 +1,8 @@
 // side dropper store hooks
 import { useSideOpen, useToggleSideOpen } from '../../stores/SideDropperStore/SideDropperStore'
 
-// item preview store hook
-// import { useGetItemPreviewActive } from '../../stores/ItemPreviewStore/ItemPreviewStore'
+// hooks
+import { useItemPreviewEventActive } from '../../stores/ItemPreviewStore/ItemPreviewStore'
 
 // util 
 import { get_svg_icons } from '../../util/get_svg_icons'
@@ -20,12 +20,14 @@ const slideVariants = {
 }
 
 export default function SideDropperMobile() {
+
+  // hook init
   const sideOpen = useSideOpen()
   const toggleSideOpen = useToggleSideOpen()
-//   const itemPreviewActiveEvent = useGetItemPreviewActive()
+  const itemPreviewEventActive = useItemPreviewEventActive()
 
   const handleToggle = () => {
-    // if (itemPreviewActiveEvent) return
+    if (itemPreviewEventActive) return
     toggleSideOpen(!sideOpen)
   }
 
@@ -34,17 +36,13 @@ export default function SideDropperMobile() {
       <div className="side-dropper-header">
         <h1 onClick={handleToggle} role="button" aria-expanded={sideOpen}>
           {/* Button stuff FIX BELOW STUFF */}
-         {get_svg_icons({
-                icon: sideOpen ? 'Side-Dropper-Open-Mobile' : 'Side-Dropper-Close-Mobile',
-                size: 34,
-          })} 
           {/* ITEM PREVIEW STUFF */}
-          {/* {itemPreviewActiveEvent
+          {itemPreviewEventActive
             ? get_svg_icons({ icon: 'Lock', size: 34 })
             : get_svg_icons({
                 icon: sideOpen ? 'Side-Dropper-Open-Mobile' : 'Side-Dropper-Close-Mobile',
                 size: 34,
-              })} */}
+            })}
         </h1>
       </div>
 

@@ -1,6 +1,5 @@
 // elements 
-// import PlaceholderElement from '../../../../cross-platform/elements/PlaceholderElement/PlaceholderElement'
-// import ItemPreviewMobile from '../../../../mobile/elements/ItemPreviewMobile/ItemPreviewMobile'
+import MobileItemPreview from "../../gridItems/MobileItemPreview/MobileItemPreview";
 import Timer from "../../gridItems/Timer/Timer";
 // import Tracker from '../../../elements/Tracker/Tracker'
 // import StickyNotes from '../../../elements/StickyNotes/StickyNotes'
@@ -18,9 +17,10 @@ type RenderElementProps = {
 }
 
 export default function useRenderElementMap({ type, i, isMobilePreview = false }: RenderElementProps) {
-//   if (isMobilePreview) {
-//     return <ItemPreviewMobile key={id} id={id} type={type} />;
-//   }
+
+  if (isMobilePreview) {
+    return <MobileItemPreview i={i} type={type} />;
+  }
 
 
   switch (type) {

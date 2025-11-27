@@ -31,9 +31,9 @@ export default function GridItemMobile({layout} : GridItemMobileProps) {
       }
       <div className="grid-item-content">
         {useRenderElementMap({
+          isMobilePreview : layout.isMobileItemPreview,
           i : layout.i,
-          type : layout.type
-
+          type : layout.type,
         })}
       </div>
     </div>

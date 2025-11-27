@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import {
   BrowserRouter as Router,
   Routes,
@@ -15,8 +16,11 @@ import WorkSpace from './components/WorkSpace/WorkSpace'
 import { useIsAuth, useIsGuest } from './components/stores/AccountsStore/AccountsStore'
 
 function App() {
+  
+  // hook init
   const isAuth = useIsAuth()
   const isGuest = useIsGuest()
+
 
   return (
     <Router>

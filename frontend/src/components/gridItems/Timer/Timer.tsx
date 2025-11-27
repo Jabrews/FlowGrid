@@ -11,7 +11,6 @@ type TimerProps = {
 export default function Timer({i} : TimerProps) {
 
     const {data, isLoading} = useQueryTimer(i)
-    console.log('timer data : ', data, 'and i :', i)
 
     return (
         <>
