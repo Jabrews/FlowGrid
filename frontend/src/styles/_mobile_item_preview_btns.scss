@@ -1,0 +1,41 @@
+
+.add-element-buttons-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin-bottom: 18vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    button {
+        border: none;
+        border-radius: 2em;
+        width: 5em;
+        font-size: 1.8em;
+        margin-left: 1em;
+        margin-right: 1em;
+        padding: 1em;
+    }
+
+    .add-btn {
+        background-color: green;
+
+        &:hover {
+            background-color: rgb(7, 151, 7) ;
+        }
+
+    }
+
+    .cancel-btn {
+        background-color: rgb(202, 18, 18);
+
+        &:hover {
+            background-color : rgb(236, 34, 34);
+        }
+
+    }
+
+
+}

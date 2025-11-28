@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef} from "react";
 
 // hooks
 import useIsMobileScreen from "../hooks/useIsMobileScreen"; 
@@ -15,6 +15,7 @@ import Navbar from "../Navbar/Navbar";
 import SideDropperMobile from "../SideDropper/SideDropperMobile/SideDropperMobile";
 import SideDropperDesktop from "../SideDropper/SideDropperDesktop/SideDropperDesktop";
 import ModalRenderer from "../ModalRenderer/ModalRenderer";
+import ItemPreviewBtns from "../ItemPreviewBtns/ItemPreviewBtns";
 
 export default function WorkSpace() {
 
@@ -23,6 +24,8 @@ export default function WorkSpace() {
     const isMobileScreen = useIsMobileScreen()
     const editorScrollEventActive = useEditorScrollEventActive()
     const itemPreviewEventActive = useItemPreviewEventActive() // mobile only
+
+
 
     // refs
     const editorRef = useRef<HTMLDivElement>(null)
@@ -55,6 +58,7 @@ export default function WorkSpace() {
             {/* mobile */}
             {isMobileScreen &&
             <>
+                <ItemPreviewBtns />
                 <GridMobile />
                 <SideDropperMobile />
             </>

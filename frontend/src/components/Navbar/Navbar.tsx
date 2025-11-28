@@ -8,6 +8,9 @@ import { useActiveProjectName } from "../stores/ProjectAndFolderStore/ProjectAnd
 import { useUserName } from "../stores/AccountsStore/AccountsStore"
 import useLogout from "./hooks/useLogout"
 import { useToggleIsAuth, useSetUserName } from "../stores/AccountsStore/AccountsStore"
+import useIsMobileScreen from "../hooks/useIsMobileScreen"
+import { useItemPreviewEventActive } from "../stores/ItemPreviewStore/ItemPreviewStore"
+import useResetMobileWorkSpace from "./hooks/useResetMobileWorkspace"
 
 // util
 import { get_svg_icons } from "../util/get_svg_icons"
@@ -28,10 +31,26 @@ export default function Navbar() {
     const toggleIsAuth = useToggleIsAuth()
     const setUserName = useSetUserName()
 
+    // hook init (all for reseting mobile workspace rn)
+    const isMobile = useIsMobileScreen()
+    const itemPreviewEventActive = useItemPreviewEventActive()
+    const resetMobileWorkSpace = useResetMobileWorkSpace()
+
     const handleLogoutBtnDown = () => {
         logoutMutation.mutate()
         toggleIsAuth(false)
         setUserName("")
+    }
+
+    // reset mobile navabar and layout stuff when travleing back home
+    const handleFlowGridLogoDwn = () => {
+        if (location.pathname == '/workspace' 
+            && isMobile
+            && itemPreviewEventActive
+        )  {
+            resetMobileWorkSpace()
+        }
+        navigate("/home")
     }
 
     // determine if home
@@ -41,7 +60,7 @@ export default function Navbar() {
         <div className='navbar'>
             
             <div className='navbar-left'>
-                <p onClick={() => navigate("/home")}>
+                <p onClick={handleFlowGridLogoDwn}>
                     {isHome
                         ? "FlowGrid"
                         : `FlowGrid${activeFolderName ? ` / ${activeFolderName}` : ""}${activeProjectName ? ` / ${activeProjectName}` : ""}`

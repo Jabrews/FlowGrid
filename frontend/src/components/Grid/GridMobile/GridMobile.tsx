@@ -53,7 +53,6 @@ export default function GridMobile() {
     },[setLayout, layoutData, itemPreviewEventActive, hasUpdated])
 
 
-    console.log('layout :', layout)
 
     // helper function
     const handleLayoutChangeTrigger = (newLayout : Layout[]) => {

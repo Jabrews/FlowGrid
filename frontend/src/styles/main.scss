@@ -15,6 +15,9 @@
 @use './side_dropper/side-dropper-mobile' as *;
 @use './side_dropper/side-dropper-desktop' as *;
 
+// mobile item preview btns
+@use './mobile_item_preview_btns' as *;
+
 // Grid item
 @use './mobile_preview_item' as *; // mobile only btw
 

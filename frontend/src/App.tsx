@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import {useEffect } from 'react'
 import {
   BrowserRouter as Router,
   Routes,
@@ -20,6 +20,8 @@ function App() {
   // hook init
   const isAuth = useIsAuth()
   const isGuest = useIsGuest()
+
+
 
 
   return (
@@ -59,6 +61,7 @@ function App() {
       </Routes>
     </Router>
   )
+  
 }
 
 export default App

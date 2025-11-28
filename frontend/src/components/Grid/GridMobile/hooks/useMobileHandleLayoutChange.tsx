@@ -3,6 +3,7 @@ import type { Layout } from '../../util/types';
 // hooks
 import useMutateLayout from '../../hooks/useMutateLayout';
 import { useItemPreviewEventActive } from '../../../stores/ItemPreviewStore/ItemPreviewStore';
+import { usePreviewItemI } from '../../../stores/ItemPreviewStore/ItemPreviewStore';
 import { useLayout, useSetLayout} from '../../../stores/ItemPreviewStore/ItemPreviewStore';
 
 type UseHandleLayoutChangeArguments = {
@@ -17,6 +18,7 @@ export default function useMobileHandleLayoutChange() {
   const itemPreviewEventActive = useItemPreviewEventActive()
   const layout = useLayout()
   const setLayout = useSetLayout() 
+  const previewItemI = usePreviewItemI()
 
 
   const handleLayoutChange = ({ newLayout, oldLayout }: UseHandleLayoutChangeArguments) => {
@@ -24,16 +26,39 @@ export default function useMobileHandleLayoutChange() {
       
     // Mobile item preview 
     if (itemPreviewEventActive) {
-      const newLayout = layout.map((layoutItem: Layout) => {
-        // create a copy so you don't mutate 
+
+      // find preview item inside newLayout (from RGL)
+      const previewItemUpdated = newLayout.find(
+        (layoutItem: Layout) => layoutItem.i === previewItemI
+      );
+
+      if (!previewItemUpdated) {
+        return
+      }
+
+      const newPos = {
+        x: previewItemUpdated.x,
+        y: previewItemUpdated.y,
+      };
+
+      const mobileLayout = layout.map((layoutItem: Layout) => {
+        if (layoutItem.i === previewItemI) {
+          return {
+            ...layoutItem,
+            x: newPos.x,
+            y: newPos.y,
+            static: false,     
+          };
+        }
+
         return {
           ...layoutItem,
-          static: layoutItem.isMobileItemPreview ? layoutItem.static : true
+          static: layoutItem.isMobileItemPreview ? layoutItem.static : true,
         };
       });
 
-      setLayout(newLayout);
-    }
+      setLayout(mobileLayout);
+  }
 
     else {
       newLayout.forEach((newItem) => {
