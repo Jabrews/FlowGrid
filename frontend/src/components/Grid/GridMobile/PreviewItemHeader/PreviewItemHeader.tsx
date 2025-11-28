@@ -2,12 +2,7 @@
 import { get_svg_icons } from '../../../util/get_svg_icons';
 
 
-type PreviewItemHeaderProps = {
-    i : string;
-    type : string;
-}
-
-export default function PreviewItemHeader({i, type} : PreviewItemHeaderProps) {
+export default function PreviewItemHeader() {
 
 
     return (

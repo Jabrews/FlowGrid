@@ -3,7 +3,6 @@ import { useMutation } from "@tanstack/react-query";
 // hooks
 import useCsrf from "../../hooks/useCsrf";
 import { useGridId } from "../../stores/ProjectAndFolderStore/ProjectAndFolderStore";
-import type { Layout } from "../util/types";
 
 // util
 import { mutate_auth } from "../../util/mutate_auth";

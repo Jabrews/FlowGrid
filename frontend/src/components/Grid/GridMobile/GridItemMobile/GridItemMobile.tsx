@@ -23,7 +23,7 @@ export default function GridItemMobile({layout} : GridItemMobileProps) {
       {layout.isMobileItemPreview
         ?
         (
-          <PreviewItemHeader i={layout.i} type={layout.type} />
+          <PreviewItemHeader />
         ) 
         : (
           <GridItemHeader i={layout.i} type={layout.type} layoutId={layout.id || null} />

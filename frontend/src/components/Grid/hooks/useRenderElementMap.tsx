@@ -19,7 +19,7 @@ type RenderElementProps = {
 export default function useRenderElementMap({ type, i, isMobilePreview = false }: RenderElementProps) {
 
   if (isMobilePreview) {
-    return <MobileItemPreview i={i} type={type} />;
+    return <MobileItemPreview  type={type} />;
   }
 
 
