@@ -65,7 +65,9 @@ INSTALLED_APPS = [
     'accounts',
     'projects',
     'grid',
-    'gridItems.timer'
+
+    # grid items
+    'timers',
 
 
 ]

@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 # models
-from .models import Timer
+from .models import Timers
 
 class TimerSerializer(serializers.ModelSerializer) :
     user = serializers.CharField(source="user.username", read_only=True)
@@ -9,7 +9,7 @@ class TimerSerializer(serializers.ModelSerializer) :
 
 
     class Meta : 
-        model = Timer 
+        model = Timers 
         fields = ['i', 'type', 'created', 'grid', 'user']
         read_only_fields = ["user", "grid",]
 

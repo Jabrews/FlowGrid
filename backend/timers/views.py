@@ -3,10 +3,10 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 # model
-from .models import Timer
+from .models import Timers as Timer
 from grid.models import LayoutItem
 # serializer
-from .serializer import TimerSerializer
+from .serializers import TimerSerializer
 
 
 class TimerView(viewsets.ModelViewSet):

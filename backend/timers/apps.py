@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class TimerConfig(AppConfig):
+class TimersConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'gridItems.timer'
+    name = 'timers'

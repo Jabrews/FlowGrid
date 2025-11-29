@@ -5,7 +5,7 @@ from django.conf.global_settings import AUTH_USER_MODEL
 # models
 from grid.models import Grid
 
-class Timer(models.Model) :
+class Timers(models.Model) :
     grid = models.ForeignKey(
         Grid,
         on_delete=models.CASCADE,
