@@ -1,5 +1,5 @@
 // util
-import type { TimeObject } from "../util/timer_types";
+import type { TimeObject } from "../../util/timer_types";
 
 // Number Scroll Component
 import NumberScroll from "./NumberScroll/NumberScroll"

@@ -3,7 +3,7 @@ import {useRef, useState, useEffect} from "react"
 // hooks
 
 // util
-import type { TimeObject } from "../../util/timer_types"
+import type { TimeObject } from "../../../util/timer_types"
 
 type NumberScrollProps = {
     interval : string
