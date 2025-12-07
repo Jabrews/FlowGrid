@@ -23,7 +23,6 @@ export default function GridItemDesktop({layout} : GridItemDesktopProps) {
                 i : layout.i,
                 type : layout.type
             })}
-            <p> grid Item</p>
         </div>
     </div>
   )

@@ -1,7 +1,11 @@
 import {TailSpin} from 'react-loader-spinner'
+import { useState } from 'react'
 
 // hooks
 import useQueryTimer from "./hooks/useQueryTImer"
+
+// components
+import CountdownTimer from './CountdownTimer/CountdownTimer'
 
 
 type TimerProps = {
@@ -11,6 +15,16 @@ type TimerProps = {
 export default function Timer({i} : TimerProps) {
 
     const {data, isLoading} = useQueryTimer(i)
+
+    const [timerView, toggleTimerView] = useState('countdown')
+
+    const handleSwapBtn = () => {
+        if (timerView == 'countdown') {
+            toggleTimerView('stopwatch')
+        } else {
+            toggleTimerView('countdown')
+        }
+    }
 
     return (
         <>
@@ -25,11 +39,38 @@ export default function Timer({i} : TimerProps) {
                     />
                 )}
                 {data && (
-                    <>
-                        <p> Im a timer </p>
-                        <p> i : {i}</p>
-                    </>
-                )}
+                        <>
+                            <div className='timer-container highlight-content'>
+                            <div className='swap-btn-container'>
+
+                                <button
+                                    className={timerView === 'countdown' ? 'swap-btn-inactive' : 'swap-btn'}
+                                    onClick={handleSwapBtn}
+                                >
+                                    countdown
+                                </button>
+
+                                <button
+                                    className={timerView === 'stopwatch' ? 'swap-btn-inactive' : 'swap-btn'}
+                                    onClick={handleSwapBtn}
+                                >
+                                    stopwatch
+                                </button>
+
+                                </div>
+
+                                <div className='timer-child'>
+                                    {timerView == 'countdown' ? (
+                                        <CountdownTimer />
+                                    ) : (
+                                        <p> penis</p>
+                                    )} 
+                                </div>
+                            </div> 
+                        
+                        </>
+
+                    )}
             </div>
 
         </>

@@ -20,6 +20,11 @@
 
 // Grid item
 @use './mobile_preview_item' as *; // mobile only btw
+@use './highlight' as *;
+
+// timer 
+@use './gridItems/timer/timer-number-picker' as *;
+@use './gridItems/timer/timer' as *;
 
 
 /* Import a clean UI font */

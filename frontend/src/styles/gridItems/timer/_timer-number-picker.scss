@@ -1,0 +1,68 @@
+
+
+.picker-container {
+  display:  flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+
+  p {
+    margin-left: 0.2em;
+    margin-right: 0.2em;
+    font-size: 2em;
+    color: rgb(61, 59, 59);
+  }  
+
+}
+
+
+.number-scroll-container {
+  height: 7em;
+  width: 2em;
+  border: solid 1px solid;
+  overflow-y: scroll;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  scrollbar-width: none;
+  // overscroll-behavior: contain;      /* prevents annoying bounce */
+  // scroll-behavior: smooth;           /* smooth auto-scroll-to-center */
+  // scroll-snap-type: y mandatory;     /* enables snapping feel */
+  // -webkit-overflow-scrolling: touch; /* iOS-style inertial scrolling */
+
+
+  .x {
+    color: gray;
+    margin-bottom: 1em;
+    margin-top: 1em;
+  }
+
+  li {
+    font-size: 1.2em;
+    list-style: none;
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+
+  .active {
+    font-weight: bolder;
+  }
+
+  .in-active {
+    font-weight: lighter;
+    color: rgb(90, 88, 88);
+  }
+
+
+}
+
+.blinking-text {
+  animation: blinker 1s step-start infinite;
+}
+
+@keyframes blinker {
+  50%  {
+    opacity: 0;
+  }
+}
