@@ -33,6 +33,7 @@ urlpatterns = [
     path("api/", include(grid_router.urls)),
     path('api/', include('grid.urls')),
     # gridItems
-    path("api/", include('timers.urls'))
+    path("api/", include('timers.urls')),
+    path("api/", include('tracker.urls')),
 
 ]

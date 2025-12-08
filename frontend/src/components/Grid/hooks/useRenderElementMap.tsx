@@ -1,7 +1,7 @@
 // elements 
 import MobileItemPreview from "../../gridItems/MobileItemPreview/MobileItemPreview";
 import Timer from "../../gridItems/Timer/Timer";
-// import Tracker from '../../../elements/Tracker/Tracker'
+import Tracker from "../../gridItems/Tracker/Tracker";
 // import StickyNotes from '../../../elements/StickyNotes/StickyNotes'
 // import TableList from '../../../elements/TableList/TableList'
 
@@ -32,13 +32,13 @@ export default function useRenderElementMap({ type, i, isMobilePreview = false }
             {/* <TrackerInput parentElementId={id}/> */}
           </>
         )
-    // case 'Tracker':
-    //   return (
-    //     <>
-    //       <Tracker  id={id}/>
-    //       <TrackerOutput parentElementId={id} />
-    //     </>
-    //   )
+    case 'tracker':
+      return (
+        <>
+          <Tracker i={i}/>
+          {/* <TrackerOutput parentElementId={id} /> */}
+        </>
+      )
     // case 'Sticky-Notes' :
     //   return (
     //     <>

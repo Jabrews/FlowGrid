@@ -68,6 +68,7 @@ INSTALLED_APPS = [
 
     # grid items
     'timers',
+    'tracker',
 
 
 ]
