@@ -6,6 +6,7 @@ import useQueryTimer from "./hooks/useQueryTImer"
 
 // components
 import CountdownTimer from './CountdownTimer/CountdownTimer'
+import StopwatchTimer from './StopwatchTimer/StopwatchTimer'
 
 
 type TimerProps = {
@@ -63,7 +64,7 @@ export default function Timer({i} : TimerProps) {
                                     {timerView == 'countdown' ? (
                                         <CountdownTimer />
                                     ) : (
-                                        <p> penis</p>
+                                        <StopwatchTimer />
                                     )} 
                                 </div>
                             </div> 

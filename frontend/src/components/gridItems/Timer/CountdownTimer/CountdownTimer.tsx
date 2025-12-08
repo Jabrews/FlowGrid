@@ -3,7 +3,7 @@ import { useTimer } from "react-timer-hook"
 
 // util
 import type { TimeObject } from "../util/timer_types"
-import convert_to_second from "../util/convert_to_second"
+import convert_to_second from "./util/convert_to_second"
 
 // components
 import AnimateCircle from "./AnimateCircle/AnimateCircle"
