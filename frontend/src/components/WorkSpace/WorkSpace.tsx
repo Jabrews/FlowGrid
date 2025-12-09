@@ -1,4 +1,5 @@
 import { useRef} from "react";
+import { DndContext, DragOverlay} from "@dnd-kit/core";
 
 // hooks
 import useIsMobileScreen from "../hooks/useIsMobileScreen"; 
@@ -16,6 +17,7 @@ import SideDropperMobile from "../SideDropper/SideDropperMobile/SideDropperMobil
 import SideDropperDesktop from "../SideDropper/SideDropperDesktop/SideDropperDesktop";
 import ModalRenderer from "../ModalRenderer/ModalRenderer";
 import ItemPreviewBtns from "../ItemPreviewBtns/ItemPreviewBtns";
+import DragOverlaySvg from "./DragOverlaySvg/DragOverlaySvg"; // look at note 
 
 
 /// NOTE ////
@@ -61,22 +63,36 @@ export default function WorkSpace() {
             <Navbar />
             <ModalRenderer />
 
-            {/* mobile */}
-            {isMobileScreen &&
-            <>
-                <ItemPreviewBtns />
-                <GridMobile />
-                <SideDropperMobile />
-            </>
-            }
+            <DndContext
+                onDragEnd={(event) => {
+                    console.log('event : ', event)
+                    if (event.over?.data.current?.type == 'tracker') {
+                        console.log('over tracker')
+                    }
+                 }}
+            >
 
-            {/* desktop*/}
-            {!isMobileScreen &&
-            <>
-                <GridDesktop />
-                <SideDropperDesktop />
-            </>
-            }
+  
+                {/* mobile */}
+                {isMobileScreen &&
+                <>
+                    <ItemPreviewBtns />
+                    <GridMobile />
+                    <SideDropperMobile />
+                    <DragOverlay>  <DragOverlaySvg /> </DragOverlay>
+
+                </>
+                }
+
+                {/* desktop*/}
+                {!isMobileScreen &&
+                <>
+                    <GridDesktop />
+                    <SideDropperDesktop />
+                    <DragOverlay>  <DragOverlaySvg /> </DragOverlay>
+                </>
+                }
+            </DndContext>
         </div>
     )
 

@@ -16,19 +16,27 @@ export default function TrackerInput({parentElementI, parentElementType} : Track
         data: {parentElementType },
     });
 
-    const style = {
+
+    const style: React.CSSProperties = {
         transform: CSS.Translate.toString(transform),
-        cursor: 'grab',
+        cursor: "grab",
+        zIndex: 9999,
     };
 
 
   return (
     <div 
         className="tracker-input"
+    >
+            
+        <div
         ref={setNodeRef} style={style} {...listeners} {...attributes}
-    >        <svg width="20" height="20">
-          <circle cx="10" cy="10" r="10" fill="blue" />
-        </svg>
+        >
+            <svg width="20" height="20">
+            <circle cx="10" cy="10" r="10" fill="blue" />
+            </svg>
+        </div>
+
         {get_svg_icons({icon : 'plug', size : 23})}
     </div>
   );
