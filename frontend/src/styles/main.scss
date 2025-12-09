@@ -27,6 +27,8 @@
 @use './gridItems/timer/timer' as *;
 // tracker 
 @use './gridItems/Tracker/tracker' as *;
+// tracker input & output
+@use './gridItems/Tracker/connections' as *;
 
 
 /* Import a clean UI font */

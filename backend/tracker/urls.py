@@ -5,7 +5,7 @@ from rest_framework.routers import DefaultRouter
 from .views import TrackerView
 
 router = DefaultRouter()
-router.register('tracker', TrackerView, basename='tracker' )
+router.register('trackers', TrackerView, basename='trackers' )
 
 urlpatterns = [
     path("", include(router.urls))

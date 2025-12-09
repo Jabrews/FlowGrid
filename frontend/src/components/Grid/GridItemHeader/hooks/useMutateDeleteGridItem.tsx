@@ -35,7 +35,7 @@ export default function useMutateDeleteGridItem() {
         },
         onSuccess: (_data, variables) => {
             queryClient.invalidateQueries({
-                queryKey: ["timer", variables.i],
+                queryKey: [variables.type, variables.i],
             });
         },
     })

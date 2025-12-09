@@ -7,8 +7,8 @@ import Tracker from "../../gridItems/Tracker/Tracker";
 
 // element parts
 // import NameHeader from '../../../elements/NameHeader/NameHeader'
-// import TrackerInput from '../../../elements/TrackerParts/TrackerInput'
-// import TrackerOutput from '../../../elements/TrackerParts/TrackerOutput'
+import TrackerInput from "../../gridItems/Connection/TrackerInput/TrackerInput";
+import TrackerOutput from "../../gridItems/Connection/TrackerOutput/TrackerOutput";
 
 type RenderElementProps = {
   type: string;
@@ -29,14 +29,14 @@ export default function useRenderElementMap({ type, i, isMobilePreview = false }
           <>
             {/* <NameHeader id={id} type={type} /> */}
             <Timer i={i}/>
-            {/* <TrackerInput parentElementId={id}/> */}
+            <TrackerInput parentElementI={i} parentElementType={type}/>
           </>
         )
     case 'tracker':
       return (
         <>
           <Tracker i={i}/>
-          {/* <TrackerOutput parentElementId={id} /> */}
+          <TrackerOutput parentElementI={i} />
         </>
       )
     // case 'Sticky-Notes' :

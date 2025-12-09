@@ -22,7 +22,7 @@ export default function useQueryTracker(i : string) {
 
 
             return fetch_or_create({
-                queryUrl : 'tracker/',
+                queryUrl : 'trackers/',
                 csrf_token : csrf_token,
                 i : i,
                 gridId : gridId,

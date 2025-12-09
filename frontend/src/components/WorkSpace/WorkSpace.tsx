@@ -17,6 +17,12 @@ import SideDropperDesktop from "../SideDropper/SideDropperDesktop/SideDropperDes
 import ModalRenderer from "../ModalRenderer/ModalRenderer";
 import ItemPreviewBtns from "../ItemPreviewBtns/ItemPreviewBtns";
 
+
+/// NOTE ////
+// inside this is the dnd context for input and output trackers
+/////////////
+
+
 export default function WorkSpace() {
 
 

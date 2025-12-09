@@ -15,6 +15,9 @@ import { PanelBottomOpen } from 'lucide-react';
 import {Lock} from 'lucide-react'
 // mobile item preview
 import {Move} from 'lucide-react'
+// tracker input / output
+import { Plug } from 'lucide-react';
+import { Unplug } from 'lucide-react';
 
 // Home Menu
 import { ChevronDown } from 'lucide-react';
@@ -76,6 +79,17 @@ export function get_svg_icons({ icon, size }: UseSvgIconArguments) {
       return React.createElement(Lock, { size });
     case 'Item-Preview-Drag-Handle' :
       return React.createElement(Move, { size });
+
+    // grid items
+    
+    // tracker input & output
+    case "plug" :
+      return React.createElement(Plug, { size });
+    case "unplug" :
+      return React.createElement(Unplug, { size });
+
+
+
     default:
       console.log('getSvgIcons : couldnt find icon : ', icon, ' size : ', size)
       return null;

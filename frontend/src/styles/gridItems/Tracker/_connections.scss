@@ -1,0 +1,60 @@
+.tracker-input {
+    padding: 1em;
+    width: 100%;
+    align-items: center;
+    justify-items: center;
+    text-align: center;
+    background-color: rgb(73, 73, 73);
+
+    p {
+        font-size : 0.7em;
+    }
+
+    .lucide-plug{
+        position: absolute;
+        align-self: center;
+        justify-self: center;
+        margin-left: 2em;
+        margin-bottom: 0.4em;
+        color :black; 
+
+        &:hover {
+            scale : 1.2;
+            color : white;
+        }
+    }
+    
+}
+
+
+
+.tracker-output {
+    padding: 1em;
+    width : 100%;
+    align-items: center;
+    justify-items: center;
+    text-align: center;
+    background-color: rgb(85, 84, 84);
+
+
+    p {
+        font-size : 0.7em;
+    }
+
+    .lucide-unplug{
+        position: absolute;
+        align-self: center;
+        justify-self: center;
+        margin-left: 3em;
+        margin-bottom: 0.4em;
+        color :black; 
+    
+        &:hover {
+            scale : 1.2;
+            color : white;
+        }
+    }
+
+
+
+}
