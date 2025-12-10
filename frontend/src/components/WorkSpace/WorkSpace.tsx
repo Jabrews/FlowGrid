@@ -8,6 +8,8 @@ import { useEditorEdgeDraggingStore } from "./hooks/useEditorEdgeDraggingScroll"
 import useMiddleWheelPan from "./hooks/useMiddleWheelPan";
 import { useItemPreviewEventActive } from "../stores/ItemPreviewStore/ItemPreviewStore";
 import useScrollOnPreviewActive from "./hooks/useScrollOnPreviewActive";
+// hooks for dnd 
+import useMutateCreateTrackObject from "./hooks/TrackObjectHooks/useMutateCreateTrackObject";
 
 // components 
 import GridMobile from "../Grid/GridMobile/GridMobile";
@@ -32,8 +34,7 @@ export default function WorkSpace() {
     const isMobileScreen = useIsMobileScreen()
     const editorScrollEventActive = useEditorScrollEventActive()
     const itemPreviewEventActive = useItemPreviewEventActive() // mobile only
-
-
+    const mutateCreateTrackObj = useMutateCreateTrackObject()
 
     // refs
     const editorRef = useRef<HTMLDivElement>(null)
@@ -53,6 +54,7 @@ export default function WorkSpace() {
         scrollTo: { top: 650, left: 1000 },
     })
 
+
     return (
         <div 
             className='workspace-container'
@@ -68,6 +70,13 @@ export default function WorkSpace() {
                     console.log('event : ', event)
                     if (event.over?.data.current?.type == 'tracker') {
                         console.log('over tracker')
+                        mutateCreateTrackObj.mutate({
+                            trackerI: event.over.id.toString() ,
+                            gridItemI : event.active.id.toString(),
+                            trackerType : event.over.data.current.type,
+                            gridItemType : event.active.data.current?.parentElementType 
+
+                        })
                     }
                  }}
             >

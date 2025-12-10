@@ -34,3 +34,5 @@ class TrackObjTimer(models.Model) :
         related_name='track_obj_timer'
     )
     elaspedSeconds = models.IntegerField(default=0)
+    trackerI = models.CharField(max_length=45) 
+    gridItemI = models.CharField(max_length=45) 

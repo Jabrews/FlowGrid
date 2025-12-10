@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 # models
-from .models import Tracker
+from .models import Tracker, TrackObjTimer
 
 class TrackerSerializer(serializers.ModelSerializer) :
     user = serializers.CharField(source="user.username", read_only=True)
@@ -12,6 +12,17 @@ class TrackerSerializer(serializers.ModelSerializer) :
         fields = ['id', 'user', 'grid'] 
         read_only_fields = ['user', 'grid']
 
+
+class TrackObjTimerSerializer(serializers.ModelSerializer) :
+    user = serializers.CharField(source="user.username", read_only=True)
+    grid = serializers.CharField(source='grid.id', read_only=True)
+    tracker = serializers.CharField(source='tracker.id', read_only=True)
+
+
+    class Meta : 
+        model = TrackObjTimer
+        fields = ['id', 'user', 'grid', 'tracker', 'trackerI', 'gridItemI', 'elaspedSeconds']
+        read_only_fields = ['user', 'grid', 'tracker']
 
 
 
