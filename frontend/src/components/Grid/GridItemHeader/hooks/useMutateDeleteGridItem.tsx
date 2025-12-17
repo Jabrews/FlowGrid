@@ -2,20 +2,26 @@ import { useMutation, useQueryClient} from "@tanstack/react-query";
 
 // hooks
 import useCsrf from "../../../hooks/useCsrf";
+import { useDeleteTrackObj } from "../../../stores/TrackObjectsStore/TrackObjectsStore";
 
 // util
 import { mutate_auth } from "../../../util/mutate_auth";
+import type { TrackObj } from "../util/track_obj_type";
 
 type DeleteForm = {
     type: string,
     i : string,
 }
 
+
 export default function useMutateDeleteGridItem() {
 
     // hook init
     const csrf_token = useCsrf()
     const queryClient = useQueryClient()
+
+    // track obj store hook init
+    const deleteTrackObj = useDeleteTrackObj()
 
     return useMutation({
         mutationFn : async (deleteForm : DeleteForm) => {
@@ -37,6 +43,8 @@ export default function useMutateDeleteGridItem() {
             queryClient.invalidateQueries({
                 queryKey: [variables.type, variables.i],
             });
+
+            deleteTrackObj(variables.i)
         },
     })
 

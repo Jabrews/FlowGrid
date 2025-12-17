@@ -1,6 +1,7 @@
 from rest_framework import viewsets, permissions , throttling
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework import throttling
 
 # model
 from .models import Timers as Timer

@@ -1,6 +1,9 @@
 import {useDraggable} from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities';
 
+// hooks
+import useQueryGridItem from './hooks/useQueryGridItem';
+
 // util
 import { get_svg_icons } from "../../../util/get_svg_icons";
 
@@ -11,9 +14,14 @@ type TrackerInputProps = {
 
 export default function TrackerInput({parentElementI, parentElementType} : TrackerInputProps) {
 
+    
+    const {data} = useQueryGridItem({gridItemI : parentElementI, gridItemType : parentElementType})
+
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
         id : parentElementI,
-        data: {parentElementType },
+        data: data 
+            ? {parentElementType, parentElementId : data.id} 
+            : {} 
     });
 
 

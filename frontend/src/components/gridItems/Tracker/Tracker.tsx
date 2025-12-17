@@ -10,7 +10,6 @@ export default function Tracker({i} : TrackerProps) {
 
     const {data} = useQueryTracker(i)
 
-
     return (
     <div className='tracker-container highlight-content'>
         {/* Tracker Header */}

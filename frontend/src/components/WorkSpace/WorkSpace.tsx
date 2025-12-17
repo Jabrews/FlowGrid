@@ -70,12 +70,14 @@ export default function WorkSpace() {
                     console.log('event : ', event)
                     if (event.over?.data.current?.type == 'tracker') {
                         console.log('over tracker')
+                        // check in Connections/trackerOutput & input for this drag obj
                         mutateCreateTrackObj.mutate({
                             trackerI: event.over.id.toString() ,
                             gridItemI : event.active.id.toString(),
+                            gridItemId : event.active.data.current?.parentElementId,
                             trackerType : event.over.data.current.type,
-                            gridItemType : event.active.data.current?.parentElementType 
-
+                            gridItemType : event.active.data.current?.parentElementType ,
+                            trackerId : event.over.data.current.trackerId
                         })
                     }
                  }}

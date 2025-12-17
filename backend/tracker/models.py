@@ -2,6 +2,7 @@ from django.db import models
 from django.conf.global_settings import AUTH_USER_MODEL
 
 from grid.models import Grid
+from timers.models import Timers
 
 class Tracker(models.Model) :
     grid = models.ForeignKey(
@@ -30,6 +31,11 @@ class TrackObjTimer(models.Model) :
     )
     tracker = models.ForeignKey(
         Tracker,
+        on_delete=models.CASCADE,
+        related_name='track_obj_timer'
+    )
+    timer = models.ForeignKey(
+        Timers,
         on_delete=models.CASCADE,
         related_name='track_obj_timer'
     )

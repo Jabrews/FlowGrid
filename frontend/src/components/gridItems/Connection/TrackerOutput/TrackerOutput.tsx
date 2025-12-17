@@ -1,5 +1,8 @@
 import { useDroppable } from '@dnd-kit/core';
 
+// hooks
+import useQueryTracker from '../../Tracker/hooks/useQueryTracker';
+
 // utill
 import { get_svg_icons } from "../../../util/get_svg_icons";
 
@@ -9,10 +12,15 @@ type TrackerOutputProps = {
 
 export default function TrackerOutput({parentElementI} : TrackerOutputProps) {
 
-    const { setNodeRef } = useDroppable({
-        id : parentElementI,
-        data: { type : 'tracker' },
-    });
+
+  const {data} = useQueryTracker(parentElementI)    
+    
+  const { setNodeRef } = useDroppable({
+      id: parentElementI,
+      data: data
+          ? { type: "tracker", trackerId: data.id }
+          : {}
+  });
 
     const style: React.CSSProperties = {
         cursor: "grab",

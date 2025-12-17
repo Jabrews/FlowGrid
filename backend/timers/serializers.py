@@ -10,6 +10,6 @@ class TimerSerializer(serializers.ModelSerializer) :
 
     class Meta : 
         model = Timers 
-        fields = ['i', 'type', 'created', 'grid', 'user']
-        read_only_fields = ["user", "grid",]
+        fields = ['i', 'type', 'created', 'grid', 'user', 'id']
+        read_only_fields = ["user", "grid", 'id']
 
