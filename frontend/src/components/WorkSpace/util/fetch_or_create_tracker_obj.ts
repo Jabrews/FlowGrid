@@ -35,7 +35,7 @@ export default async function fetch_or_create_tracker_obj({queryUrl, csrf_token,
                     "X-CSRFToken": csrf_token,
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ i, gridId }),
+                body: JSON.stringify({ trackerI, gridId }),
             });
 
             if (!res.ok) {

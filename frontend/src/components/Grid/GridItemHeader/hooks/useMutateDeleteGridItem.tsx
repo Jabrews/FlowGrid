@@ -6,7 +6,6 @@ import { useDeleteTrackObj } from "../../../stores/TrackObjectsStore/TrackObject
 
 // util
 import { mutate_auth } from "../../../util/mutate_auth";
-import type { TrackObj } from "../util/track_obj_type";
 
 type DeleteForm = {
     type: string,

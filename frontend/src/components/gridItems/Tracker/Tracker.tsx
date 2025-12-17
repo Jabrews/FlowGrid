@@ -9,6 +9,7 @@ type TrackerProps = {
 export default function Tracker({i} : TrackerProps) {
 
     const {data} = useQueryTracker(i)
+    console.log('tracker data : ', data)
 
     return (
     <div className='tracker-container highlight-content'>
