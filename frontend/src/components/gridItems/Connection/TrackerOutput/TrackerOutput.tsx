@@ -2,6 +2,8 @@ import { useDroppable } from '@dnd-kit/core';
 
 // hooks
 import useQueryTracker from '../../Tracker/hooks/useQueryTracker';
+import { useToggleShowConnectionModal } from '../../../stores/ModalRendererStore/ModelRendererStore';
+import { useSetActiveConnectionItemI } from '../../../stores/ConnectionModalStore/ConnectionModalStore';
 
 // utill
 import { get_svg_icons } from "../../../util/get_svg_icons";
@@ -12,6 +14,9 @@ type TrackerOutputProps = {
 
 export default function TrackerOutput({parentElementI} : TrackerOutputProps) {
 
+  // hooks
+  const toggleShowConnectionModal = useToggleShowConnectionModal()
+  const setActiveConnectionItemI = useSetActiveConnectionItemI()
 
   const {data} = useQueryTracker(parentElementI)    
     
@@ -28,6 +33,13 @@ export default function TrackerOutput({parentElementI} : TrackerOutputProps) {
         zIndex: 100,
     };
 
+    const handleOnPlugClick = () => {
+        setActiveConnectionItemI(parentElementI)
+        toggleShowConnectionModal(true)
+    }
+
+
+
 
   return (
     <div 
@@ -42,7 +54,11 @@ export default function TrackerOutput({parentElementI} : TrackerOutputProps) {
         <circle cx="10" cy="10" r="10" fill="red" />
       </svg>
     </div>
+      <p
+        onClick={handleOnPlugClick} 
+      >
         {get_svg_icons({icon : 'unplug', size : 24})}
+      </p>
     </div>
   );
 

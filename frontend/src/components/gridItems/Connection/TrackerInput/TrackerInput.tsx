@@ -3,6 +3,8 @@ import { CSS } from '@dnd-kit/utilities';
 
 // hooks
 import useQueryGridItem from './hooks/useQueryGridItem';
+import { useToggleShowConnectionModal } from '../../../stores/ModalRendererStore/ModelRendererStore';
+import { useSetActiveConnectionItemI} from '../../../stores/ConnectionModalStore/ConnectionModalStore';
 
 // util
 import { get_svg_icons } from "../../../util/get_svg_icons";
@@ -14,7 +16,11 @@ type TrackerInputProps = {
 
 export default function TrackerInput({parentElementI, parentElementType} : TrackerInputProps) {
 
+    // hook init
+    const toggleShowConnectionModal = useToggleShowConnectionModal()
+    const setActiveConnectionItemI = useSetActiveConnectionItemI()
     
+
     const {data} = useQueryGridItem({gridItemI : parentElementI, gridItemType : parentElementType})
 
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
@@ -31,6 +37,13 @@ export default function TrackerInput({parentElementI, parentElementType} : Track
         zIndex: 9999,
     };
 
+    const handleOnPlugClick = () => {
+        setActiveConnectionItemI(parentElementI)
+        toggleShowConnectionModal(true)
+    }
+
+
+
 
   return (
     <div 
@@ -46,7 +59,11 @@ export default function TrackerInput({parentElementI, parentElementType} : Track
             </svg>
         </div>
 
-        {get_svg_icons({icon : 'plug', size : 23})}
+        { <p
+            onClick={handleOnPlugClick} 
+        > 
+            {get_svg_icons({icon : 'plug', size : 23})} 
+        </p> }
     </div>
   );
 
