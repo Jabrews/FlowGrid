@@ -1,8 +1,11 @@
+import { useEffect } from "react";
+
 // hooks
 import { useConfirmStore } from "../../stores/ConfirmStore/ConfirmStore"; 
 import { useToggleShowDeleteModal } from "../../stores/ModalRendererStore/ModelRendererStore";
 import useMutateDeleteLayout from "./hooks/useMutateDeleteLayout";
 import useMutateDeleteGridItem from "./hooks/useMutateDeleteGridItem"; 
+import { useTogglePauseRender } from "../../stores/LineRendererStore/LineRendererStore"; 
 
 
 type GridItemHeaderProps = {
@@ -18,6 +21,7 @@ export default function GridItemHeader({ i, type, layoutId}: GridItemHeaderProps
   const toggleShowDeleteModal = useToggleShowDeleteModal()
   const mutateDeleteLayout = useMutateDeleteLayout()
   const mutateDeleteGridItem = useMutateDeleteGridItem()
+  const togglePauseRender = useTogglePauseRender()
 
 
   const handleDeleteBtnDown = async () => {
@@ -41,13 +45,18 @@ export default function GridItemHeader({ i, type, layoutId}: GridItemHeaderProps
   }
 
 
+
   return (
     <div className="grid-item-header">
-      <p
-        className="drag-handle move-icon"
-      >
-        ::
-      </p>
+    <p
+      className="drag-handle"
+      onPointerDown={() => {
+        togglePauseRender(true)
+      }}
+    >
+      ::
+    </p>
+
       <p 
         className='del-icon'
         onClick={handleDeleteBtnDown} 

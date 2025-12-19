@@ -20,6 +20,7 @@ import SideDropperDesktop from "../SideDropper/SideDropperDesktop/SideDropperDes
 import ModalRenderer from "../ModalRenderer/ModalRenderer";
 import ItemPreviewBtns from "../ItemPreviewBtns/ItemPreviewBtns";
 import DragOverlaySvg from "./DragOverlaySvg/DragOverlaySvg"; // look at note 
+import LineRenderer from "../LineRenderer/LineRenderer";
 
 
 /// NOTE ////
@@ -88,9 +89,10 @@ export default function WorkSpace() {
                 {isMobileScreen &&
                 <>
                     <ItemPreviewBtns />
-                    <GridMobile />
                     <SideDropperMobile />
                     <DragOverlay>  <DragOverlaySvg /> </DragOverlay>
+                    <GridMobile />
+                    <LineRenderer containerRef={editorRef}/>
 
                 </>
                 }
@@ -101,6 +103,8 @@ export default function WorkSpace() {
                     <GridDesktop />
                     <SideDropperDesktop />
                     <DragOverlay>  <DragOverlaySvg /> </DragOverlay>
+                    <LineRenderer containerRef={editorRef}/>
+
                 </>
                 }
             </DndContext>

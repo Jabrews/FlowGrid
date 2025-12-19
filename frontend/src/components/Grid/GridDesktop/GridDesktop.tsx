@@ -11,6 +11,7 @@ import useQueryLayout from '../hooks/useQueryLayout.tsx';
 import useDesktopHandleOnDrop from './hooks/useDesktopHandleOnDrop.tsx';
 import { useSetGridId } from '../../stores/ProjectAndFolderStore/ProjectAndFolderStore.tsx';
 import useDesktopHandleLayoutChange from './hooks/useDesktopHandleLayoutChange.tsx';
+import { useTogglePauseRender } from '../../stores/LineRendererStore/LineRendererStore.tsx';
 
 // util
 import {gridLayoutProps} from '../util/gridLayoutProps.ts'
@@ -25,6 +26,7 @@ export default function GridDesktop() {
     const setGridId = useSetGridId()
     const desktopHandleOnDrop = useDesktopHandleOnDrop()
     const handleDesktopLayoutChange = useDesktopHandleLayoutChange() // in helper func
+    const togglePauseRender = useTogglePauseRender()
     
     const {data : gridData}= useQueryGrid()
     const {data : layoutData} = useQueryLayout()
@@ -44,6 +46,7 @@ export default function GridDesktop() {
             return
         }
         handleDesktopLayoutChange({newLayout : newLayout, oldLayout : layoutData})
+        togglePauseRender(false)
     }
 
     return (

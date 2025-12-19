@@ -39,6 +39,7 @@ export default function TrackerInput({parentElementI, parentElementType} : Track
             
         <div
         ref={setNodeRef} style={style} {...listeners} {...attributes}
+        id={parentElementI}
         >
             <svg width="20" height="20">
             <circle cx="10" cy="10" r="10" fill="blue" />

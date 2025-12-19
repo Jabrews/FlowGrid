@@ -6,6 +6,8 @@ import type { Layout } from '../util/types'
 import useQueryGrid from "../hooks/useQueryGrid"
 import { useSetGridId } from '../../stores/ProjectAndFolderStore/ProjectAndFolderStore'
 import useQueryLayout from '../hooks/useQueryLayout'
+import { useTogglePauseRender } from '../../stores/LineRendererStore/LineRendererStore'
+
 // hooks pertaining to 2nd layout
 import { useLayout } from '../../stores/ItemPreviewStore/ItemPreviewStore'
 import { useSetLayout } from '../../stores/ItemPreviewStore/ItemPreviewStore'
@@ -28,6 +30,7 @@ export default function GridMobile() {
     const setLayout = useSetLayout()
     const itemPreviewEventActive = useItemPreviewEventActive()
     const mobileHandleLayoutChange = useMobileHandleLayoutChange()
+    const togglePauseRender = useTogglePauseRender()
 
     // queries
     const {data : gridData}= useQueryGrid()
@@ -60,6 +63,7 @@ export default function GridMobile() {
             return
         }
         mobileHandleLayoutChange({newLayout : newLayout, oldLayout : !itemPreviewEventActive ? layoutData : layout})
+        togglePauseRender(false)
     }
 
     const items = itemPreviewEventActive ? layout : layoutData;

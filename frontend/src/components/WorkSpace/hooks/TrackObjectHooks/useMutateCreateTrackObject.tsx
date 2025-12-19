@@ -1,9 +1,10 @@
-import { useMutation} from "@tanstack/react-query";
+import { useMutation, useQueryClient} from "@tanstack/react-query";
 
 // hooks
 import useCsrf from "../../../hooks/useCsrf";
 import { useGridId } from "../../../stores/ProjectAndFolderStore/ProjectAndFolderStore";
 import { useAddTrackObj} from "../../../stores/TrackObjectsStore/TrackObjectsStore";
+
 
 // util
 import type { TrackObj } from "../../../Grid/GridItemHeader/util/track_obj_type";
@@ -24,6 +25,7 @@ export default function useMutateCreateTrackObject() {
     // hook int
     const csrf_token = useCsrf()
     const grid_id = useGridId()
+    const queryClient = useQueryClient()
 
     // trakc obj hook init
     const addTrackObb = useAddTrackObj() 
@@ -74,6 +76,11 @@ export default function useMutateCreateTrackObject() {
             }
             
         },
+        onSuccess : ()  => {
+            queryClient.invalidateQueries({
+                queryKey: [`track-objs-all-${grid_id}`]
+            })        
+        }
     })
 
 }

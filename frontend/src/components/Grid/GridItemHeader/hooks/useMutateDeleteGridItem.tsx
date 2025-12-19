@@ -3,6 +3,7 @@ import { useMutation, useQueryClient} from "@tanstack/react-query";
 // hooks
 import useCsrf from "../../../hooks/useCsrf";
 import { useDeleteTrackObj } from "../../../stores/TrackObjectsStore/TrackObjectsStore";
+import { useGridId } from "../../../stores/ProjectAndFolderStore/ProjectAndFolderStore";
 
 // util
 import { mutate_auth } from "../../../util/mutate_auth";
@@ -18,6 +19,7 @@ export default function useMutateDeleteGridItem() {
     // hook init
     const csrf_token = useCsrf()
     const queryClient = useQueryClient()
+    const gridId = useGridId()
 
     // track obj store hook init
     const deleteTrackObj = useDeleteTrackObj()
@@ -26,6 +28,7 @@ export default function useMutateDeleteGridItem() {
         mutationFn : async (deleteForm : DeleteForm) => {
 
             if (!csrf_token) throw new Error('No csrf token')
+            if (!gridId) throw new Error('no gridId found')
 
             const DeleteGridItemInit : RequestInit = {
                 method: 'DELETE'
@@ -42,6 +45,9 @@ export default function useMutateDeleteGridItem() {
             queryClient.invalidateQueries({
                 queryKey: [variables.type, variables.i],
             });
+            queryClient.invalidateQueries({
+                queryKey: [`track-objs-all-${gridId}`]
+            })
 
             deleteTrackObj(variables.i)
         },

@@ -36,6 +36,7 @@ export default function TrackerOutput({parentElementI} : TrackerOutputProps) {
     <div
         style={style}
         ref={setNodeRef}
+        id={parentElementI}
     >
       <svg width="20" height="20"> {/* onClick={handleToggleConnectionModal}*/}
         <circle cx="10" cy="10" r="10" fill="red" />
