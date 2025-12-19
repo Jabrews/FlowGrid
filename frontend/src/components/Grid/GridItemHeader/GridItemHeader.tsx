@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-
 // hooks
 import { useConfirmStore } from "../../stores/ConfirmStore/ConfirmStore"; 
 import { useToggleShowDeleteModal } from "../../stores/ModalRendererStore/ModelRendererStore";
