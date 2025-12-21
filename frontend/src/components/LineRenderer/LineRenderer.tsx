@@ -30,6 +30,7 @@ export default function LineRenderer({ containerRef }: LineRendererProps) {
           containerRef={containerRef}
           startId={item.gridItemI}
           endId={item.trackerI}
+         
         />
       ))}
     </>

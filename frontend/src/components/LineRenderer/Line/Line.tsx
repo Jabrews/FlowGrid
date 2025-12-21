@@ -7,6 +7,8 @@ type LineProps = {
 };
 
 export function Line({ startId, endId, containerRef }: LineProps) {
+
+
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -57,9 +59,12 @@ export function Line({ startId, endId, containerRef }: LineProps) {
         ctx.beginPath();
         ctx.moveTo(x1, y1);
         ctx.lineTo(x2, y2);
+
         ctx.strokeStyle = "black";
+
         ctx.lineWidth = 2;
         ctx.stroke();
+
     };
 
 

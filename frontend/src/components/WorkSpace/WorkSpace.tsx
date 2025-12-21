@@ -70,7 +70,6 @@ export default function WorkSpace() {
                 onDragEnd={(event) => {
                     console.log('event : ', event)
                     if (event.over?.data.current?.type == 'tracker') {
-                        console.log('over tracker')
                         // check in Connections/trackerOutput & input for this drag obj
                         mutateCreateTrackObj.mutate({
                             trackerI: event.over.id.toString() ,

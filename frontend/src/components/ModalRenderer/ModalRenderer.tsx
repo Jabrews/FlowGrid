@@ -1,6 +1,6 @@
 // modal components
-import DeleteModal from "./Modals/DelProjectModal";
-import ConnectionToggleModal from "./Modals/ConnectionToggleModal";
+import DeleteModal from "./Modals/DelProjectModal/DelProjectModal";
+import ConnectionToggleModal from "./Modals/ConnectionToggleModal/ConnectionToggleModal";
 
 // store hooks for using
 import { useShowDeleteModal } from "../stores/ModalRendererStore/ModelRendererStore";

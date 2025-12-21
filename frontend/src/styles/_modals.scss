@@ -51,7 +51,7 @@
 
 .connection-modal {
   background-color: white;
-  padding: 2rem;
+  padding: 1.4rem;
   border-radius: 12px;
   border: 1px solid black;
 
@@ -63,7 +63,6 @@
   max-width: 90vw;
 
   .big-h2 {
-    margin-left: 2em;
     align-self: flex-start;
     font-size: 2em;
     margin-bottom: 0.25em;
@@ -80,6 +79,57 @@
     border-radius: 1em;
     border: none;
     cursor: pointer;
+  }
+
+  ul {
+    align-self: flex-start;
+    display: flex;
+    
+    .connection-li {
+      text-align: start;
+      list-style: none;
+      text-wrap-mode:wrap;
+
+      .connection-li-container {
+        font-size: 1.0em;
+        display: flex;
+        flex-direction: row;
+
+        p {
+          margin-right: 1em;
+          font-weight: 600;
+        }
+
+        button {
+          color : white;
+          font-weight: bold;
+          width: fit-content;
+          padding: 0.2em;
+          border-radius: 0em;
+          border: none;
+          cursor: pointer;
+          background-color: red;
+
+          &:hover {
+            scale : 1.2
+          }
+
+
+        }
+
+        
+      }
+        .note {
+          margin-top: 4em;
+          margin-bottom: 1em;
+          font-size: 1em;
+          color : rgb(151, 151, 151);
+
+        }
+
+
+    }
+
   }
 
 }

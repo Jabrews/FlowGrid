@@ -18,10 +18,9 @@ class TrackObjTimerSerializer(serializers.ModelSerializer) :
     gridId = serializers.CharField(source='grid.id', read_only=True)
     trackerId = serializers.CharField(source='tracker.id', read_only=True)
 
-
     class Meta : 
         model = TrackObjTimer
-        fields = ['id', 'user', 'gridId', 'trackerId', 'trackerI', 'gridItemI', 'elaspedSeconds']
+        fields = ['id', 'user', 'gridId', 'trackerId', 'trackerI', 'gridItemI', 'elaspedSeconds' ]
         read_only_fields = ['user', 'gridId', 'trackerId']
 
 

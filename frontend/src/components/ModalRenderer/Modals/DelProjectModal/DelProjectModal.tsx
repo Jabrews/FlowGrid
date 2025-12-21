@@ -1,8 +1,11 @@
 import { motion } from 'framer-motion'
 
 // hooks
-import { useToggleShowDeleteModal } from "../../stores/ModalRendererStore/ModelRendererStore"
-import { useConfirmStore } from "../../stores/ConfirmStore/ConfirmStore"
+import { useToggleShowDeleteModal } from "../../../stores/ModalRendererStore/ModelRendererStore"
+import { useConfirmStore } from "../../../stores/ConfirmStore/ConfirmStore"
+
+
+// note delete mutation occurs in item header, this is for confirming
 
 export default function DelProjectModal () {
 

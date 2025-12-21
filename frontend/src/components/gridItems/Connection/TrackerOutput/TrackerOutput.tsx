@@ -34,8 +34,8 @@ export default function TrackerOutput({parentElementI} : TrackerOutputProps) {
     };
 
     const handleOnPlugClick = () => {
-        setActiveConnectionItemI(parentElementI)
-        toggleShowConnectionModal(true)
+      setActiveConnectionItemI(parentElementI)
+      toggleShowConnectionModal(true)
     }
 
 

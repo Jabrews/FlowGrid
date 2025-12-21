@@ -22,4 +22,3 @@ export const usePauseRender= () =>
 
 export const  useTogglePauseRender= () =>
     useLineRendererStore((s) => s.togglePauseRender)
-

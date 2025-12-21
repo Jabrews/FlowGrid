@@ -27,7 +27,7 @@ export default function useQueryAllTrackObjs() {
 
 
             return fetch_auth({
-                queryUrl : `api/track_obj_all/getAllTrackObjs/${gridId.toString()}`,
+                queryUrl : `api/track_obj_all/grid/${gridId.toString()}`,
                 csrf_token : csrf_token,
                 init : queryAllTrackObjsInit,
             })

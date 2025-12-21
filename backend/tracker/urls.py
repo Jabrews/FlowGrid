@@ -12,9 +12,9 @@ trackObjTimerRouter = DefaultRouter()
 trackObjTimerRouter.register('track_obj_timer', TrackObjTimerView, basename='trackers' )
 trackObjAllRouter = DefaultRouter()
 trackObjAllRouter.register(
-    r'track_obj_all/getAllTrackObjs/(?P<gridId>[^/.]+)',
+    "track_obj_all",
     AllTrackObjView,
-    basename='trackers'
+    basename="track_obj_all"
 )
 
 
