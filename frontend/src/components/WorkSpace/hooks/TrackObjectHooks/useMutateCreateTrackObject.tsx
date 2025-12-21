@@ -76,10 +76,13 @@ export default function useMutateCreateTrackObject() {
             }
             
         },
-        onSuccess : ()  => {
+        onSuccess : (_data, variables)  => {
             queryClient.invalidateQueries({
                 queryKey: [`track-objs-all-${grid_id}`]
             })        
+            queryClient.invalidateQueries({
+                queryKey : [`tracker-connections-${variables.trackerI}`]
+            })
         }
     })
 

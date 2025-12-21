@@ -3,6 +3,7 @@
 // gridItemHeader, Workspace, every trackable grid item
 
 export type TrackObj = {
+    customName? : string,
     id? : number
     gridId : string,
     gridItemI : string,

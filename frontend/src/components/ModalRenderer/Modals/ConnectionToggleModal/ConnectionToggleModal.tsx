@@ -48,10 +48,16 @@ export default function ConnectionToggleModal() {
                     ))}
                 </ul>
 
-                {data && data.length == 0 &&
-                
+                {data && data.length == 0 ? (
                     <p> No Items Connected, Drag over connection circle on valid grid items to connect</p>
+                ) : (
+                    <p className='note'> 
+                        NOTE : after disconnecting an item, all data in the tracker will be deleted.
+                    </p>
+                )
+                
                 }
+
 
 
                 <motion.button

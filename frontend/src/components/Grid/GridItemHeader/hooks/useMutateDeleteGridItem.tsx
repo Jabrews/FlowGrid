@@ -2,7 +2,7 @@ import { useMutation, useQueryClient} from "@tanstack/react-query";
 
 // hooks
 import useCsrf from "../../../hooks/useCsrf";
-import { useDeleteTrackObj } from "../../../stores/TrackObjectsStore/TrackObjectsStore";
+import { useDeleteTrackObj, useGetTrackerIFromItem} from "../../../stores/TrackObjectsStore/TrackObjectsStore";
 import { useGridId } from "../../../stores/ProjectAndFolderStore/ProjectAndFolderStore";
 
 // util
@@ -23,6 +23,7 @@ export default function useMutateDeleteGridItem() {
 
     // track obj store hook init
     const deleteTrackObj = useDeleteTrackObj()
+    const getTrackerIFromItem = useGetTrackerIFromItem()
 
     return useMutation({
         mutationFn : async (deleteForm : DeleteForm) => {
@@ -42,13 +43,27 @@ export default function useMutateDeleteGridItem() {
             })
         },
         onSuccess: (_data, variables) => {
+            // objects itself query
             queryClient.invalidateQueries({
                 queryKey: [variables.type, variables.i],
             });
+            // all track obs (for line renderer)
             queryClient.invalidateQueries({
                 queryKey: [`track-objs-all-${gridId}`]
             })
-
+            // if a connection then invalidate tracker KINDA TRICKY
+            if (variables.type != 'tracker') {
+                // get possibe tracker I array
+                const trackerIArray: string[] | false = getTrackerIFromItem(variables.i)
+                if (trackerIArray) {
+                    trackerIArray.map((trackerI: string) => {
+                        queryClient.invalidateQueries({
+                            queryKey: [`tracker-connections-${trackerI}`]
+                        })
+                    })
+                }
+            }
+            // finally for line renderer ls
             deleteTrackObj(variables.i)
         },
     })

@@ -23,13 +23,7 @@ export default function useQueryTrackObjByItemI({activeConnectionItemI } : Query
             const ByItemInit : RequestInit = {
                 method : 'GET'
             }
-
             
-            console.log(`
-                    ${activeConnectionItemI.replace(/-.*/, "")}
-                    ${activeConnectionItemI}
-            `)
-
             return fetch_auth({
                 queryUrl : 
                     `api/track_obj_all/by-item/

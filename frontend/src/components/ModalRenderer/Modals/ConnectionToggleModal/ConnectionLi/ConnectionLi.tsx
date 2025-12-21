@@ -31,10 +31,9 @@ export default function ConnectionLi({trackObj, activeConnectionItemType} : Conn
 
     const handleDisconnectBtn = () => {
         if (!trackObj.id) return
-        deleteTrackObjectMutation.mutate({
-            gridItemI : trackObj.gridItemI,
-            trackObjId : trackObj.id.toString()
-        })
+        deleteTrackObjectMutation.mutate(
+            trackObj
+        )
         toggleShowConnectionModal(false)
 
     }
@@ -68,9 +67,6 @@ export default function ConnectionLi({trackObj, activeConnectionItemType} : Conn
                 )
 
             }
-            <p className='note'> 
-                NOTE : after disconnecting an item, all data in the tracker will be deleted.
-            </p>
 
                 {/* <p> {trackObj.} </p> */}
         </li>

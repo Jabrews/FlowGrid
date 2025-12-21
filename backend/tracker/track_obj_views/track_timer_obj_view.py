@@ -34,7 +34,15 @@ class TrackObjTimerView(viewsets.ModelViewSet):
         if existingObj:
             return Response({'error': 'Timer Pair Object already created'}, status=404)
 
+        ## custom name logic
+        grid_id = self.request.data.get('gridId'),#type: ignore
+        count = TrackObjTimer.objects.filter(user=self.request.user, grid_id=grid_id).count()
+        customName = f"timer-{count + 1}"
+
+
+
         serializer.save(
+            customName = customName,
             trackerI=self.request.data.get("trackerI"),#type: ignore
             gridItemI=self.request.data.get("gridItemI"),#type: ignore
             grid_id = self.request.data.get('gridId'),#type: ignore

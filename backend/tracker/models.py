@@ -19,6 +19,7 @@ class Tracker(models.Model) :
 
 
 class TrackObjTimer(models.Model) :
+    customName = models.CharField(max_length=20, default='timer')
     grid = models.ForeignKey(
         Grid,
         on_delete=models.CASCADE,

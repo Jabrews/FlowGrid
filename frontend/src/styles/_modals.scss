@@ -84,8 +84,11 @@
   ul {
     align-self: flex-start;
     display: flex;
+    flex-direction: column;
     
     .connection-li {
+      margin-top: 0.4em;
+      margin-bottom: 0.4em;
       text-align: start;
       list-style: none;
       text-wrap-mode:wrap;
@@ -119,17 +122,19 @@
 
         
       }
-        .note {
-          margin-top: 4em;
+
+
+    }
+        
+
+
+  }
+      .note {
+          margin-top: 2em;
           margin-bottom: 1em;
           font-size: 1em;
           color : rgb(151, 151, 151);
 
         }
-
-
-    }
-
-  }
 
 }

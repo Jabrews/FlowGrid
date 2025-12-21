@@ -5,7 +5,8 @@ type TrackObjectStore = {
     getTrackObjects :  () => TrackObj[],
     setTrackObjects : (newTrackObjs : TrackObj[]) => void,
     addTrackObj : (newItem : TrackObj) => void,
-    deleteTrackObj : (itemI : string) => void, //grid item or tracker
+    deleteTrackObj : (itemI : string) =>  void, //grid item or tracker
+    getTrackerIFromItem : (gridItemI : string) => string[] | false// grid item
 }
 
 const localStorageKey =  "track-objects";
@@ -52,11 +53,27 @@ export const useTrackObjectsStore = create<TrackObjectStore>(() => ({
         const parsed = JSON.parse(raw) as TrackObj[]
         const newItems = parsed.filter(
         (item: TrackObj) =>
-            item.gridItemI !== itemI &&
-            item.trackerI !== itemI
+            item.gridItemI !== itemI 
+            // item.trackerI !== itemI
         );
         localStorage.setItem('track-objects', JSON.stringify(newItems))
-    }
+    },
+    // used when invalidating tracker's track objs
+    getTrackerIFromItem : (gridItemI: string) =>  {
+        const raw = localStorage.getItem(localStorageKey)
+        if (!raw) throw new Error('unable to find trackObj in LS')
+        const parsed = JSON.parse(raw) as TrackObj[]
+        const validTrackObjs = parsed.filter((item : TrackObj) => item.gridItemI == gridItemI)
+        if (!validTrackObjs) return false // exit if none
+        // get list of tracker is
+        const trackerIList : string[] = []
+        validTrackObjs.map((item : TrackObj) =>
+            trackerIList.push(item.trackerI)
+        )
+        return trackerIList
+
+
+    },
 }))
 
 // no custom hook for setting track objects do with hook
@@ -69,3 +86,6 @@ export const useAddTrackObj = () =>
 
 export const useDeleteTrackObj = () =>
     useTrackObjectsStore((s) => s.deleteTrackObj)
+
+export const useGetTrackerIFromItem = () =>
+    useTrackObjectsStore((s) => s.getTrackerIFromItem)

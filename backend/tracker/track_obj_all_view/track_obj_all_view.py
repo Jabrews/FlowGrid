@@ -55,6 +55,8 @@ class AllTrackObjView(viewsets.ViewSet):
                 TrackObjTimerSerializer(timer_qs, many=True).data
             )
 
+        print('results : ', results)
+
         # example_qs = ExampleTrackObj.objects.filter(**filter_kwargs)
         # if example_qs.exists():
         #     results.extend(
