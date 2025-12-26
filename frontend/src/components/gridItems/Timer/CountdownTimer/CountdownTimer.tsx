@@ -1,15 +1,30 @@
 import { useState, useEffect, useRef, useMemo} from "react"
 import { useTimer } from "react-timer-hook"
 
+// hooks
+import useMutateTrackObjList from "../hooks/useMutateTrackObjList"
+import useQueryTimeTrackObjs from "../hooks/useQueryTimerTrackObjs"
+
 // util
 import type { TimeObject } from "../util/timer_types"
 import convert_to_second from "./util/convert_to_second"
+import get_id_array from "../util/get_id_array"
+import get_tracker_i_array from "../util/get_tracker_I_array"
+
 
 // components
 import AnimateCircle from "./AnimateCircle/AnimateCircle"
 import NumberScrollContainer from "./NumberScrollContainer.tsx/NumberScrollContainer"
 
-export default function CountdownTimer() {
+type CountdownTimerProps = {
+    timerI : string,
+}
+
+export default function CountdownTimer({timerI}:CountdownTimerProps) {
+
+    // hook init
+    const mutateTrackObjList = useMutateTrackObjList()
+    const {data : timerTrackObjects } = useQueryTimeTrackObjs(timerI)
 
     const timeObjectsInital : TimeObject[]= [
         {type : 'hrL', value : 0, lastValue : 0},
@@ -23,6 +38,7 @@ export default function CountdownTimer() {
     const [timeObjects, setTimeObjects] = useState(timeObjectsInital)
     const [timerRunning, toggleTimerRunning] = useState(false)
     const [timeout, toggleTimeout] = useState(false)
+
 
     // set a dummy date for init 
     const initialTime = useMemo(() => {
@@ -62,6 +78,22 @@ export default function CountdownTimer() {
     }, [totalCountdownSec, timeObjects])
 
     
+    // mutate helper func for tracker //
+    const handleMutateTimerTrackObject = () => {
+        if (timerTrackObjects == undefined) return
+        const timeSpentSeconds = startSec - totalSeconds
+        const idAray = get_id_array(timerTrackObjects)
+        const trackerIArray = get_tracker_i_array(timerTrackObjects)
+        if (!idAray|| !trackerIArray) return
+        mutateTrackObjList.mutate({
+            trackObjIdList : idAray,
+            trackObjTrackerIList  : trackerIArray,
+            timeFieldName : 'timespentSeconds',
+            newTimeValue : timeSpentSeconds,
+        })
+    }
+
+
     // BTN HANDLERS///
     const handleStartTimerBtn = () => {
         if (!totalCountdownSec.current) return;
@@ -78,6 +110,7 @@ export default function CountdownTimer() {
     };
 
     const handleXBtn = () => {
+        handleMutateTimerTrackObject()
         toggleTimerRunning(false)
         toggleTimeout(false)
     }
@@ -90,6 +123,10 @@ export default function CountdownTimer() {
 
         toggleTimeout(false)
         restart(newTime, true);
+
+        // deal with tracker 
+        handleMutateTimerTrackObject() 
+
     };
 
     ////////////////////

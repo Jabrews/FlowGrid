@@ -41,13 +41,21 @@ export default function useDeleteTrackObjectMutation() {
 
         },
         onSuccess : (_data, variables) => {
+            // local storage
             deleteTrackObj(variables.gridItemI)
+            // line renderer 
             queryClient.invalidateQueries({
                 queryKey: [`track-objs-all-${gridId}`]
             })
+            // tracker and its menus
             queryClient.invalidateQueries({
                 queryKey : [`tracker-connections-${variables.trackerI}`]
             })
+            // timer 
+            queryClient.invalidateQueries({
+                queryKey : [`tracker-connections-${variables.gridItemI}`]
+            })
+
         }
     })
 

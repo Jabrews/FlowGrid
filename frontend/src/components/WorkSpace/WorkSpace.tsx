@@ -68,7 +68,6 @@ export default function WorkSpace() {
 
             <DndContext
                 onDragEnd={(event) => {
-                    console.log('event : ', event)
                     if (event.over?.data.current?.type == 'tracker') {
                         // check in Connections/trackerOutput & input for this drag obj
                         mutateCreateTrackObj.mutate({

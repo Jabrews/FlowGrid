@@ -23,14 +23,12 @@ export const useModelRendererStore = create<ModalRendererStore>((set) => ({
             set((s) => ({
                 ...s,
                 showDeleteModal: bool
-            })
-        ),
+        })),
         toggleShowConnectionModal : (bool : boolean) => 
             set((s) => ({
                 ...s,
                 showConnectionModal : bool
-            }))
-
+        })),
        },
 }));
 
@@ -41,10 +39,13 @@ export const useShowDeleteModal = () =>
 export const useShowConnectionModal = ( ) =>
     useModelRendererStore((s) => s.showConnectionModal)
 
+
 // hook actions
 export const useToggleShowDeleteModal = () =>
     useModelRendererStore((s) => s.actions.toggleShowDeleteModal)
 
 export const useToggleShowConnectionModal = () =>
     useModelRendererStore((s) => s.actions.toggleShowConnectionModal)
+
+
 

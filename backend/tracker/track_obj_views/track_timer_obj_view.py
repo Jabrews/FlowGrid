@@ -3,6 +3,7 @@ from rest_framework import viewsets, permissions
 from rest_framework.decorators import action 
 from rest_framework.response import Response
 from rest_framework import throttling
+from django.db.models import F
 
 
 
@@ -87,3 +88,57 @@ class TrackObjTimerView(viewsets.ModelViewSet):
 
         trackObjTimer.delete()
         return Response({"success": "Successfully deleted item"}, status=200)
+    
+
+    @action(
+        detail=False,
+        methods=['get'],
+        url_path=r'findTrackerObjsByTimerI/(?P<gridItemI>[^/.]+)'
+    )
+    def findTrackerObjsByTimerI(self, request, gridItemI=None):
+
+        qs = TrackObjTimer.objects.filter(
+            user=request.user,
+            gridItemI=gridItemI
+        )
+
+        return Response(
+            self.get_serializer(qs, many=True).data,
+            status=200
+        )
+
+    @action(
+        detail=False,
+        methods=['patch'],
+        url_path='listUpdateTrackObj'
+    )
+    def listUpdateTrackObj(self, request):
+
+        listTrackObjId = request.data.get("listTrackObjId", [])
+        timeFieldName = request.data.get("timeFieldName")
+        newTimeValue = request.data.get("newTimeValue")
+
+        print(listTrackObjId, timeFieldName, newTimeValue)
+
+
+        if not listTrackObjId or not timeFieldName or newTimeValue is None:
+            return Response({"error": "missing data"}, status=400)
+
+        # dynamic field update
+        update_kwargs = {
+            timeFieldName: F(timeFieldName) + newTimeValue
+        }
+
+        updated_count = TrackObjTimer.objects.filter(
+            user=request.user,
+            id__in=listTrackObjId
+        ).update(**update_kwargs)
+
+        return Response({
+            "updated": updated_count
+        })
+
+
+
+
+

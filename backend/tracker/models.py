@@ -40,6 +40,7 @@ class TrackObjTimer(models.Model) :
         on_delete=models.CASCADE,
         related_name='track_obj_timer'
     )
+    timespentSeconds = models.IntegerField(default=0)
     elaspedSeconds = models.IntegerField(default=0)
     trackerI = models.CharField(max_length=45) 
     gridItemI = models.CharField(max_length=45) 

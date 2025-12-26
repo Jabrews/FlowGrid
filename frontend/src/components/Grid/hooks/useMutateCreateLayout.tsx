@@ -17,7 +17,6 @@ export default function useMutateCreateLayout() {
 
     return useMutation({
         mutationFn : async (layout :  Layout) => {
-            console.log('grid id :', gridId)
 
 
             if (!csrf_token) throw new Error('Could not find csrf token')

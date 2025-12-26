@@ -23,7 +23,6 @@ export default function ConnectionToggleModal() {
 
     const {data} = queryTrackObjsByItemI({activeConnectionItemI})
 
-    console.log(data)
 
 
     return (

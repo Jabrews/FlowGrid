@@ -1,6 +1,10 @@
 // utill
 import type { TrackObj } from "../../../Grid/GridItemHeader/util/track_obj_type"
 
+// tracker menus
+import TimerMenu from "../TrackerMenus/TimerMenu/TimerMenu"
+
+
 type RenderTrackerMenuProps = {
     index : number,
     trackObjects : TrackObj[]
@@ -22,7 +26,7 @@ export default function useRenderTrackerMenus({index, trackObjects} : RenderTrac
 
         case 'timer' :
             return (
-                <p> timer </p>
+                <TimerMenu trackObject={trackObjects[index]}/>
             )
         default :
             return (

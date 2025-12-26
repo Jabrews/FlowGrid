@@ -35,7 +35,6 @@ export default function useMutateCreateTrackObject() {
 
         mutationFn: async ({trackerI, gridItemI, trackerType, gridItemType, trackerId, gridItemId} : CreateTrackObjectProps) => {
 
-            console.log(gridItemId)
 
             if (!csrf_token) throw new Error('no csrf token')
             if (!trackerI  || !gridItemI || !trackerType || !gridItemType) throw new Error('missing props')
@@ -77,12 +76,21 @@ export default function useMutateCreateTrackObject() {
             
         },
         onSuccess : (_data, variables)  => {
+            // for line renderer
             queryClient.invalidateQueries({
                 queryKey: [`track-objs-all-${grid_id}`]
             })        
+            // for tracker and its menus
             queryClient.invalidateQueries({
                 queryKey : [`tracker-connections-${variables.trackerI}`]
             })
+            // for grid items acessing their own (timer, todo list)
+            queryClient.invalidateQueries({
+                queryKey : [`tracker-connections-${variables.gridItemI}`]
+            })
+
+
+
         }
     })
 

@@ -62,13 +62,12 @@ export default function Timer({i} : TimerProps) {
 
                                 <div className='timer-child'>
                                     {timerView == 'countdown' ? (
-                                        <CountdownTimer />
+                                        <CountdownTimer timerI={i}/>
                                     ) : (
-                                        <StopwatchTimer />
+                                        <StopwatchTimer timerI={i}/>
                                     )} 
                                 </div>
                             </div> 
-                        
                         </>
 
                     )}

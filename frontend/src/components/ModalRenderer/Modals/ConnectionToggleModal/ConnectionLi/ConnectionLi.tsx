@@ -46,7 +46,7 @@ export default function ConnectionLi({trackObj, activeConnectionItemType} : Conn
                 {trackerEvent ? (
                     <div className='connection-li-container'>
                         {/* ONLY DIFFRENCE BEWTEEN THEM*/}
-                        <p> {trackObj.gridItemI} </p>
+                        <p> {trackObj.customName} </p>
                         <button 
                             onClick={handleDisconnectBtn}
                         > 
@@ -56,7 +56,7 @@ export default function ConnectionLi({trackObj, activeConnectionItemType} : Conn
                 )
                 : (
                     <div className='connection-li-container'>
-                        <p> {trackObj.trackerI} </p>
+                        <p> {trackObj.customName}</p>
                         <button 
                             onClick={handleDisconnectBtn}
 

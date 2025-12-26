@@ -11,5 +11,6 @@ export type TrackObj = {
     trackerI : string,
     user? : string,
     elaspedSeconds? : number
+    timespentSeconds? : number
     gridItemId : string,
 }
