@@ -40,7 +40,6 @@ class AllTrackObjView(viewsets.ViewSet):
         i = i.strip()
         gridItemType = gridItemType.strip()
 
-        print(gridItemType)
         lookup_field = "trackerI" if gridItemType == "tracker" else "gridItemI"
         filter_kwargs = {
             "user": request.user,
@@ -55,7 +54,6 @@ class AllTrackObjView(viewsets.ViewSet):
                 TrackObjTimerSerializer(timer_qs, many=True).data
             )
 
-        print('results : ', results)
 
         # example_qs = ExampleTrackObj.objects.filter(**filter_kwargs)
         # if example_qs.exists():

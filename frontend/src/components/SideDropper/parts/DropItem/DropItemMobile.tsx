@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 
 // hooks 
 import { get_svg_icons } from '../../../util/get_svg_icons';
@@ -16,12 +17,14 @@ export default function DropItemMobile({type} : DroppableItemMobileProps) {
     // hook init
     const handleOnClick = useOnClickMobile(type)
 
+    const displayText = type.replace(/[_-]/g, " "); 
+
 
     return (
         <div className='droppable-table-item'
             onClick={handleOnClick}
         >
-           <p> {type} </p> 
+           <p> {displayText} </p> 
            <div
            
            >

@@ -63,9 +63,9 @@ export function get_svg_icons({ icon, size }: UseSvgIconArguments) {
       return React.createElement(AlarmClock, { size });
     case 'tracker':
       return React.createElement(Cable, { size });
-    case 'sticky-notes':
+    case 'sticky_note':
       return React.createElement(StickyNote, { size });
-    case 'table-list':
+    case 'table_list':
       return React.createElement(TableProperties, { size });
     case 'Side-Dropper-Open':
       return React.createElement(PanelLeftOpen, { size });

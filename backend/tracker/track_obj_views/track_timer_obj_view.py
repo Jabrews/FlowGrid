@@ -118,8 +118,6 @@ class TrackObjTimerView(viewsets.ModelViewSet):
         timeFieldName = request.data.get("timeFieldName")
         newTimeValue = request.data.get("newTimeValue")
 
-        print(listTrackObjId, timeFieldName, newTimeValue)
-
 
         if not listTrackObjId or not timeFieldName or newTimeValue is None:
             return Response({"error": "missing data"}, status=400)

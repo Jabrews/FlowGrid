@@ -28,6 +28,7 @@ export default function GridItemHeader({ i, type, layoutId}: GridItemHeaderProps
     }
     const waitForConfirm = ask()
     toggleShowDeleteModal(true)
+    console.log(type, i)
     const confirmed = await waitForConfirm
     if (confirmed) {
       mutateDeleteLayout.mutate({

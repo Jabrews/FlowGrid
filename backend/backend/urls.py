@@ -35,5 +35,6 @@ urlpatterns = [
     # gridItems
     path("api/", include('timers.urls')),
     path("api/", include('tracker.urls')),
+    path("api/", include("stickynote.urls")) 
 
 ]

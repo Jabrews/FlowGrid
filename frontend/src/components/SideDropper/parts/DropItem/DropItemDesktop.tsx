@@ -24,13 +24,16 @@ export default function DropItemDesktop({type} :DroppableItemDesktopProps){
     toggleEditorScrollEventActive(false)
   }
 
+  const displayText = type.replace(/[_-]/g, " "); 
+
+
     return (
         <div className='droppable-table-item'
             draggable
             onDragStart={handleDragStart}
             onDragEnd={handleDragDrop}
         >
-           <p> {type} </p> 
+           <p> {displayText} </p> 
            <div
            
            >
