@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-
 // hooks 
 import { get_svg_icons } from '../../../util/get_svg_icons';
 import useOnClickMobile from './hooks/useOnClickMobile'

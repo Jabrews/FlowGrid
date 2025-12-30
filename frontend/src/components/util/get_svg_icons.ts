@@ -34,7 +34,6 @@ import { Pen } from 'lucide-react';
 // Navbar
 import {User} from 'lucide-react'
 import { Settings } from 'lucide-react';
-import { setStyle } from 'framer-motion';
 
 
 
