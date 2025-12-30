@@ -31,6 +31,8 @@
 @use './gridItems/Tracker/connections' as *;
 // sticky note
 @use './gridItems/sticky_notes/sticky_notes' as *;
+// table
+@use './gridItems/table/table' as *;
 
 
 /* Import a clean UI font */

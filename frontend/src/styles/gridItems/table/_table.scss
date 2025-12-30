@@ -1,0 +1,26 @@
+
+.table-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+  .table-header {
+    input {
+        background-color: transparent;
+        border :none;
+        font-size: 1.2em;
+        padding : 0.2em;
+        text-align: center;
+    }
+  }  
+
+  .table-body {
+    width: 20em;
+    height: 20em;
+    background-color: gray;
+  }
+
+
+
+}

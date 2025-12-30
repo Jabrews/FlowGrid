@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     'timers',
     'tracker',
     'stickynote',
+    'table',
 
 
 ]

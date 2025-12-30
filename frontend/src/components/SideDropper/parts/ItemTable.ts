@@ -5,7 +5,7 @@ const firstItems = [
     'timer',
     'tracker',
     'sticky_note',
-    'table_list',
+    'table',
 ]
 
 export const itemTable = {

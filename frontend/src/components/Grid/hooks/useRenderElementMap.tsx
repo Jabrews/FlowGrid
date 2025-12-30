@@ -3,7 +3,7 @@ import MobileItemPreview from "../../gridItems/MobileItemPreview/MobileItemPrevi
 import Timer from "../../gridItems/Timer/Timer";
 import Tracker from "../../gridItems/Tracker/Tracker";
 import StickyNote from "../../gridItems/StickyNote/StickyNote";
-// import TableList from '../../../elements/TableList/TableList'
+import Table from "../../gridItems/Table/Table";
 
 // element parts
 // import NameHeader from '../../../elements/NameHeader/NameHeader'
@@ -45,12 +45,12 @@ export default function useRenderElementMap({ type, i, isMobilePreview = false }
           <StickyNote parentElementI={i} />
         </>
       )
-    // case 'Table-List' :
-    //   return (
-    //     <>
-    //       <TableList id={id} />
-    //     </>
-    //   )
+    case 'table' :
+      return (
+        <>
+          <Table parentElementI={i} />
+        </>
+      )
     default:
       return <div key={i}>Unknown Element</div>;
   }

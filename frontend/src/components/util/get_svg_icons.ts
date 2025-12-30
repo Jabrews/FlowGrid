@@ -1,4 +1,4 @@
-// Grid
+
 // side dropper display
 import React from 'react';
 import { AlarmClock } from 'lucide-react';
@@ -71,7 +71,7 @@ export function get_svg_icons({ icon, size }: UseSvgIconArguments) {
       return React.createElement(Cable, { size });
     case 'sticky_note':
       return React.createElement(StickyNote, { size });
-    case 'table_list':
+    case 'table':
       return React.createElement(TableProperties, { size });
     case 'Side-Dropper-Open':
       return React.createElement(PanelLeftOpen, { size });

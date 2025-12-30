@@ -63,8 +63,6 @@ export default function Tracker({i} : TrackerProps) {
                 selectedTrackObj : trackObjs[selectedIndex]
             })
         }
-
-       // run mutation 
     }
 
 
