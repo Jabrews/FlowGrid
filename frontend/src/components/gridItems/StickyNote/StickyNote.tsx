@@ -24,19 +24,23 @@ export default function StickyNote({ parentElementI }: StickyNoteProps) {
         stickyNoteI : parentElementI,
         stickyNoteId : Sticky?.id
     })
+    console.log('sticky page : ', StickyPage, selectedIndex)
     const createStickyPage = useCreateStickyPage()
     const deleteStickyPage = useDeleteSticky()
 
     const naviateNoteListFoward = () => {
         if (!StickyPage) return
-        if (selectedIndex+ 1 <= StickyPage.length)
-            setSelectedIndex((prev) => prev + 1)
+        if (selectedIndex + 1 < StickyPage.length) {
+            setSelectedIndex(prev => prev + 1)
+        }
     }
+
 
     const navigateNoteListBackward = () => {
         if (!StickyPage) return
-        if (selectedIndex - 1 >= 0) 
+        if (selectedIndex - 1 >= 0)  {
             setSelectedIndex((prev) => prev - 1)
+        }
     }
 
     const handleAddNoteList = () => {
@@ -55,7 +59,6 @@ export default function StickyNote({ parentElementI }: StickyNoteProps) {
             stickyPageId : String(StickyPage[selectedIndex].id)
         })
 
-        
 
 
     }
@@ -99,8 +102,13 @@ export default function StickyNote({ parentElementI }: StickyNoteProps) {
         style={{overflowY: 'scroll'}}
         >
 
-        {StickyPage && StickyPage.length > 0 && StickyPage[selectedIndex] ? (
-            <Page stickyPage={StickyPage[selectedIndex]} stickyNoteI={parentElementI}/>
+        {Sticky && StickyPage && StickyPage.length > 0 && StickyPage[selectedIndex] ? (
+            <Page
+            key={StickyPage[selectedIndex].id}
+            stickyPage={StickyPage[selectedIndex]}
+            stickyNoteI={parentElementI}
+            stickyNoteId={Sticky.id}
+            />
         ) : (
             <p> no note found</p>
         )}

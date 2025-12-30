@@ -19,7 +19,7 @@ export default function useQueryStickyNotePage({stickyNoteI, stickyNoteId} : Sti
     const csrf_token = useCsrf()
 
     return useQuery<StickyPage[]>({
-        queryKey : [`sticky-note-page-${stickyNoteI}`],
+        queryKey : ['sticky-note-page', stickyNoteI],
         queryFn : async () => {
  
             if (!csrf_token) throw new Error('no csrf token found')

@@ -27,7 +27,7 @@ export default function useDeleteSticky() {
                 method : 'DELETE'
             }
 
-            mutate_auth({
+            return mutate_auth({
                 queryUrl : `api/sticky_notes/${stickyId}/pages/${stickyPageId}/`,
                 init : init ,
                 csrf_token : csrf_token,
@@ -35,7 +35,7 @@ export default function useDeleteSticky() {
 
         },
         onSuccess: (_data, variables) => {
-            queryClient.invalidateQueries({queryKey : [`sticky-note-page-${variables.stickyI}`]})
+            queryClient.invalidateQueries({queryKey : ['sticky-note-page', variables.stickyI]})
         },
         retry: false,
 

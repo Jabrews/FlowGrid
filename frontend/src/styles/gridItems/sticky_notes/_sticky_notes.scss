@@ -121,7 +121,6 @@
         font-weight: 525;
     }
 
-    form {
         width: 100% ;
         .title {
             width: 100%;
@@ -132,21 +131,20 @@
             font-size: 1.3em;
             font-weight: 600;
         }
-    }
 
 
     /* for adding sticky pages*/
     .add-btn {
-        margin-top: 27em;
-        margin-bottom: 0;
-        align-self:  center;
-        justify-self :end;
+        margin-bottom: 1em;
+        margin-top: auto;   /* pushes button to bottom */
+        align-self: center;
+        // justify-self :end;
         border-radius: 1em;
         font-size: 1em;
         font-weight: bold;
         padding: 0.6em;
         border :none;
-        position: absolute;
+        // position: absolute;
 
         &:hover {
             scale : 1.2;
@@ -158,125 +156,55 @@
 
 }
 
-.note-area-container {
-    display: flex;
-    align-items: flex-start;
+.note-container {
+    width: 100%; 
+    margin-left:  0.2em;
 
-    justify-content: center;
-    flex-direction: column;
+  .line-container {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
 
-    .note-area-item-container {
+
+    .line-icon {
+        padding : 0;
+        margin : 0;
+        grid-column: 1 / 2;
         display: flex;
-        flex-direction: column;
-        align-items: stretch;
+        align-items: center;
         justify-content: center;
-    } 
-
-    .note-area-add-item-btn {
-        border: none;
-        padding: 0.5em;
-        border-radius: 1em;
-        background-color: ghostwhite;
-        font-size: 0.8em;
-        font-weight: 500;
-        align-self: center;
-        margin-bottom: 1em;
-        margin-left: 5em;
-        cursor: pointer; 
-
-        &:hover {
-            background-color: white;
-        }
+        cursor : pointer;
     }
 
-}
-
-.note-area-item{
-    position: relative; // ✅ Add this line
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-items:center;
-    margin-top: 0.8em;
-    margin-bottom: 0.8em;
-    margin-left: 1em;
-
-    /* bullet */
-    p {
-        margin-right: 0.4em;
-        margin-left: 0.8em;
-        margin-bottom: 10px;
-        font-size: 1.2em;
-        font-weight: 500;
-        color: black;
-    }
-
-    /* checkbox / input */
-    input {
-        margin-right: 0.4em;
-        margin-left: 0.8em;
-        margin-bottom: 10px;
-        font-size: 1.2em;
-        font-weight: 500;
-        color: black;     
-        background-color: transparent;
-    }
-
-    textarea {
-        background-color: transparent;
-        resize: vertical;
+    // text area
+    .line-text {
+        grid-column: 2 / 6;
+        background-color:  rgb(158, 158, 158);
+        border : none;
+        font-size: 1em;
+        width : 100%;
+        resize: none;
         border: none;
         color: black;
         white-space: normal;
         word-wrap: break-word;
-        overflow-wrap: break-word;
-        height: 100%;
-        width: 19em;
-        
-        &:hover {
-            background-color: transparent;
-            border: none;
-        }
+        overflow: hidden;      
 
-        &:focus {
-            outline: none;
-            border: none;
-            box-shadow: none;
-            text-decoration: underline;
-            background-color: transparent;
-        }
-
-        &::placeholder {
-            color: rgb(68, 68, 68);
-        }
     }
 
-}
+    .line-dlt-btn {
+        cursor: pointer;
+        margin-right : 0.2em;
+        grid-column: 6 / 7;
+        background-color:  rgb(158, 158, 158);;
+        border : none;
+        color : red;
 
-.note-area-item-delete-icon {
-    position: absolute;
-    align-self: center;
-    left : -0.4em;
-    top : 0.1em;
-    background-color: transparent;
+        &:hover {
+            scale : 1.2;
+        }
 
-    // button {
-    //     border: none;
-    //     background-color: transparent;
-    //     font-size: 1.2em;
-    //     cursor: pointer;
-    //     border-radius: 1em;
-
-    //     .delete-icon {
-    //         font-size: 0.5em;
-    //         color: red;
-
-    //         &:hover {
-    //             color : black;
-    //         }
-    //     }
-
-    // }
-
+    }
+  }
 }

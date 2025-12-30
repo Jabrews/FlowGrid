@@ -4,9 +4,10 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 # models
-from .models import StickyNote, StickyNotePage 
+from .models import StickyNote, StickyNotePage, StickyNoteLine
 from grid.models import LayoutItem
-from .serializers import StickyNoteSerializer, StickyNotePageSerializer
+from .serializers import StickyNoteSerializer, StickyNotePageSerializer, StickyNoteLineSerializer
+
 
 class StickyNoteView(viewsets.ModelViewSet) :
     serializer_class = StickyNoteSerializer
@@ -78,6 +79,75 @@ class StickyNotePageView(viewsets.ModelViewSet) :
             sticky_note_id=sticky_id,
             user=self.request.user
         )
+
+class StickyNoteLineView(viewsets.ModelViewSet) :
+    serializer_class = StickyNoteLineSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    throttle_classes = [throttling.UserRateThrottle]
+
+    def get_queryset(self): #type: ignore
+        page_id = self.kwargs.get("page_pk")
+
+        print('getting items for : ', page_id)
+        return StickyNoteLine.objects.filter(
+            user=self.request.user,
+            sticky_note_page_id=page_id,
+        )
+
+    def perform_create(self, serializer):
+        page_id = self.kwargs["page_pk"]
+
+        serializer.save(
+            sticky_note_page_id=page_id,
+            user=self.request.user
+        )
+
+    @action(detail=True, methods=['patch'], url_path='changeIconType')
+    def change_icon_type(self, request, sticky_pk=None, page_pk=None, pk=None):
+
+        line = StickyNoteLine.objects.filter(
+            id=pk,
+            sticky_note_page_id=page_pk,
+            user=request.user
+        ).first()
+
+        if not line:
+            return Response({"error": "Not found"}, status=404)
+
+        # cycle icon type
+        current_icon = line.line_symbol
+
+        if current_icon == 'checkbox_filled':
+            line.line_symbol = 'checkbox_empty'
+        elif current_icon == 'checkbox_empty':
+            line.line_symbol = 'dash'
+        elif current_icon == 'dash':
+            line.line_symbol = 'bullet'
+        elif current_icon == 'bullet':
+            line.line_symbol = 'none'
+        elif current_icon == 'none':
+            line.line_symbol = 'checkbox_filled'
+
+        # save changes
+        line.save()
+
+        return Response({"success": "Successfully changed item icon type"}, status=200)
+
+
+
+
+
+        # return Response(self.get_serializer(line).data)
+
+
+        # new_type = request.data.get("line_symbol")
+        # if not new_type:
+        #     return Response({"error": "Missing line_symbol"}, status=400)
+
+        # line.line_symbol = new_type
+        # line.save()
+
+        # return Response(self.get_serializer(line).data)
 
 
 

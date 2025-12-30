@@ -20,7 +20,7 @@ export default function useQuerySticky({stickyNoteI} : QueryStickyProps) {{
     const grid_id = useGridId()
 
     return useQuery<Sticky>({
-        queryKey : [`sticky-note-${stickyNoteI}`],
+        queryKey : ['sticky-note', stickyNoteI],
         queryFn : async () => {
 
             if (!csrf_token) throw new Error('no csrf token found')

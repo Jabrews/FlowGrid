@@ -39,7 +39,7 @@ export default function useMutateStickyPage() {
 
         },
         onSuccess : (_data, variables) => {
-            queryClient.invalidateQueries({queryKey : [`sticky-note-page-${variables.stickyNoteId}`]})
+            queryClient.invalidateQueries({queryKey : ['sticky-note-page' , variables.stickyNoteI]})
 
         }
 

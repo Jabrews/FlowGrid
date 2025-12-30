@@ -12,4 +12,12 @@ export type StickyPage = {
     id : number,
     title : string,
     stickyNoteId: string 
+    user : string,
+}
+
+export type LineType = {
+    id : number,
+    line_symbol : string,
+    stickyNotePageId : string,
+    text : string,
 }

@@ -36,4 +36,38 @@ class StickyNotePage(models.Model) :
 
 
 
+class StickyNoteLine(models.Model) : 
+
+    LINE_SYMBOL_TYPES = (
+        ("checkbox_filled", "checkbox_filled"),
+        ("checkbox_empty", "checkbox_empty"),
+        ("dash", "dash"),
+        ("bullet", "bullet"),
+        ("none", "none"),
+    )
+
+    sticky_note_page = models.ForeignKey(
+        StickyNotePage,
+        on_delete=models.CASCADE,
+        related_name='sticky_note_lines'
+    )
+    user = models.ForeignKey(
+        AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='sticky_note_lines',
+    ) 
+    line_symbol = models.CharField(
+        max_length=32,
+        choices=LINE_SYMBOL_TYPES,
+        default='dash'
+    )
+    text = models.CharField(
+        max_length=100,
+        default='',
+    )
+
+
+
+
+
 

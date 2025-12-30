@@ -59,6 +59,3 @@ class TrackerView(viewsets.ModelViewSet) :
         tracker.delete()
         return Response({"success": "Successfully deleted item"}, status=200)
 
-
-
-

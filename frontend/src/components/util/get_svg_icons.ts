@@ -18,6 +18,12 @@ import {Move} from 'lucide-react'
 // tracker input / output
 import { Plug } from 'lucide-react';
 import { Unplug } from 'lucide-react';
+// sticky note line symbols
+import { Square } from 'lucide-react';
+import { SquareCheck } from 'lucide-react';
+import { Dot } from 'lucide-react';
+import { Minus } from 'lucide-react';
+
 
 // Home Menu
 import { ChevronDown } from 'lucide-react';
@@ -28,6 +34,7 @@ import { Pen } from 'lucide-react';
 // Navbar
 import {User} from 'lucide-react'
 import { Settings } from 'lucide-react';
+import { setStyle } from 'framer-motion';
 
 
 
@@ -87,6 +94,28 @@ export function get_svg_icons({ icon, size }: UseSvgIconArguments) {
       return React.createElement(Plug, { size });
     case "unplug" :
       return React.createElement(Unplug, { size });
+
+    // sticky note
+    case "checkbox_empty" :
+      // these are switched 
+      return React.createElement(SquareCheck, { size });
+    case "checkbox_filled" :
+      return React.createElement(Square, { size });
+    case "bullet" :
+      return React.createElement(Dot, { size });
+    case "dash" :
+      return React.createElement(Minus, {size})
+    case "none" :
+      return React.createElement(
+        "p",
+        { style: { backgroundColor: "lightgray" } },
+        ""
+      );
+
+
+
+
+
 
 
 
