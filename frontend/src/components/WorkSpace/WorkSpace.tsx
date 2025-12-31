@@ -1,5 +1,11 @@
 import { useRef} from "react";
 import { DndContext, DragOverlay} from "@dnd-kit/core";
+import {
+  PointerSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
 
 // hooks
 import useIsMobileScreen from "../hooks/useIsMobileScreen"; 
@@ -55,6 +61,21 @@ export default function WorkSpace() {
         scrollTo: { top: 650, left: 1000 },
     })
 
+    // mobile drag annd drop (tracker input)
+    const sensors = useSensors(
+    useSensor(PointerSensor, {
+        activationConstraint: {
+        distance: 5, // prevents accidental drags
+        },
+    }),
+    useSensor(TouchSensor, {
+        activationConstraint: {
+        delay: 250,   // long-press on mobile
+        tolerance: 5,
+        },
+    })
+    );
+
 
     return (
         <div 
@@ -67,6 +88,7 @@ export default function WorkSpace() {
             <ModalRenderer />
 
             <DndContext
+                sensors={sensors}
                 onDragEnd={(event) => {
                     if (event.over?.data.current?.type == 'tracker') {
                         // check in Connections/trackerOutput & input for this drag obj

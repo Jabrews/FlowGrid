@@ -59,11 +59,13 @@ export default function TrackerInput({parentElementI, parentElementType} : Track
             </svg>
         </div>
 
-        { <p
+        <p
             onClick={handleOnPlugClick} 
+            onPointerDown={(e) => e.stopPropagation()}
+
         > 
             {get_svg_icons({icon : 'plug', size : 23})} 
-        </p> }
+        </p> 
     </div>
   );
 
