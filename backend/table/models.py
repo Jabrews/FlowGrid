@@ -25,6 +25,13 @@ class Table(models.Model) :
     )
 
 class Column(models.Model) :
+    user = models.ForeignKey(
+        AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='columns'
+    )
+
+
     table = models.ForeignKey(
         Table,
         on_delete=models.CASCADE,
@@ -34,6 +41,13 @@ class Column(models.Model) :
     index = models.IntegerField()
 
 class Row(models.Model) :
+
+    user = models.ForeignKey(
+        AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='rows'
+    )
+   
     table = models.ForeignKey(
         Table,
         on_delete=models.CASCADE,
@@ -44,6 +58,11 @@ class Row(models.Model) :
 
 
 class Cell(models.Model) :
+    user = models.ForeignKey(
+        AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='cells'
+    )
     table = models.ForeignKey(
         Table,
         on_delete=models.CASCADE,
@@ -54,12 +73,15 @@ class Cell(models.Model) :
         on_delete=models.CASCADE,
         related_name='cells'
     )
-    rows = models.ForeignKey(
+    row = models.ForeignKey(
         Row ,
         on_delete=models.CASCADE,
         related_name='cells'
     )
     text = models.CharField(max_length=50, default='')
+    rowIndex = models.IntegerField()
+    columnIndex = models.IntegerField()
+
 
 
 

@@ -16,9 +16,41 @@
   }  
 
   .table-body {
-    width: 20em;
-    height: 20em;
-    background-color: gray;
+    display: grid;
+    grid-template-columns: 1fr 10fr;
+    
+    // BUTTONS
+    .table-btn {
+        background-color: teal;
+        border-radius: 1em;
+        font-size: 1.4em;
+        font-weight: bold;
+        border: none;
+        padding: 0.2em;
+        
+        &:hover {
+            scale : 1.1;
+        }
+
+    }
+
+    .add-column-btn {
+        margin-right: 0.2em;
+        align-self: center;
+        justify-self: center;
+    }
+
+    .add-row-btn {
+        margin-top: 0.2em;
+        grid-column: 1 / -1;
+        align-self: center;
+        justify-self: center;
+
+    }
+    //CELL STYLES
+
+
+
   }
 
 

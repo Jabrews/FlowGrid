@@ -25,12 +25,12 @@ export default function useMutateTable() {
             if (!csrf_token) throw new Error('no csrf token found')
 
             const init : RequestInit = {
-                method : 'Patch',
+                method : 'PATCH',
                 body : JSON.stringify({name : newName}),
             }
 
             return mutate_auth({
-                queryUrl : `api/tables/${tableId}`,
+                queryUrl : `api/tables/${tableId}/`,
                 init : init,
                 csrf_token: csrf_token,
             })

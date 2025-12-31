@@ -14,25 +14,23 @@ class TableSerializer(serializers.ModelSerializer) :
 class ColumnSerializer(serializers.ModelSerializer)  : 
 
     class Meta :
-        models = Column
+        model = Column
         fields = ['id', 'index']
-        read_only_fields = ['id']
+        read_only_fields = ['id', 'index']
 
 class RowSerializer(serializers.ModelSerializer)  : 
 
     class Meta :
-        models = Row 
+        model = Row 
         fields = ['id', 'index']
-        read_only_fields = ['id']
-
-
+        read_only_fields = ['id', 'index']
 
 class CellSerializer (serializers.ModelSerializer) :
     tableId = serializers.CharField(source='table.id', read_only=True)
+    columnIndex = serializers.CharField(source='column.index', read_only=True)
+    rowIndex = serializers.CharField(source='row.index', read_only=True)
 
     class Meta :
-        models = Cell
-        fields = ['id', 'text', 'tableId']
-        read_only_fields = ['id', 'tableId']
-        constraints = [
-    ]
+        model = Cell
+        fields = ['id', 'text', 'tableId', 'columnIndex', 'rowIndex']
+        read_only_fields = ['id', 'tableId', 'columnIndex', 'rowIndex']
