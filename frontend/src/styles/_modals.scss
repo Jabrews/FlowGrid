@@ -66,13 +66,21 @@
 
   .big-h2 {
     align-self: flex-start;
-    font-size: 2em;
+    font-size: clamp(0.8em, 1em, 2em);
     margin-bottom: 0.25em;
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
 
   .tiny-h2 {
     font-size: 1em;
     margin-bottom: 1.5em;
+  }
+
+  p {
+    overflow-wrap: break-word;
+    word-break: break-word;
+    font-size: 1em;
   }
 
   .exit-btn {
