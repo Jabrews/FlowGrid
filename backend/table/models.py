@@ -78,7 +78,11 @@ class Cell(models.Model) :
         on_delete=models.CASCADE,
         related_name='cells'
     )
-    text = models.CharField(max_length=50, default='')
+    text = models.CharField(
+        max_length=50,
+        blank=True,
+        default=''
+    )
     rowIndex = models.IntegerField()
     columnIndex = models.IntegerField()
 

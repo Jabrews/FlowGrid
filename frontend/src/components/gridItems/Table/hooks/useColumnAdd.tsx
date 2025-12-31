@@ -39,7 +39,9 @@ export default function useColumnAdd() {
         },
         onSuccess: (_data, variables) => {
             queryClient.invalidateQueries({queryKey : [`cells`,variables.parentElementI]})
-        }
+        },
+        retry: false,
+
     })
 
 

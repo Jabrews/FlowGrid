@@ -73,6 +73,13 @@ class ColumnView(viewsets.ModelViewSet) :
     serializer_class = ColumnSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+    def get_queryset(self): #type: ignore
+        table_id = self.request.data.get("tableId") #type: ignore
+        return Column.objects.filter(
+            user = self.request.user,
+            table_id = table_id
+
+        )
 
     def perform_create(self, serializer):
         table_id = self.request.data.get("tableId") #type: ignore
@@ -146,7 +153,7 @@ class ColumnView(viewsets.ModelViewSet) :
                 table_id=table_id
             ).order_by("index")
 
-            for new_index, column in enumerate(columns):
+            for new_index, column in enumerate(columns, start=1):
                 if column.index != new_index:
                     column.index = new_index
                     column.save(update_fields=["index"])
@@ -158,6 +165,13 @@ class RowView(viewsets.ModelViewSet):
     serializer_class = RowSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+    def get_queryset(self): #type: ignore
+        table_id = self.request.data.get("tableId") #type: ignore
+        return Row.objects.filter(
+            user = self.request.user,
+            table_id = table_id
+        )   
+
     def perform_create(self, serializer):
 
         tableId = self.request.data.get("tableId") #type: ignore
@@ -166,8 +180,8 @@ class RowView(viewsets.ModelViewSet):
         with transaction.atomic():
             # create the row
             total_rows = Row.objects.filter(
+                table_id=tableId,
                 user=self.request.user,
-                table_id=tableId
             ).count()
 
             row = serializer.save(
@@ -246,6 +260,7 @@ class CellView(viewsets.ModelViewSet):
     def get_queryset(self):  # type: ignore
         
         table_id = self.request.query_params.get("tableId") #type: ignore
+        print('table id : .', table_id)
 
         if not table_id:
             return Cell.objects.none()

@@ -39,7 +39,8 @@ export default function useRowAdd() {
         },
         onSuccess : (_data, variables) => {
             queryClient.invalidateQueries({queryKey : [`cells`, variables.parentElementI]})
-        }
+        },
+        retry: false,
     })
 
 

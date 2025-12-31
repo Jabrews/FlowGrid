@@ -1,58 +1,121 @@
-
 .table-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 
   .table-header {
     input {
-        background-color: transparent;
-        border :none;
-        font-size: 1.2em;
-        padding : 0.2em;
-        text-align: center;
+      background-color: transparent;
+      border: none;
+      font-size: 1.2em;
+      padding: 0.2em;
+      text-align: center;
     }
-  }  
+  }
 
   .table-body {
     display: grid;
-    grid-template-columns: 1fr 10fr;
-    
+    grid-template-columns: 10fr 1fr;
+    align-items: stretch;
+
     // BUTTONS
     .table-btn {
-        background-color: teal;
-        border-radius: 1em;
-        font-size: 1.4em;
-        font-weight: bold;
-        border: none;
-        padding: 0.2em;
-        
-        &:hover {
-            scale : 1.1;
-        }
+      background-color: teal;
+      border-radius: 1em;
+      font-size: 1.4em;
+      font-weight: bold;
+      border: none;
+      padding: 0.2em;
 
+      &:hover {
+        scale: 1.1;
+      }
     }
 
     .add-column-btn {
-        margin-right: 0.2em;
-        align-self: center;
-        justify-self: center;
+      margin-left: 0.4em;
+      align-self: center;
+      justify-self: center;
     }
 
     .add-row-btn {
-        margin-top: 0.2em;
-        grid-column: 1 / -1;
-        align-self: center;
-        justify-self: center;
+      margin-top: 0.4em;
+      grid-column: 1 / -1;
+      align-self: center;
+      justify-self: center;
+    }
+
+    .add-initial-btn {
+      width: 110%;
+      align-self: center;
+      justify-self: center;
+      margin: 0.2em;
+      padding: 0.2em;
+      grid-column: 1/-1;
+    }
+
+    // CELL
+    .cell-container {
+      height: 100%; // important
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      
+    }
+
+    .cell-textarea {
+      width: 100%;
+      min-width: 6em;      
+      height: 100%;
+      overflow: hidden;
+      resize: none;
+      padding-top: 1em;
+
+      /* center focus */
+      text-align: center;
+      align-self: center;
+    }
+
+    /* top delete button */
+    .top-del-btn {
+      color: red;
+      font-weight: bolder;
+      font-size: 0.6em;
+      background-color: transparent;
+      border: none;
+
+      position: absolute;
+      top: -0.6em;
+      left: 50%;
+      transform: translateX(-50%);
+
+      &:hover {
+        scale : 1.2;
+        cursor: pointer;
+      }
+    }
+
+    /* left delete button */
+    .left-del-btn {
+      color: red;
+      font-weight: bolder;
+      font-size: 0.6em;
+      background-color: transparent;
+      border: none;
+
+      position: absolute;
+      left: -0.6em;
+      top: 40%;
+      transform: translateY(-50%);
+
+      &:hover {
+        scale : 1.2;
+        cursor: pointer;
+      }
 
     }
-    //CELL STYLES
-
-
-
   }
-
-
-
 }

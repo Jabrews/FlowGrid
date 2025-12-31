@@ -22,8 +22,6 @@ export async function fetch_auth({ queryUrl, init = {}, csrf_token}: FetchProps)
 
         if (!res.ok) {
         const errorText = await res.text();
-        console.error(" fetch_auth failed:", res.status, res.statusText);
-        console.error(" Error response:", errorText);
         throw new Error(`Request failed with ${res.status}: ${errorText}`);
         }
 

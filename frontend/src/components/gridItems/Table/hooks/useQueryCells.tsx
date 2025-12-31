@@ -22,6 +22,7 @@ export default function useQueryCells({parentElementI, tableId} : QueryCellsProp
 
             if (!csrf_token) throw new Error('no csrf token found')
 
+
             const init : RequestInit = {
                 method : 'GET',
             }
@@ -31,10 +32,7 @@ export default function useQueryCells({parentElementI, tableId} : QueryCellsProp
                 init : init,
                 csrf_token : csrf_token,
             })
-
-
         },
-        retry : false,
     })
 
 }

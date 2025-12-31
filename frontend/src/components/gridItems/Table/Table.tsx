@@ -4,11 +4,7 @@ import { useState, useEffect } from "react";
 import useQueryTable from "./hooks/useQueryTable";
 import useMutateTable from "./hooks/useMutateTable";
 import useQueryCells from "./hooks/useQueryCells";
-// hooks: column
-import useColumnDelete from "./hooks/useColumnDelete";
 import useColumnAdd from "./hooks/useColumnAdd";
-// hooks: row
-import useRowDelete from "./hooks/useRowDelete";
 import useRowAdd from "./hooks/useRowAdd";
 
 // utill
@@ -28,13 +24,8 @@ export default function Table({ parentElementI }: TableProps) {
     parentElementI: parentElementI,
     tableId: Table?.id,
   });
-
   const mutateTable = useMutateTable();
-  // hooks : column
-  const columnDelete = useColumnDelete();
   const columnAdd = useColumnAdd();
-  // hooks : row
-  const rowDelete = useRowDelete();
   const rowAdd = useRowAdd();
 
   const [dummyTableTitle, setDummyTableTitle] = useState("");
@@ -50,6 +41,7 @@ export default function Table({ parentElementI }: TableProps) {
   if (sortedCells) {
     columnCount = Math.max(...sortedCells.map((c) => c.columnIndex));
   }
+  const hasCells = !!(sortedCells && sortedCells.length > 0);
 
   // handlers
   const handleTableNameChange = () => {
@@ -61,24 +53,8 @@ export default function Table({ parentElementI }: TableProps) {
     });
   };
 
-  const handleColumnDelete = (cellColIndex: number) => {
-    columnDelete.mutate({
-      index: cellColIndex,
-      tableId: Table?.id,
-      parentElementI: parentElementI,
-    });
-  };
-
   const handleColumnAdd = () => {
     columnAdd.mutate({
-      tableId: Table?.id,
-      parentElementI: parentElementI,
-    });
-  };
-
-  const handleRowDelete = (cellRowIndex: number) => {
-    rowDelete.mutate({
-      index: cellRowIndex,
       tableId: Table?.id,
       parentElementI: parentElementI,
     });
@@ -89,6 +65,24 @@ export default function Table({ parentElementI }: TableProps) {
       tableId: Table?.id,
       parentElementI: parentElementI,
     });
+  };
+
+  const handleInitialAdd = async () => {
+    if (!Table?.id) return;
+
+    try {
+      await rowAdd.mutateAsync({
+        tableId: Table.id,
+        parentElementI,
+      });
+
+      await columnAdd.mutateAsync({
+        tableId: Table.id,
+        parentElementI,
+      });
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -102,37 +96,51 @@ export default function Table({ parentElementI }: TableProps) {
       </div>
 
       <div className="table-body">
-        {/* ADD COL*/}
-        <button className="add-column-btn table-btn" onClick={handleColumnAdd}>
-          +
-        </button>
+        {!hasCells ? (
+          /* INITIAL STATE */
+          <button
+            className="table-btn add-initial-btn"
+            onClick={handleInitialAdd}
+          >
+            +
+          </button>
+        ) : (
+          <>
+            {/* TABLE */}
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: `repeat(${columnCount}, 1fr)`,
+                gap: "8px",
+              }}
+            >
+              {sortedCells.map((cell) => (
+                <Cell
+                  key={`cell-${cell.id}`}
+                  id={cell.id}
+                  rowIndex={cell.rowIndex}
+                  columnIndex={cell.columnIndex}
+                  text={cell.text}
+                  tableId={String(Table?.id)}
+                  parentElementI={parentElementI}
+                />
+              ))}
+            </div>
 
-        {/* TABLE */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: `repeat(${columnCount}, 1fr)`,
-            gap: "8px",
-          }}
-        >
-          {CellData && sortedCells ? (
-            sortedCells.map((cell, i) => (
-              <Cell
-                arrayIndex={i}
-                rowIndex={cell.rowIndex}
-                columnIndex={cell.columnIndex}
-                text={cell.text}
-              />
-            ))
-          ) : (
-            <span> </span>
-          )}
-        </div>
+            {/* ADD COLUMN */}
+            <button
+              className="add-column-btn table-btn"
+              onClick={handleColumnAdd}
+            >
+              +
+            </button>
 
-        {/* ADD ROW*/}
-        <button className="add-row-btn table-btn" onClick={handleRowAdd}>
-          +
-        </button>
+            {/* ADD ROW */}
+            <button className="add-row-btn table-btn" onClick={handleRowAdd}>
+              +
+            </button>
+          </>
+        )}
       </div>
     </div>
   );

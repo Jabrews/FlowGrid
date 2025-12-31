@@ -1,31 +1,31 @@
 import { useMutation, useQueryClient} from "@tanstack/react-query";
 
 // hooks
-import useCsrf from "../../../hooks/useCsrf";
+import useCsrf from "../../../../hooks/useCsrf";
 
 // util
-import { mutate_auth } from "../../../util/mutate_auth";
+import { mutate_auth } from "../../../../util/mutate_auth";
 
-type RowDeleteForm = {
+type ColumnDeleteForm = {
     index : number,
     tableId : string
-    parentElementI : string
+    parentElementI :string
 }
 
 
-export default function useRowDelete() {
+export default function useColumnDelete() {
 
     // hook init    
     const csrf_token = useCsrf()
     const queryClient = useQueryClient()
 
     return useMutation({
-        mutationFn : async ({index, tableId} : RowDeleteForm) => {
+        mutationFn : async ({index, tableId} : ColumnDeleteForm) => {
 
             if (!csrf_token) throw new Error('no csrf token')
 
             const init : RequestInit = {
-                method : 'Delete',
+                method : 'DELETE',
                 body : JSON.stringify({
                     index : index,
                     tableId : tableId
@@ -33,17 +33,18 @@ export default function useRowDelete() {
             }
 
             return mutate_auth({
-                queryUrl : `api/rows/deleteRowByindex/`,
+                queryUrl : `api/columns/deleteColumnByIndex/`,
                 init : init,
                 csrf_token: csrf_token
             })
 
 
         },
-        onSuccess: (_data, variables) => {
-            queryClient.invalidateQueries({queryKey : [`cells`,variables.parentElementI]})
-        }
+        onSuccess : (_data, variables) => {
+            queryClient.invalidateQueries({queryKey : [`cells`, variables.parentElementI]})
+            queryClient.invalidateQueries({queryKey : [`table`, variables.parentElementI]})
 
+        }
     })
 
 
