@@ -23,7 +23,9 @@ import { Square } from 'lucide-react';
 import { SquareCheck } from 'lucide-react';
 import { Dot } from 'lucide-react';
 import { Minus } from 'lucide-react';
-
+// zoom btns
+import { ZoomIn } from 'lucide-react';
+import { ZoomOut } from 'lucide-react';
 
 // Home Menu
 import { ChevronDown } from 'lucide-react';
@@ -63,6 +65,12 @@ export function get_svg_icons({ icon, size }: UseSvgIconArguments) {
         return React.createElement(User, { size });    
     case 'Settings' :
         return React.createElement(Settings, {size})
+
+    // zoom btns
+    case 'zoom-in' :
+      return React.createElement(ZoomIn, {size})
+    case 'zoom-out' :
+      return React.createElement(ZoomOut, {size})
 
     // Grid And Workspace Components
     case 'timer':

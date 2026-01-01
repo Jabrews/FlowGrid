@@ -20,7 +20,12 @@ import { gridLayoutProps } from '../util/gridLayoutProps'
 // components
 import GridItemMobile from './GridItemMobile/GridItemMobile'
 
-export default function GridMobile() {
+type GridMobileProps = {
+    gridRef : React.RefObject<HTMLDivElement | null>
+}
+
+
+export default function GridMobile({gridRef} : GridMobileProps) {
 
     const [hasUpdated, toggleHasUpdated] = useState(false)    
 
@@ -72,6 +77,7 @@ export default function GridMobile() {
     return (
         <div 
         className='grid-container grid-mobile'
+        ref={gridRef}
         >
 
             {!layoutData && !gridData  &&

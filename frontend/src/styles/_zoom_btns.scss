@@ -1,0 +1,21 @@
+
+    .zoom-btn-container {
+        position: fixed;
+        bottom : 0;
+        right : 0;
+        margin-bottom: 1em;
+        margin-right: 1em;
+        display: flex;
+        flex-direction: row;
+
+        button {
+            background-color: rgba(128, 128, 128, 0.377);
+            margin-right: 0.5em;
+            margin-left: 0.5em;
+            padding: 1.2em;
+            border :none;
+            border-radius: 1.2em;
+        }
+
+
+    }

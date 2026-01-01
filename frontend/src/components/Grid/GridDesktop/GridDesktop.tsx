@@ -20,7 +20,12 @@ import type { Layout } from '../util/types.ts';
 // components
 import GridItemDesktop from './GridItemDesktop/GridItemDesktop.tsx'
 
-export default function GridDesktop() {
+type GridDesktopProps = {
+    gridRef : React.RefObject<HTMLDivElement | null>
+}
+
+
+export default function GridDesktop({gridRef} : GridDesktopProps) {
 
     // hooks init
     const setGridId = useSetGridId()
@@ -52,6 +57,7 @@ export default function GridDesktop() {
     return (
         <div 
         className='grid-container grid-desktop'
+        ref={gridRef}
         >
 
             {!layoutData && !gridData &&

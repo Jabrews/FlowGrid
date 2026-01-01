@@ -10,6 +10,9 @@
 @use './grid/grid-mobile' as *;
 @use './grid/grid-desktop' as *;
 
+// Zoom Btns
+@use './zoom_btns' as *;
+
 // Side Dropper
 @use './side_dropper/side-dropper' as *;
 @use './side_dropper/side-dropper-mobile' as *;

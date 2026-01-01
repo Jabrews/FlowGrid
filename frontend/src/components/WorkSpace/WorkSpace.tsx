@@ -27,6 +27,7 @@ import ModalRenderer from "../ModalRenderer/ModalRenderer";
 import ItemPreviewBtns from "../ItemPreviewBtns/ItemPreviewBtns";
 import DragOverlaySvg from "./DragOverlaySvg/DragOverlaySvg"; // look at note 
 import LineRenderer from "../LineRenderer/LineRenderer";
+import ZoomButtons from "../ZoomButtons/ZoomButtons";
 
 
 /// NOTE ////
@@ -46,6 +47,8 @@ export default function WorkSpace() {
     // refs
     const editorRef = useRef<HTMLDivElement>(null)
     const cursorRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 })
+    const gridRef = useRef<HTMLDivElement | null>(null); // for zoom 
+
 
     // MOVEMENT STUFF //
     useEditorEdgeDraggingStore({editorScrollEventActive, editorRef});
@@ -111,8 +114,9 @@ export default function WorkSpace() {
                     <ItemPreviewBtns />
                     <SideDropperMobile />
                     <DragOverlay>  <DragOverlaySvg /> </DragOverlay>
-                    <GridMobile />
+                    <GridMobile gridRef={gridRef}/>
                     <LineRenderer containerRef={editorRef}/>
+                    <ZoomButtons gridRef={gridRef}/>
 
                 </>
                 }
@@ -120,10 +124,11 @@ export default function WorkSpace() {
                 {/* desktop*/}
                 {!isMobileScreen &&
                 <>
-                    <GridDesktop />
+                    <GridDesktop gridRef={gridRef}/>
                     <SideDropperDesktop />
                     <DragOverlay>  <DragOverlaySvg /> </DragOverlay>
                     <LineRenderer containerRef={editorRef}/>
+                    <ZoomButtons gridRef={gridRef} />
 
                 </>
                 }
