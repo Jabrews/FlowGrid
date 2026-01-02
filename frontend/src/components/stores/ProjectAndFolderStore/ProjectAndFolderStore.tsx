@@ -4,7 +4,7 @@ import { persist, createJSONStorage } from 'zustand/middleware'
 type ProjectFolderStore = {
   ActiveProjectId: string
   ActiveProjectName: string
-  ActiveFolderId: string
+  ActiveFolderId: string | null
   ActiveFolderName: string
   gridId : string,
   GridUrl: string
@@ -14,6 +14,7 @@ type ProjectFolderStore = {
   setActiveFolderId: (id: string) => void
   setActiveFolderName: (name: string) => void
   setGridId : (id : string) => void
+  resetFolderId : () => void,
 
   setGridUrl: () => void
 }
@@ -33,6 +34,11 @@ export const useProjectAndFolderStore = create<ProjectFolderStore>()(
       setActiveFolderId: (id: string) => set({ ActiveFolderId: id }),
       setActiveFolderName: (name: string) => set({ ActiveFolderName: name }),
       setGridId : (id : string) => set({gridId : id}),
+      resetFolderId : () => set((s) => (
+        {...s,
+          ActiveFolderId : null
+        }
+      )),
 
       setGridUrl: () => {
         const { ActiveFolderId, ActiveProjectId } = get()
@@ -104,3 +110,5 @@ export const useSetGridId = () =>
 export const useSetGridUrl = () =>
   useProjectAndFolderStore((s) => s.setGridUrl)
 
+export const useResetFolderId = () =>
+  useProjectAndFolderStore((s) => s.resetFolderId)

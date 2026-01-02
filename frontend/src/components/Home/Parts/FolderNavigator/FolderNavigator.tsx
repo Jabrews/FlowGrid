@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 // utill
 import { get_svg_icons } from "../../../util/get_svg_icons"
@@ -28,11 +28,17 @@ export default function FolderNavigator() {
 
     // query projectfolder names
     const {data,  isLoading, isPending} = useQueryProjectFolderNames()
+    const [folders, setFolders] = useState(data)
+
 
     // handle project folder add
     const handleAddProjectFolder = () => {
         mutateCreateProjectFolder.mutate()
     }
+
+    useEffect(() => {
+        setFolders(data)
+    }, [data])
 
 
     return (
@@ -54,8 +60,8 @@ export default function FolderNavigator() {
                <div className='folder-body'>
                 {isLoading && <p>Loading folders...</p>}
 
-                {!isLoading && data && data.length > 0 && (
-                    data.map((folder: ProjectFolderPartial) => (
+                {!isLoading && folders && folders.length > 0 && (
+                    folders.map((folder: ProjectFolderPartial) => (
                     <FolderItem
                         key={folder.id}
                         folderId={folder.id}

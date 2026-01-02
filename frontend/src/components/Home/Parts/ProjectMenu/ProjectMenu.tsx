@@ -1,3 +1,4 @@
+import { useState, useEffect} from 'react'
 import {motion} from 'framer-motion'
 
 // hooks
@@ -18,15 +19,25 @@ export type ProjectData = {
 
 export default function ProjectMenu() {
 
+
+
     // hooks
     const activeFolderId = useActiveFolderId()
     const mutateCreateProject = useMutateCreateProject()    
 
-    const {data, isLoading, error, isPending} = useQueryProjects(activeFolderId)
+    const {data, isLoading, error, isPending} = useQueryProjects({folderId : activeFolderId})
+
+    const [projects, setProjects] = useState(data)
 
     const handleCreateBtnDown = () => {
+        if (activeFolderId == null) return
         mutateCreateProject.mutate(activeFolderId)
     }
+
+    useEffect(() => {
+        setProjects(data)
+    }, [data])
+
 
 
     /// NOTE TO SELF : MAKE SURE TO DISPLAY PROJECT BASED UPON LAST USED
@@ -36,7 +47,7 @@ export default function ProjectMenu() {
             <p> is loading...</p> 
         }
 
-        {data && !error && !isLoading && data.map((project : ProjectData) => 
+        {projects && !error && !isLoading && projects.map((project : ProjectData) => 
                 <Project key={project.id}
                     projectName={project.name} 
                     projectId={project.id}

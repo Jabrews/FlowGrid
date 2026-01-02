@@ -224,6 +224,27 @@
     overflow-y: scroll;
     overflow-x: scroll;
 
+    /* scrollbar width */
+    &::-webkit-scrollbar {
+      width: 14px;        /* vertical scrollbar */
+      height: 10px;       /* horizontal scrollbar */
+    }
+
+    /* track (background) */
+    &::-webkit-scrollbar-track {
+    }
+
+    /* draggable handle */
+    &::-webkit-scrollbar-thumb {
+      background: #000;   /* black */
+      border-radius: 8px;
+    }
+
+    /* hover state */
+    ::-webkit-scrollbar-thumb:hover {
+      background: #222;
+    }
+
     
     .project-container {
         border-radius: 1em;

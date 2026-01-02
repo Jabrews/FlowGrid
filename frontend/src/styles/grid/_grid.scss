@@ -5,6 +5,7 @@
     linear-gradient(to right, rgba(0, 0, 0, 0.1) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
     background-size: 3.8em 3.8em;
+    background-color: rgb(212, 212, 212);
     margin: 2.5em;
 }
 
@@ -28,6 +29,7 @@
 
     p {
         cursor: pointer;
+        font-size: 2em;
         padding-left: 0.5em;
         padding-right: 0.5em;
     }

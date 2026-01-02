@@ -36,6 +36,7 @@ export default function useMutateDeleteProject() {
             queryClient.invalidateQueries({
                 queryKey: ['projects', variables.activeProjectId]
             })
+            queryClient.invalidateQueries({queryKey : ['projects', variables.activeFolderId]})
         },
 
 

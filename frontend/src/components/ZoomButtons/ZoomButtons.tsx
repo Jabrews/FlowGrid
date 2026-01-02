@@ -16,7 +16,6 @@ export default function ZoomButtons({gridRef}: ZoomButtonsProps) {
         if (!gridRef.current) return
         scaleRef.current += 0.2;
         gridRef.current.style.transform = `scale(${scaleRef.current})`;
-        // console.log('scale ref : ', scaleRef.current)
 
     }
 
@@ -28,7 +27,6 @@ export default function ZoomButtons({gridRef}: ZoomButtonsProps) {
 
         scaleRef.current -= 0.2;
         gridRef.current.style.transform = `scale(${scaleRef.current})`;
-        console.log('scale ref : ', scaleRef.current)
 
     }
 

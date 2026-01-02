@@ -3,14 +3,21 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 // hooks
 import useCsrf from "../../../../../hooks/useCsrf";
 import { mutate_auth } from "../../../../../util/mutate_auth";
+import { useResetFolderId } from "../../../../../stores/ProjectAndFolderStore/ProjectAndFolderStore";
+
+
+type DeleteProjectFolderForm = {
+    id :string | null
+}
 
 export default function useMutateDeleteProjectFolder() {
 
     const queryClient = useQueryClient()    
     const csrf_token = useCsrf()
+    const resetFolderId = useResetFolderId()
 
     return useMutation({
-        mutationFn : async (id : string) => {
+        mutationFn : async ({id} : DeleteProjectFolderForm) => {
 
             if (!csrf_token) throw new Error('couldnt find csrf token')
 
@@ -25,8 +32,10 @@ export default function useMutateDeleteProjectFolder() {
                 csrf_token : csrf_token,
             })
         },
-        onSuccess: () => {
+        onSuccess: (_data, variables) => {
+            resetFolderId()
             queryClient.invalidateQueries({queryKey : ['project_folders']})
+            queryClient.invalidateQueries({queryKey : ['projects', variables.id]})
         }
     })
 
