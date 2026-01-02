@@ -79,14 +79,19 @@ export default function Project({projectName, projectId, project_last_used} : Pr
 
         if (!editValue.trim() || editValue.trim() === projectName) return
 
+        if (activeFolderId == null) return
+
         mutateChangeProjectName.mutate({
-            selectedFolderId : activeFolderId,
+            selectedFolderId: activeFolderId,
             selectedProjectId : activeProjectId,
             newName: editValue.trim(),
         })
     }
 
     const handleDeleteBtn = async () => {
+
+        if (activeFolderId == null) return
+
         const waitForConfirm = ask()  
         toggleShowDeleteModal(true)
         const confirmed = await waitForConfirm
