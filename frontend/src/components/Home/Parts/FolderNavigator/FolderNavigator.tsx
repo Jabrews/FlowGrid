@@ -80,7 +80,7 @@ export default function FolderNavigator() {
                         onClick={handleAddProjectFolder}
                         disabled={isPending}
                     >
-                        +
+                        New
                     </button>
                 </div>
 

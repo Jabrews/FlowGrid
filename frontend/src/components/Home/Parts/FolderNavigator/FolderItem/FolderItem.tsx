@@ -45,7 +45,7 @@ export default function FolderItem({folderId, folderName} : FolderItemProps) {
     toggleShowDeleteModal(true)
     const confirmed = await waitForConfirm
     if (confirmed) deleteProjectFolder.mutate({
-      id : folderId
+      id : folderName
     })
     toggleShowDeleteModal(false)
   }
@@ -73,6 +73,7 @@ export default function FolderItem({folderId, folderName} : FolderItemProps) {
   return (
     <div className="folder-body">
       <motion.div
+        data-testid='folder-item-container'
         className={`folder-item-container ${activeFolderId == folderId ? 'selected' : ''}`}
         onClick={() => handleItemClick()}
         onHoverStart={() => toggleShowBtns(true)}
@@ -92,6 +93,7 @@ export default function FolderItem({folderId, folderName} : FolderItemProps) {
           </p>
 
           <input
+            data-testid='folder-item-input'
             id={folderId}
             className="item-label"
             value={value}
