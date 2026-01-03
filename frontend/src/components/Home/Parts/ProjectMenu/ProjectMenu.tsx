@@ -1,4 +1,3 @@
-import { useState, useEffect} from 'react'
 import {motion} from 'framer-motion'
 
 // hooks
@@ -27,17 +26,10 @@ export default function ProjectMenu() {
 
     const {data, isLoading, error, isPending} = useQueryProjects({folderId : activeFolderId})
 
-    const [projects, setProjects] = useState(data)
-
     const handleCreateBtnDown = () => {
-        if (activeFolderId == null) return
+        if (!activeFolderId) return
         mutateCreateProject.mutate(activeFolderId)
     }
-
-    useEffect(() => {
-        setProjects(data)
-    }, [data])
-
 
 
     /// NOTE TO SELF : MAKE SURE TO DISPLAY PROJECT BASED UPON LAST USED
@@ -47,7 +39,7 @@ export default function ProjectMenu() {
             <p> is loading...</p> 
         }
 
-        {projects && !error && !isLoading && projects.map((project : ProjectData) => 
+        {data && !error && !isLoading && data.map((project : ProjectData) => 
                 <Project key={project.id}
                     projectName={project.name} 
                     projectId={project.id}
@@ -63,6 +55,7 @@ export default function ProjectMenu() {
                 whileHover={{ scale: 1.15 }}     // increase size on hover
                 whileTap={{ scale: 0.95 }}       // optional: press feedback
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                data-testid='add-project-btn'
             >
                 +
             </motion.button>

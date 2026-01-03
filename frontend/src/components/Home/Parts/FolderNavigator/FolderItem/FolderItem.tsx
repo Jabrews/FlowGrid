@@ -45,7 +45,7 @@ export default function FolderItem({folderId, folderName} : FolderItemProps) {
     toggleShowDeleteModal(true)
     const confirmed = await waitForConfirm
     if (confirmed) deleteProjectFolder.mutate({
-      id : folderName
+      id : folderId 
     })
     toggleShowDeleteModal(false)
   }

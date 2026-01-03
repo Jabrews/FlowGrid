@@ -51,9 +51,7 @@ describe('FolderNavigator', () => {
     await userEvent.click(addNewButton)
 
     // assert mutation was triggered
-    expect(mutateCreateProjectFolder).toHaveBeenCalledWith({
-
-    })
+    expect(mutateCreateProjectFolder).toHaveBeenCalledTimes(1)
   })
 })
 

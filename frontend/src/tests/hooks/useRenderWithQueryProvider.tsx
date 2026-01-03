@@ -1,11 +1,17 @@
-import type { ReactElement } from "react";
+import type { ReactNode } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { CookiesProvider } from "react-cookie";
-import {render} from '@testing-library/react'
+import { render } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 
+type RenderOptions = {
+  route?: string;
+};
 
-
-export function useRenderWithQueryProvider(element: ReactElement) {
+export function useRenderWithQueryProvider(
+  children: ReactNode,
+  { route = "/" }: RenderOptions = {}
+) {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: { retry: false },
@@ -13,10 +19,12 @@ export function useRenderWithQueryProvider(element: ReactElement) {
   });
 
   return render(
-    <QueryClientProvider client={queryClient}>
-      <CookiesProvider>
-      {element}
-      </CookiesProvider>
-    </QueryClientProvider>
+    <MemoryRouter initialEntries={[route]}>
+      <QueryClientProvider client={queryClient}>
+        <CookiesProvider>
+          {children}
+        </CookiesProvider>
+      </QueryClientProvider>
+    </MemoryRouter>
   );
 }

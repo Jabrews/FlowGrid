@@ -90,7 +90,7 @@ export default function Project({projectName, projectId, project_last_used} : Pr
 
     const handleDeleteBtn = async () => {
 
-        if (activeFolderId == null) return
+        if (!activeFolderId) return
 
         const waitForConfirm = ask()  
         toggleShowDeleteModal(true)
