@@ -37,5 +37,9 @@ urlpatterns = [
     path("api/", include('tracker.urls')),
     path("api/", include("stickynote.urls")),
     path("api/", include("table.urls")), 
+    # note 
+    path("api/", include("note_navigator.urls")), 
+
+    
 
 ]

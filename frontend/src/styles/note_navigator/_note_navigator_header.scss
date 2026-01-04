@@ -1,0 +1,142 @@
+.note-nav-container {
+
+
+.note-nav-header {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
+        button {
+            cursor : pointer;
+        }
+
+
+        .note-nav-header-mobile {
+            display: flex;
+            flex-direction: row;
+            z-index: 1000;            
+            position: fixed;
+            top: 6em;
+            padding-top: 1em;
+            right: 1em;
+            left: auto;
+            border-radius: 1em;
+            background-color: rgba(127, 255, 212, 0.123);
+
+            // transition:
+            //     top 0.25s ease,
+            //     left 0.25s ease,
+            //     right 0.25s ease;
+
+            &.active {
+                // top: 6em;
+                // left: 1em;
+                // right: auto;
+                padding : 0.4em;
+                top : 1.4em;
+                left : 0em;
+                right : 0em;
+                bottom : 42.5em;
+                align-items: center;
+                height: fit-content;
+                border-radius: 0;
+                background-color: #2e293b;
+
+            }
+
+            button {
+                background-color: #2e293bcc;
+                padding: 0.5em;
+                border-radius: 1em;
+                border: none;
+                transition: background-color 0.30ease;
+
+                &:hover{
+                    scale : 1.1;
+                    color : rgb(165, 165, 165);
+                }
+
+            }
+
+            &.active button {
+                // background-color: rgba(190, 190, 190, 0.356);
+                padding: 0.2em;
+
+                &:hover {
+                    color : rgb(167, 167, 167);
+                }
+
+            }
+        }
+
+
+        .note-nav-header-desktop {
+            display: flex;
+            flex-direction: row;
+            z-index: 1000;            
+            position: fixed;
+            top : 3em;
+            right: 1em;
+            padding: 0.2em;
+            background-color: #2e293b6b;
+            border : none;
+            border-radius: 1em;
+
+            &.active {
+                padding : 0;
+                top : 1.4em;
+                left : 0em;
+                right : 0;
+                bottom : 42.5em;
+                align-items: center;
+                height: fit-content;
+                border-radius: 0;
+                background-color: #2e293b;
+            }
+
+            button {
+                background-color: transparent;
+                color : rgb(34, 34, 34);
+                border: none;
+                padding : 0.2em;
+
+                &:hover {
+                    color : rgb(100, 100, 100);
+
+                }
+
+
+            }
+
+            &.active button {
+                color : black;
+                margin-left: 0.5em;
+
+                &:hover {
+                    color : rgb(150, 150, 150);
+
+
+                }
+            }
+            
+
+        }
+    }
+}
+
+
+
+.note-info-container {
+  justify-self: center;
+  color: rgb(180, 180, 180);
+  font-size: 0.9em;
+  font-weight: bold;
+
+    &:hover {
+        color : turquoise;
+        cursor : pointer;
+    }
+
+
+
+}

@@ -28,6 +28,7 @@ import ItemPreviewBtns from "../ItemPreviewBtns/ItemPreviewBtns";
 import DragOverlaySvg from "./DragOverlaySvg/DragOverlaySvg"; // look at note 
 import LineRenderer from "../LineRenderer/LineRenderer";
 import ZoomButtons from "../ZoomButtons/ZoomButtons";
+import NoteNavigator from "../NoteNavigator/NoteNavigator";
 
 
 /// NOTE ////
@@ -117,6 +118,7 @@ export default function WorkSpace() {
                     <GridMobile gridRef={gridRef}/>
                     <LineRenderer containerRef={editorRef}/>
                     <ZoomButtons gridRef={gridRef}/>
+                    <NoteNavigator isMobile={isMobileScreen}/>
 
                 </>
                 }
@@ -129,6 +131,7 @@ export default function WorkSpace() {
                     <DragOverlay>  <DragOverlaySvg /> </DragOverlay>
                     <LineRenderer containerRef={editorRef}/>
                     <ZoomButtons gridRef={gridRef} />
+                    <NoteNavigator isMobile={isMobileScreen}/>
 
                 </>
                 }

@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'accounts',
     'projects',
     'grid',
+    'note_navigator',
 
     # grid items
     'timers',

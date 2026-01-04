@@ -1,0 +1,37 @@
+.folder-pannel-body {
+
+    .no-folder-container {
+        margin-top: 2em;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        p {
+            text-align: center;
+            color: rgb(221, 221, 221);
+            font-size: clamp(0.6em, 0.8em, 1em)
+        }
+
+        button {
+            font-size: 1.2em;
+            margin-top: 1em;
+            border: none;
+            border-radius: 1em;
+            padding: 0.4em;
+            background: linear-gradient(to bottom,
+                    #2e293b,
+                    #ffffff);
+            &:hover {
+                scale : 1.1;
+            }
+
+
+        }
+
+
+    }
+
+
+
+}

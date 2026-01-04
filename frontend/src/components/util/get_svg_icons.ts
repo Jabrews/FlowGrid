@@ -1,7 +1,7 @@
 
 // side dropper display
 import React from 'react';
-import { AlarmClock } from 'lucide-react';
+import { AlarmClock, Folders } from 'lucide-react';
 import { Cable } from 'lucide-react';
 import { StickyNote } from 'lucide-react';
 import {TableProperties} from 'lucide-react'
@@ -36,6 +36,10 @@ import { Pen } from 'lucide-react';
 // Navbar
 import {User} from 'lucide-react'
 import { Settings } from 'lucide-react';
+
+// Note Menu
+import { NotebookPen } from 'lucide-react'; 
+import { Notebook } from 'lucide-react';
 
 
 
@@ -119,9 +123,14 @@ export function get_svg_icons({ icon, size }: UseSvgIconArguments) {
         ""
       );
 
-
-
-
+      // Note Mneu
+      case 'notebook_open' :
+        return React.createElement(NotebookPen, {size})
+      case 'notebook_close' :
+        return React.createElement(Notebook, {size})
+      case 'folders' :
+        return React.createElement(Folders, {size})
+        
 
 
 

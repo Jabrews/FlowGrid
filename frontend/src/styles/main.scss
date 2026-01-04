@@ -18,6 +18,12 @@
 @use './side_dropper/side-dropper-mobile' as *;
 @use './side_dropper/side-dropper-desktop' as *;
 
+// Note Navigator
+@use './note_navigator/note_navigator_header' as *;
+@use './note_navigator/note_navigator_parts_headers' as *;
+@use './note_navigator/note_navigator_body_folder' as *;
+
+
 // mobile item preview btns
 @use './mobile_item_preview_btns' as *;
 
