@@ -40,6 +40,9 @@ import { Settings } from 'lucide-react';
 // Note Menu
 import { NotebookPen } from 'lucide-react'; 
 import { Notebook } from 'lucide-react';
+import { Folder } from 'lucide-react';
+import { FolderOpen } from 'lucide-react';
+import { ScrollText } from 'lucide-react';
 
 
 
@@ -130,6 +133,14 @@ export function get_svg_icons({ icon, size }: UseSvgIconArguments) {
         return React.createElement(Notebook, {size})
       case 'folders' :
         return React.createElement(Folders, {size})
+      case 'folder-open' : 
+        return React.createElement(FolderOpen, {size})
+      case 'folder-close' : 
+        return React.createElement(Folder, {size})
+      case 'note-icon' :
+        return React.createElement(ScrollText, {size})
+
+
         
 
 

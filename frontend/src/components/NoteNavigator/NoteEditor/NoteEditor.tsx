@@ -1,9 +1,9 @@
 
 // hooks
-import { useShowFolderPannel, useToggleShowFolderPannel } from "../../../stores/NoteNavigatorStore/NoteNavigatorStore"
+import { useShowFolderPannel, useToggleShowFolderPannel } from "../../stores/NoteNavigatorStore/NoteNavigatorStore"
 
 // util
-import { get_svg_icons } from "../../../util/get_svg_icons"
+import { get_svg_icons } from "../../util/get_svg_icons"
 
 export default function NoteEditor(){
 

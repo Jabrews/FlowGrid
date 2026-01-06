@@ -6,8 +6,8 @@ import { useShowNavMenu } from "../stores/NoteNavigatorStore/NoteNavigatorStore"
 // components
 import NavHeaderDesktop from "./Headers/NavHeaderDesktop"
 import NavHeaderMobile from "./Headers/NavHeaderMobile"
-import FolderPannel from './parts/FolderPannel/FolderPannel'
-import NoteEditor from './parts/NoteEditor/NoteEditor'
+import FolderPannel from './FolderPannel/FolderPannel'
+import NoteEditor from './NoteEditor/NoteEditor'
 
 type NoteNavigatorProps = {
     isMobile : boolean,
