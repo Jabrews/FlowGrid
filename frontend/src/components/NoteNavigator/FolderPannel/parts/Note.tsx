@@ -1,119 +1,136 @@
 import { useRef, useState, useLayoutEffect } from "react";
+import { motion } from "framer-motion";
 import { get_svg_icons } from "../../../util/get_svg_icons";
-import {motion} from 'framer-motion'
 
 export type NoteProps = {
-  title: string;
-  id: number;
+    title: string;
+    id: number;
 };
 
 export default function Note({ title, id }: NoteProps) {
-  const [dummyTitle, setDummyTitle] = useState(title);
-  const [isActive, setIsActive] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
-  const [isHover, toggleIsHover] = useState(false)
+    const [dummyTitle, setDummyTitle] = useState(title);
+    const [isActive, setIsActive] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
 
-  const inputRef = useRef<HTMLInputElement | null>(null);
-  const measureRef = useRef<HTMLSpanElement | null>(null);
+    const inputRef = useRef<HTMLInputElement | null>(null);
+    const measureRef = useRef<HTMLSpanElement | null>(null);
 
-  const focusInput = () => {
-    requestAnimationFrame(() => inputRef.current?.focus());
-  };
+    /* helpers */
+    const focusInput = () => {
+        requestAnimationFrame(() => inputRef.current?.focus());
+    };
 
-  const startEditing = () => {
-    setIsActive(true);
-    setIsEditing(true);
-    focusInput();
-  };
+    const startEditing = () => {
+        setIsActive(true);
+        setIsEditing(true);
+        focusInput();
+    };
 
-  // resize input whenever text changes
-  useLayoutEffect(() => {
-    const input = inputRef.current;
-    const measurer = measureRef.current;
-    if (!input || !measurer) return;
+    const finishEditing = () => {
+        if (dummyTitle.length <= 0 || dummyTitle == title) {
+            setDummyTitle(title)
+            setIsEditing(false);
+            return
+        }
 
-    // keep measurer in sync with input font styles (we set via CSS below too)
-    const text = dummyTitle.length ? dummyTitle : " "; // avoid 0 width
-    measurer.textContent = text;
+        setIsEditing(false);
+    };
 
-    const w = measurer.getBoundingClientRect().width;
+    const handleContainerClick = () => {
+        if (isEditing) return;
+        setIsActive((prev) => !prev);
+    };
 
-    const minW = 18;   // so empty doesn't collapse
-    input.style.width = `${Math.max(minW, Math.ceil(w))}px`;
-  }, [dummyTitle]);
+    const handleInputClick = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        if (!isActive) setIsActive(true);
+    };
 
-  return (
-    <motion.div
-      className={`note-container ${isActive ? "active" : ""} ${isEditing ? "editing" : ""}`}
-      onClick={() => setIsActive((p) => !p)}
-      onHoverStart={() => toggleIsHover(true)}
-      onHoverEnd={() => toggleIsHover(false)}
-    >
-      {/* hidden measurer: must match input’s font styles */}
-      <span
-        ref={measureRef}
-        style={{
-          position: "absolute",
-          visibility: "hidden",
-          whiteSpace: "pre",
-          // IMPORTANT: match whatever your input uses
-          fontSize: "inherit",
-          fontFamily: "inherit",
-          fontWeight: "inherit",
-          letterSpacing: "inherit",
-        }}
-      />
+    /* auto-size input */
+    useLayoutEffect(() => {
+        const input = inputRef.current;
+        const measurer = measureRef.current;
+        if (!input || !measurer) return;
 
-      {isActive && (
-        <p style={{ color: "white", fontWeight: "bold", fontSize: "clamp(0.6em, 0.8em, 1em)" }}>
-          |
-        </p>
-      )}
+        measurer.textContent = dummyTitle.length ? dummyTitle : " ";
+        const width = measurer.getBoundingClientRect().width;
 
-      <input
-        ref={inputRef}
-        id={`note-input-${String(id)}`}
-        value={dummyTitle}
-        onChange={(e) => setDummyTitle(e.target.value)}
-        readOnly={!isEditing}
-        onClick={(e) => {
-          e.stopPropagation();
-          if (!isActive) setIsActive(true);
-        }}
-        onBlur={() => setIsEditing(false)}
-        style={{
-          // makes width changes feel smooth
-          transition: "width 80ms linear",
-        }}
-      />
+        const MIN_WIDTH = 18;
+        input.style.width = `${Math.max(MIN_WIDTH, Math.ceil(width))}px`;
+    }, [dummyTitle]);
 
-      {isActive && !isEditing && isHover && (
-        <button
-          type="button"
-          className='pencil-btn'
-          style={{
-            color: "white",
-            backgroundColor: "transparent",
-            border: "none",
-          }}
-          onClick={(e) => {
-            e.stopPropagation();
-            e.preventDefault();
-            startEditing();
-          }}
+    return (
+        <motion.div
+            className={`note-container ${isActive ? "active" : ""} ${isEditing ? "editing" : ""
+                }`}
+            onClick={handleContainerClick}
         >
-          {get_svg_icons({ icon: "Change-Input", size: 12 })}
-        </button>
-      )}
+            {/* hidden measurer */}
+            <span
+                ref={measureRef}
+                style={{
+                    position: "absolute",
+                    visibility: "hidden",
+                    whiteSpace: "pre",
+                    fontSize: "inherit",
+                    fontFamily: "inherit",
+                    fontWeight: "inherit",
+                    letterSpacing: "inherit",
+                }}
+            />
 
-    { isHover && isActive&& !isEditing &&
-        <button
-        className='note-del-btn'
-        >
-            X
-        </button>
-    }
+            {/* title input */}
+            <input
+                ref={inputRef}
+                id={`note-input-${id}`}
+                value={dummyTitle}
+                readOnly={!isEditing}
+                onChange={(e) => setDummyTitle(e.target.value)}
+                onClick={handleInputClick}
+                onBlur={finishEditing}
+                style={{ transition: "width 80ms linear" }}
+            />
 
-    </motion.div>
-  );
+            {/* view mode icons */}
+            {isActive && !isEditing && (
+                <>
+                    <button
+                        type="button"
+                        className="pencil-btn"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            e.preventDefault();
+                            startEditing();
+                        }}
+                    >
+                        {get_svg_icons({ icon: "Change-Input", size: 12 })}
+                    </button>
+
+                    <button
+                        type="button"
+                        className="note-del-btn"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        X
+                    </button>
+
+                </>
+            )}
+
+            {/* edit confirm */}
+            {isEditing && (
+                <button
+                    style={{color : 'white'}}
+                    type="button"
+                    className="confirm-btn"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        finishEditing();
+                    }}
+                >
+                    {get_svg_icons({ icon: "check", size: 12 })}
+                </button>
+            )}
+        </motion.div>
+    );
 }

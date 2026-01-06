@@ -43,6 +43,8 @@ import { Notebook } from 'lucide-react';
 import { Folder } from 'lucide-react';
 import { FolderOpen } from 'lucide-react';
 import { ScrollText } from 'lucide-react';
+import { Check } from 'lucide-react';
+import { Scroll } from 'lucide-react';
 
 
 
@@ -139,6 +141,10 @@ export function get_svg_icons({ icon, size }: UseSvgIconArguments) {
         return React.createElement(Folder, {size})
       case 'note-icon' :
         return React.createElement(ScrollText, {size})
+      case 'check' :
+        return React.createElement(Check, {size})
+      case 'new-note' :
+        return React.createElement(Scroll, {size})
 
 
         

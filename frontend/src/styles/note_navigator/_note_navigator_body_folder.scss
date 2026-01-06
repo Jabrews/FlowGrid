@@ -1,4 +1,17 @@
+
 .folder-pannel-body {
+
+
+  button {
+    cursor : pointer;
+    
+    &:hover {
+      scale : 1.1
+    }
+
+  }
+
+
   // when no folders
   .no-folder-container {
     margin-top: 2em;
@@ -20,6 +33,7 @@
       border-radius: 1em;
       padding: 0.4em;
       background: linear-gradient(to bottom, #2e293b, #ffffff);
+
       &:hover {
         scale: 1.1;
       }
@@ -27,63 +41,64 @@
   }
 
   .folder-pannel-item-container {
-    
+
     // to the left of each note item (name & icon)
     .note-icon-wrapper {
-        display: flex;
-        flex-direction: row;
-        align-items: flex-start;
-        justify-content: center;
-        padding-left: 0.6em;
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: center;
+      padding-left: 0.6em;
+      padding-right: 2em;
 
 
-        .folder-corner {
-            padding-top: 1em;
-            // color: rgb(24, 20, 24);
-            color : white;
-            font-size: 0.6em;
-        }
-    }    
+      .folder-corner {
+        padding-top: 1em;
+        // color: rgb(24, 20, 24);
+        color: white;
+        font-size: 0.6em;
+      }
+    }
 
 
 
 
     // NO Notes Container
     .no-notes-container {
-        display: flex; 
-        flex-direction: row;
-        
-        .dot {
-            color : white;
-            margin-right: 0.4em;
-        }
+      display: flex;
+      flex-direction: row;
 
-        .no-notes-text {
-            color: white;
-            font-size: clamp(0.6em, 0.8em, 1.1rem);
-        }
+      .dot {
+        color: white;
+        margin-right: 0.4em;
+      }
 
-        button {
-            padding: 0.2em;
-            padding-left: 0.2em;
-            padding-right: 0.2em;
-            margin-left: 0.6em;
-            font-size: clamp(0.6em, 0.8em, 1.1rem);
-            cursor: pointer;
+      .no-notes-text {
+        color: white;
+        font-size: clamp(0.6em, 0.8em, 1.1rem);
+      }
 
-            border: none;
-            color : white;
-            font-weight: bold;
-            background-color: rgb(127, 161, 255);
-            border-radius: 0.6em;
+      button {
+        padding: 0.2em;
+        padding-left: 0.2em;
+        padding-right: 0.2em;
+        margin-left: 0.6em;
+        font-size: clamp(0.6em, 0.8em, 1.1rem);
+        cursor: pointer;
 
-            &:hover {
-                background-color: rgb(79, 108, 187);
+        border: none;
+        color: white;
+        font-weight: bold;
+        background-color: rgb(127, 161, 255);
+        border-radius: 0.6em;
 
-            }
-
+        &:hover {
+          background-color: rgb(79, 108, 187);
 
         }
+
+
+      }
 
     }
 
@@ -94,11 +109,14 @@
       display: flex;
       flex-direction: row;
       align-items: flex-start;
-      padding: 0.2em;
+      cursor: pointer;
+      overflow-x: scroll;
+      margin-left: 0.2em;
+
 
       &:hover {
         border-radius: 2em;
-        background-color: rgb(58, 52, 58);
+        background-color: rgba(112, 112, 112, 0.055);
       }
 
       &.active {
@@ -108,8 +126,9 @@
       }
 
 
-
       .folder-btn {
+        padding-top: 0.1em;
+        margin-left: 0.3em;
         background-color: transparent;
         border: none;
         color: white;
@@ -122,14 +141,95 @@
         background-color: transparent;
         border: none;
         color: white;
-        width: fit-content;
       }
+
+      // icon to right of input
+      .folder-icon-container {
+        margin-top: 0.2em;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+          border: solid white .1em;
+          border-radius: 1em;
+        }
+
+
+    .add-note-container {
+      margin-left: 0.4em;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      padding: 0;
+
+
+      svg {
+        margin-left: 5%;
+      }
+
+      p {
+        color : white;
+        position: absolute;
+        padding: 0;
+        margin-right: 2.3%;
+
+        &:hover {
+          scale : 1.1;
+        }
+
+      }
+
+    }
+
+
+        button {
+          background-color: transparent;
+          border: none;
+          color: white;
+        }
+
+
+
+
+        .pencil-btn,
+        .folder-del-btn {
+          opacity: 0;
+          margin: 0 0.3em;
+          transition: opacity 0.15s ease;
+        }
+      }
+
+      // desktop
+      @media (hover: hover) and (pointer: fine) {
+        &:hover , .active {
+          .pencil-btn,
+          .folder-del-btn {
+            opacity: 1;
+          }
+        }
+      }
+
+      //mobile 
+        @media (hover: none) and (pointer: coarse) {
+      &.active {
+        .pencil-btn,
+        .folder-del-btn {
+          opacity: 1;
+        }
+      }
+    }
+
+
+
+
+
+
     }
 
     // note icon
     .note-container {
-      margin-top: 0.2em;
-      margin-bottom: 0.2em;
       display: flex;
       flex-direction: row;
       align-items: flex-start;
@@ -139,7 +239,7 @@
 
       &:hover {
         border-radius: 2em;
-        background-color: rgb(58, 52, 58);
+        background-color: rgba(112, 112, 112, 0.055);
       }
 
 
@@ -166,31 +266,72 @@
         width: fit-content;
       }
 
-      .note-del-btn {
+      /* hidden by default */
+      .pencil-btn,
+      .note-del-btn{
+        opacity: 0;
+        pointer-events: none;
         background-color: transparent;
         border: none;
-        color : white;
-        justify-self: flex-end;
-        align-self: flex-end;
-        margin-left: 1em;
-        margin-right: 1em;
-        margin-top: 0.03em;
+        color: white;
+      }
 
-        &:hover{
-          scale : 1.1
-        }
+      button {
+        background-color: transparent;
+        border: none;
 
       }
 
-      .pencil-btn {
-        margin-top: 0.3em;
+    .pencil-btn,
+    .note-del-btn {
+      background: transparent;
+      margin-top: 0.2em;
+      margin-left: 0.4em;
+      margin-right: 0.4em;
+      border: none;
+      color: white;
+      transition: opacity 120ms linear;
+    }
 
-        &:hover{
-          scale : 1.1
-        }
+    .note-del-btn {
+      margin-left: 0.2em;
+      margin-right: 0.5em;
+    }
 
+    /* default: show when active (mobile-friendly baseline) */
+    &.active .pencil-btn,
+    &.active .note-del-btn {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* desktop override: only show on hover */
+    @media (hover: hover) and (pointer: fine) {
+    &.active .pencil-btn,
+    &.active .note-del-btn {
+        opacity: 0;
+        pointer-events: none;
       }
+
+      &.active:hover .pencil-btn,
+      &.active:hover .note-del-btn {
+        opacity: 1;
+        pointer-events: auto;
+      }
+    }
+
+    /* optional: hide while editing */
+    &.editing .pencil-btn,
+    &.editing .note-del-btn {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+
+
+
 
     }
   }
 }
+
