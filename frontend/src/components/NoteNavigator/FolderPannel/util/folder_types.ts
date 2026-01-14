@@ -9,3 +9,10 @@ export type FolderPartial = {
     id : number,
     notes : Note[]
 }
+
+
+export type NoteDirectory = {
+    id : number,
+    grid_id : string,
+    folders : FolderPartial[]
+}

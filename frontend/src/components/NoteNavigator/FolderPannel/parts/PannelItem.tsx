@@ -1,17 +1,62 @@
-import { useState} from "react";
+import { useState, useEffect} from "react";
+
+// hooks
+import useCreateNote from "../hooks/note/useCreateNote";
 
 // util
-import type { FolderPartial } from "../util/folder_types";
+import type { Note as NoteType } from "../util/folder_types";
 import { get_svg_icons } from "../../../util/get_svg_icons";
 
 // components 
 import Folder from "./Folder";
 import Note from "./Note";
 
+type PannelItemProps = {
+    name : string
+    id : number,
+    notes : NoteType[]
+    note_directory_id : number,
+}
 
-export default function PannelItem({name, id, notes} : FolderPartial) {
 
-    const [folderOpen, toggleFolderOpen] = useState(false)
+
+export default function PannelItem({name, id, notes, note_directory_id} : PannelItemProps) {
+
+    // hook init
+    const [folderOpen, toggleFolderOpen] = useState(() => {
+        const data = localStorage.getItem(`folder-open-${id}`)
+        if (!data) return false
+        const bool = JSON.parse(data)
+        return bool
+
+    })
+    const createNote = useCreateNote()
+
+    // handlers
+    const handeAddNote = () => {
+        createNote.mutate({
+            note_directory_id : String(note_directory_id),
+            folder_id : String(id),
+        })
+    }
+
+
+
+    // local storage folder open on startup
+    useEffect(() => {
+        let folderOpenLocal : boolean = false
+        const data = localStorage.getItem(`folder-open-${id}`)
+        if (!data) return
+        const bool = JSON.parse(data)
+        folderOpenLocal = bool
+        toggleFolderOpen(folderOpenLocal)
+    }, [id])    
+
+    // set when it changes
+    useEffect(() => {
+        localStorage.setItem(`folder-open-${id}`, String(folderOpen))
+    }, [folderOpen, toggleFolderOpen, id])
+
 
     return (
         <div
@@ -19,6 +64,8 @@ export default function PannelItem({name, id, notes} : FolderPartial) {
             className="folder-pannel-item-container"
         >
             <Folder
+            note_directory_id={note_directory_id}
+            key={`folder-${id}`}
             id={id}
             name={name}
             folderOpen={folderOpen}
@@ -37,7 +84,10 @@ export default function PannelItem({name, id, notes} : FolderPartial) {
                     {get_svg_icons({icon : 'bullet', size : 20})} 
                 </div> 
                 <p className='no-notes-text'> new note? </p> 
-                <button> + </button>
+                <button
+                onClick={handeAddNote}
+                > + 
+                </button>
                 </div>
             }
 
@@ -52,7 +102,9 @@ export default function PannelItem({name, id, notes} : FolderPartial) {
                             {get_svg_icons({icon : 'bullet', size : 10})} 
                         </span>
                         <Note
-                            key={note.id}
+                            folder_id={id}
+                            note_directory_id={note_directory_id}
+                            key={`note-${note.id}`}
                             id={note.id}
                             title={note.title}
                         />

@@ -45,6 +45,16 @@ import { FolderOpen } from 'lucide-react';
 import { ScrollText } from 'lucide-react';
 import { Check } from 'lucide-react';
 import { Scroll } from 'lucide-react';
+// Note text are btns
+import { CornerDownRight } from 'lucide-react';
+import { CornerDownLeft} from 'lucide-react';
+import { Highlighter } from 'lucide-react';
+import { Bold } from 'lucide-react';
+import { Italic } from 'lucide-react';
+import { HeadingIcon} from 'lucide-react';
+import { Heading1Icon, Heading2Icon, Heading3Icon} from 'lucide-react';
+
+
 
 
 
@@ -147,7 +157,29 @@ export function get_svg_icons({ icon, size }: UseSvgIconArguments) {
         return React.createElement(Scroll, {size})
 
 
-        
+        // text area btns
+      case 'indent-right' :
+        return React.createElement(CornerDownRight, {size})
+      case 'indent-left' :
+        return React.createElement(CornerDownLeft, {size})
+      case 'highlight' :
+        return React.createElement(Highlighter, {size})
+      case 'bold' :
+        return React.createElement(Bold, {size})
+      case 'italic' :
+        return React.createElement(Italic, {size})
+      case 'heading-0' : 
+        return React.createElement(Heading1Icon, {size})
+      case 'heading-1' : 
+        return React.createElement(HeadingIcon, {size})
+      case 'heading-2' : 
+        return React.createElement(Heading3Icon, {size})
+      case 'heading-3' : 
+        return React.createElement(Heading2Icon, {size})
+
+
+
+       
 
 
 

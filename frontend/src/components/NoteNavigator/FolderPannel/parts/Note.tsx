@@ -2,16 +2,33 @@ import { useRef, useState, useLayoutEffect } from "react";
 import { motion } from "framer-motion";
 import { get_svg_icons } from "../../../util/get_svg_icons";
 
+// hooks
+import useDeleteNote from "../hooks/note/useDeleteNote";
+import useChangeNoteName from "../hooks/note/useChangeNoteName";
+// del modal hooks
+import { useConfirmStore } from "../../../stores/ConfirmStore/ConfirmStore";
+import { useToggleShowDeleteModal } from "../../../stores/ModalRendererStore/ModelRendererStore";
+
 export type NoteProps = {
     title: string;
     id: number;
+    folder_id : number,
+    note_directory_id : number
 };
 
-export default function Note({ title, id }: NoteProps) {
+export default function Note({ title, id, folder_id, note_directory_id}: NoteProps) {
+
+    // hook init
     const [dummyTitle, setDummyTitle] = useState(title);
     const [isActive, setIsActive] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
+    const deleteNote = useDeleteNote()
+    const changeNoteName = useChangeNoteName()
+    const toggleShowDeleteModal = useToggleShowDeleteModal()
+    const {ask} = useConfirmStore()
 
+
+    // help refs
     const inputRef = useRef<HTMLInputElement | null>(null);
     const measureRef = useRef<HTMLSpanElement | null>(null);
 
@@ -34,6 +51,14 @@ export default function Note({ title, id }: NoteProps) {
         }
 
         setIsEditing(false);
+        changeNoteName.mutate({
+            note_directory_id: String(note_directory_id),
+            folder_id: String(folder_id),
+            newTitle: dummyTitle,
+            note_id : String(id)
+        })
+
+
     };
 
     const handleContainerClick = () => {
@@ -45,6 +70,20 @@ export default function Note({ title, id }: NoteProps) {
         e.stopPropagation();
         if (!isActive) setIsActive(true);
     };
+
+    const handleDeleteNoteBtn = async () => {
+        const waitForConfirm = ask()
+        toggleShowDeleteModal(true)
+        const confirmed = await waitForConfirm
+        if (confirmed) { 
+            deleteNote.mutate({
+                folder_id : String(folder_id),
+                note_directory_id: String(note_directory_id),
+                note_id : String(id),
+            })
+        }
+
+    }
 
     /* auto-size input */
     useLayoutEffect(() => {
@@ -63,7 +102,10 @@ export default function Note({ title, id }: NoteProps) {
         <motion.div
             className={`note-container ${isActive ? "active" : ""} ${isEditing ? "editing" : ""
                 }`}
-            onClick={handleContainerClick}
+            onClick={(e) => {
+                handleContainerClick()
+                e.stopPropagation() 
+            }}
         >
             {/* hidden measurer */}
             <span
@@ -87,7 +129,6 @@ export default function Note({ title, id }: NoteProps) {
                 readOnly={!isEditing}
                 onChange={(e) => setDummyTitle(e.target.value)}
                 onClick={handleInputClick}
-                onBlur={finishEditing}
                 style={{ transition: "width 80ms linear" }}
             />
 
@@ -109,7 +150,10 @@ export default function Note({ title, id }: NoteProps) {
                     <button
                         type="button"
                         className="note-del-btn"
-                        onClick={(e) => e.stopPropagation()}
+                        onClick={(e) => {
+                            e.stopPropagation()
+                            handleDeleteNoteBtn()
+                        }}
                     >
                         X
                     </button>

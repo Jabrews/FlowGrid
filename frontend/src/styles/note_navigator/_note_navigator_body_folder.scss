@@ -145,6 +145,7 @@
 
       // icon to right of input
       .folder-icon-container {
+        margin-right: 2em;
         margin-top: 0.2em;
         display: flex;
         flex-direction: row;
@@ -230,6 +231,8 @@
 
     // note icon
     .note-container {
+      margin-top: 0.1em;
+      margin-bottom: 0.1em;
       display: flex;
       flex-direction: row;
       align-items: flex-start;

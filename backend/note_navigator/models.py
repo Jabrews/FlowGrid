@@ -34,7 +34,7 @@ class Note(models.Model) :
     )    
     last_used = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=25)
-    raw_text = models.CharField(max_length=300)
+    raw_text = models.CharField(max_length=300, default=' ', blank=True)
 
 
     

@@ -1,9 +1,19 @@
 import { useState, useRef, useEffect } from "react";
 
+// hooks
+import useCreateNote from "../hooks/note/useCreateNote";
+import useDeleteFolder from "../hooks/folder/useDeleteFolder";
+import useChangeFolderName from "../hooks/folder/useChangeFolderName";
+
+// del modal hooks
+import { useToggleShowDeleteModal } from "../../../stores/ModalRendererStore/ModelRendererStore";
+import { useConfirmStore } from "../../../stores/ConfirmStore/ConfirmStore";
+
 // util
 import { get_svg_icons } from "../../../util/get_svg_icons";
 
 type FolderProps = {
+    note_directory_id: number;
     name: string;
     id: number;
     folderOpen: boolean;
@@ -11,13 +21,22 @@ type FolderProps = {
 };
 
 export default function Folder({
+    note_directory_id,
     name,
     id,
     folderOpen,
     toggleFolderOpen,
 }: FolderProps) {
+
     const [dummyFolderName, setDummyFolderName] = useState(name);
     const [isEditing, setIsEditing] = useState(false);
+
+    const createNote = useCreateNote();
+    const deleteFolder = useDeleteFolder();
+    const changeFolderName = useChangeFolderName();
+
+    const toggleShowDeleteModal = useToggleShowDeleteModal();
+    const { ask } = useConfirmStore();
 
     const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -26,7 +45,6 @@ export default function Folder({
         inputRef.current.style.width = `${dummyFolderName.length + 1}ch`;
     }, [dummyFolderName]);
 
-    /* helpers */
     const focusInput = () => {
         requestAnimationFrame(() => inputRef.current?.focus());
     };
@@ -37,37 +55,52 @@ export default function Folder({
     };
 
     const handleEditStart = (e: React.MouseEvent) => {
-        e.stopPropagation();
         e.preventDefault();
+        e.stopPropagation();
         setIsEditing(true);
         focusInput();
     };
 
     const handleEditEnd = () => {
-        if (dummyFolderName.length <= 0 || dummyFolderName == name) {
-            setDummyFolderName(name)
+        if (!dummyFolderName.trim() || dummyFolderName === name) {
+            setDummyFolderName(name);
             setIsEditing(false);
-            return
+            return;
         }
-        // else mutate backend
 
+        changeFolderName.mutate({
+            note_directory_id: String(note_directory_id),
+            folder_id: String(id),
+            newName: dummyFolderName,
+        });
+
+        setIsEditing(false);
     };
 
-    const handleInputSubmit = () => {
-        if (dummyFolderName.length <= 0 || dummyFolderName == name) {
-            setDummyFolderName(name)
-            return
+    const handleAddNoteBtn = () => {
+        createNote.mutate({
+            note_directory_id: String(note_directory_id),
+            folder_id: String(id),
+        });
+    };
+
+    const handleFolderDeleteBtn = async () => {
+        const waitForConfirm = ask();
+        toggleShowDeleteModal(true);
+
+        const confirmed = await waitForConfirm;
+        if (confirmed) {
+            deleteFolder.mutate({
+                note_directory_id: String(note_directory_id),
+                folder_id: String(id),
+            });
         }
-        // else mutate backend
-
-    }
-
+    };
 
     return (
         <div
             className={`folder-container ${folderOpen ? "active" : ""}`}
             onClick={handleContainerClick}
-            onBlur={() => isEditing && setIsEditing(false)}
         >
             {/* folder toggle */}
             <button
@@ -88,13 +121,12 @@ export default function Folder({
                 value={dummyFolderName}
                 disabled={!isEditing}
                 onChange={(e) => setDummyFolderName(e.target.value)}
-                onPointerDown={() => {toggleFolderOpen(true)}}
-                onBlur={handleInputSubmit}
+                onPointerDown={() => toggleFolderOpen(true)}
             />
 
             {/* view mode icons */}
             {!isEditing && folderOpen && (
-                <div className="folder-icon-container">
+                <div className="folder-icon-container" onClick={(e) => e.stopPropagation() }>
                     <button
                         type="button"
                         className="pencil-btn"
@@ -106,28 +138,27 @@ export default function Folder({
                     <button
                         type="button"
                         className="folder-del-btn"
-                        onClick={(e) => e.stopPropagation()}
+                        onClick={handleFolderDeleteBtn}
                     >
                         X
                     </button>
-                    <div className='add-note-container'>
-                        <p className='folder-del-btn'> + </p>
-                        <button 
+
+                    <div className="add-note-container">
+                        <button
                             type="button"
                             className="folder-del-btn"
-                            onClick={(e) => e.stopPropagation()}
+                            onClick={handleAddNoteBtn}
                         >
-                            {get_svg_icons({ icon: "new-note", size: 12})}
+                            {get_svg_icons({ icon: "new-note", size: 12 })}
                         </button>
                     </div>
-
                 </div>
             )}
 
             {/* edit mode icons */}
             {isEditing && (
                 <div className="folder-icon-container">
-                    <button onClick={handleEditEnd}>
+                    <button type="button" onClick={handleEditEnd} >
                         {get_svg_icons({ icon: "check", size: 12 })}
                     </button>
                 </div>

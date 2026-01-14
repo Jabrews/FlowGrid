@@ -6,6 +6,7 @@ from rest_framework_nested.routers import NestedDefaultRouter
 from .views import NoteDirectoryViewset, NoteFolderViewSet, NoteViewSet
 
 
+# /note_directories/{directory_id}/folders/{folder_id}/notes/{note_id}/
 
 noteDirectoryRouter = DefaultRouter()
 noteDirectoryRouter.register('note_directories', NoteDirectoryViewset, basename='note_directories')

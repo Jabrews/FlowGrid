@@ -5,6 +5,9 @@ import { useShowFolderPannel, useToggleShowFolderPannel } from "../../stores/Not
 // util
 import { get_svg_icons } from "../../util/get_svg_icons"
 
+// components
+import TextArea from "./TextArea/TextArea"
+
 export default function NoteEditor(){
 
     // hook init
@@ -37,7 +40,7 @@ export default function NoteEditor(){
                 </button>
 
             </div>
-            <p>test</p>
+            {/* <TextArea /> */}
         </div>
     )
 
