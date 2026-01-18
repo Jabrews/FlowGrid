@@ -1,0 +1,121 @@
+.note-pannel-container {
+    background-color: rgb(54, 1, 54);
+}
+
+.text-area-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+
+    // lines
+    .text-line-container {
+        margin-top: 1em;
+        align-items: center;
+        max-width: 100vw;
+        max-height: 70vh;
+        overflow-x: scroll;
+        overflow-y: scroll;
+
+        .text-line-container {
+            overflow-y: auto;
+        }
+
+
+        .title-input {
+            background-color: transparent;
+            border: none;
+            color: white;
+            font-size: 1.6em;
+            margin-bottom: 0.2em;
+            font-family: monospace;
+
+            /* desktop: remove default focus ring */
+            &:focus {
+                outline: none;
+                box-shadow: none;
+            }
+
+            /* prevent gray/blue tap overlay on mobile */
+            -webkit-tap-highlight-color: transparent;
+
+            /* selection color (you already had this) */
+            &::selection {
+                background: #648ce4;
+                color: black;
+            }
+
+
+        }
+
+
+        /* scrollbar width */
+       &::-webkit-scrollbar {
+            width: 1px;
+        }
+
+        /* track */
+        &::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        /* thumb */
+        &::-webkit-scrollbar-thumb {
+            background: rgb(255, 255, 255);
+            border-radius: 6px;
+        }
+
+        /* hover */
+        &::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+
+
+        .text-line-item-container {
+            margin-top: 0.2em;
+            margin-bottom: 0.2em;
+            width: max-content;
+            min-width: 100%;
+
+            .text-line-input {
+                all: unset;
+                font-family: monospace;
+                border-bottom: solid rgb(61, 66, 87) 0.1em;
+                width: 75ch;
+                caret-color: rgb(255, 255, 255);
+                height: 1.3em;
+
+                &::selection {
+                    background: #7c96ec;
+                    color: black;
+                }
+            }
+        }
+    }
+
+
+}
+
+// btn container
+.text-area-btn-container {
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    max-width: 100vw;
+
+    button {
+        color: white;
+        background-color: rgba(0, 0, 0, 0.295);
+        border: solid, black 0.1em;
+        cursor: pointer;
+
+        &:hover {
+            color: rgb(170, 168, 168)
+        }
+
+    }
+
+}

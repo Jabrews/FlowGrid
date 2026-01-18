@@ -1,9 +1,15 @@
+import { useEffect, useState } from "react";
 
 // hooks
-import { useSetActiveTextLineNum, useActiveTextLineNum } from "./TextLine/hooks/ActiveTextLineStore";
+import { useActiveTextLineNum } from "./TextLine/hooks/ActiveTextLineStore";
+import { useActiveNotes } from "../../../stores/ActiveNoteStore/ActiveNoteStore";
+import useChangeNoteName from "../../FolderPannel/hooks/note/useChangeNoteName";
+import {useNoteDirectoryId} from "../../../stores/NoteDirectoryInfoStore/NoteDirectoryInfoStore";
+import { useSetActiveNoteName } from "../../../stores/NoteNavigatorStore/NoteNavigatorStore";
 
 // utill
 import type { RawObj } from "./util/text_area_types";
+import type { ActiveNote } from "../../../stores/ActiveNoteStore/ActiveNoteStore";
 
 // components
 import TextAreaBtns from "./TextAreaBtns/TextAreaBtns";
@@ -12,47 +18,93 @@ import TextLine from "./TextLine/TextLine";
 
 type TextAreaProps = {
     rawObjs: RawObj[]
-    setRawObjs: React.Dispatch<React.SetStateAction<RawObj[]>>
+    noteId : number;
 }
 
-export default function TextArea({ rawObjs, setRawObjs }: TextAreaProps) {
+export default function TextArea({ rawObjs, noteId}: TextAreaProps) {
 
     // hook init
-    const setActiveTextLineNum = useSetActiveTextLineNum()
+    // const setActiveTextLineNum = useSetActiveTextLineNum()
     const activeTextLineNum = useActiveTextLineNum()
+    const setActiveNoteName = useSetActiveNoteName()
+    // title note stuff
+    const activeNotes = useActiveNotes()
+    const [activeNote, setActiveNote] = useState<ActiveNote>({title : '', noteId : 0, parentFolderId: 0})
+    const changeNoteName = useChangeNoteName()
+    const noteDirectoryId = useNoteDirectoryId()
 
-    // handle nav
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key == 'ArrowUp') {
-            setActiveTextLineNum(activeTextLineNum - 1)
+    useEffect(() => {
+        const activeNote = activeNotes.find((activeNote) => activeNote.noteId == noteId)
+        if (!activeNote) return
+        setActiveNote(activeNote)
+        if (activeNote) {
+            setActiveNoteName(activeNote.title)
         }
-        if (e.key == 'ArrowDown') {
-            setActiveTextLineNum(activeTextLineNum + 1)
-        }
+    }, [noteId, setActiveNote, activeNotes, setActiveNoteName])
 
 
+    // const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    //     if (e.key === 'ArrowUp') {
+    //         e.preventDefault();
+    //         setActiveTextLineNum(Math.max(1, activeTextLineNum - 1));
+    //         return;
+    //     }
+
+    //     if (e.key === 'ArrowDown') {
+    //         e.preventDefault();
+    //         setActiveTextLineNum(activeTextLineNum + 1);
+    //         return;
+    //     }
+    // };
+
+    const handleDummyNoteTitleBlur = () => {
+
+        if (noteDirectoryId == 0) return
+        if (!activeNote) return
+
+        changeNoteName.mutate({
+            note_directory_id : String(noteDirectoryId),
+            folder_id : String(activeNote.parentFolderId), 
+            note_id : activeNote.noteId,
+            newTitle : activeNote.title,
+        })
     }
+    
 
 
     return (
+
+        <>
+        <TextAreaBtns rawObjs={rawObjs} noteId={noteId}/>
         <div className='text-area-container'>
 
             <div
                 className='text-line-container'
-                onKeyDown={handleKeyDown}
+                // onKeyDown={handleKeyDown}
             >
-                {/* render based upon line num*/}
-                {rawObjs.map((rawObj: RawObj) => {
+                <input 
+                    className='title-input'
+                    value={activeNote?.title}
+                onChange={(e) => {
+                const value = e.target.value
+                setActiveNote(prev =>
+                    prev ? { ...prev, title: value } : prev
+                )
+                }}
+                onBlur={handleDummyNoteTitleBlur}
+                />
+
+                {/* render based upon line num */}
+                {rawObjs.length > 0 && rawObjs.map((rawObj: RawObj) => {
                     return rawObj.lineNum === activeTextLineNum ? (
                         <div
                             className="text-line-item-container"
                             key={`textlineitem-${rawObj.lineNum}`}
                         >
                             <TextLine
-                                setRawObjs={setRawObjs}
-                                rawObjs={rawObjs}
-                                initText={rawObj.text}
-                                lineNum={rawObj.lineNum}
+                                rawObject={rawObj}
+                                noteId={noteId}
+                                rawObjects={rawObjs}
                             />
                         </div>
                     ) : (
@@ -67,11 +119,11 @@ export default function TextArea({ rawObjs, setRawObjs }: TextAreaProps) {
                         </div>
                     )
                 })}
+
             </div>
 
-            <TextAreaBtns rawObjs={rawObjs} setRawObjs={setRawObjs} />
         </div>
-
+        </>
 
     )
 

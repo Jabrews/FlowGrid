@@ -1,66 +1,69 @@
 // hooks
-import { useActiveTextLineNum, useSetActiveTextLineNum} from "./ActiveTextLineStore"
-
-// util
-import split_raw_obj from "../util/split_raw_obj"
-import { change_raw_text_obj } from "../util/change_raw_text_obj"
-import type { RawObj } from "../../util/text_area_types"
+import { useSetActiveTextLineNum} from "./ActiveTextLineStore"
+import usePatchRawObjectText from "./mutation/usePatchRawObjectText"
+import useSplitRawObject from "./mutation/useSplitRawObject"
 
 type HandleInputTextChangeProps = {
     inputRef : React.RefObject<HTMLInputElement | null>
     maxCharLengthRef : React.RefObject<number>
-    rawObjs : RawObj[]
-    setRawObjs: React.Dispatch<React.SetStateAction<RawObj[]>>
     setDummyText : React.Dispatch<React.SetStateAction<string>>
 }
 
-export default function useHandleInputTextChange({inputRef, maxCharLengthRef,  rawObjs, setRawObjs, setDummyText} : HandleInputTextChangeProps) {
+export default function useHandleInputTextChange({inputRef, maxCharLengthRef, setDummyText} : HandleInputTextChangeProps) {
 
     // hook init
-    const lineNum = useActiveTextLineNum()
     const setActiveTextLineNum = useSetActiveTextLineNum()
+    const patchRawObjectText = usePatchRawObjectText()
+    const splitRawObject = useSplitRawObject()
 
     // handle onChange()
-    const handleInputTextChangeOverpopulated = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputTextChangeOverpopulated = (newText : string, lineNum : number, rawObjectId : number, noteId : number) => {
 
         if (!inputRef.current) {
             console.log('no ref')
-            return rawObjs
+            return
         } 
 
-        const next = e.target.value
 
         inputRef.current.blur()
 
-        const newRawObjs = split_raw_obj({
-            rawObjs,
-            overLoadedText: next,
-            lineNum,
-            maxCharLengthRef,
+
+        // split text
+        const mainSplitText = newText.slice(0, maxCharLengthRef.current);
+        const newSplitText = newText.slice(maxCharLengthRef.current);
+
+        splitRawObject.mutate({
+            lineNum : lineNum,
+            rawObjectId : rawObjectId,
+            noteId : noteId,
+            overloadedText : newSplitText,
+            rawObjectText : mainSplitText,
         })
 
-        setActiveTextLineNum(lineNum + 1)
-        setDummyText(next)
-        change_raw_text_obj({rawObjs, setRawObjs, newText : next, lineNum}) 
 
-        return newRawObjs
+        setActiveTextLineNum(lineNum + 1)
+
+        setDummyText(mainSplitText)
+
+        return 
 
     }
 
-    const handleInputTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // simply mutate raw obj
+    const handleInputTextChange = (newText : string, rawObjectId : number, noteId : number) => {
 
         if (!inputRef.current) {
             console.log('no ref')
-            return rawObjs
+            return 
         } 
 
-        const next = e.target.value
+        patchRawObjectText.mutate({
+            newText,
+            rawObjectId,
+            noteId,
+        })
 
-
-        setDummyText(next)
-        change_raw_text_obj({rawObjs, setRawObjs, newText : next, lineNum}) 
-
-        return rawObjs
+        return 
 
     }
 

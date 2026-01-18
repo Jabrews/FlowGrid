@@ -31,7 +31,7 @@ export default function useMutateLayout() {
 
 
             const mutateLayoutInit : RequestInit  = {
-                method : 'PATCH',
+                method : '',
                 body :  JSON.stringify(layoutForm)
             }
 

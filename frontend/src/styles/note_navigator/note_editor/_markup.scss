@@ -1,0 +1,45 @@
+
+// heading font sizes // both textline input and display line
+$display-font-sizes: ( 
+  h1: 1.2em,
+  h2: 1.15em,
+  h3: 1.1em
+);
+
+.display-line-item-container {
+    margin-top: 0.1em;
+    margin-bottom: 0.1em;
+    width: fit-content;
+
+    .display-line-item {
+      font-family: monospace;
+      background-color: transparent;
+      width: 75ch;
+      display:  flex;
+      flex-direction: row;
+      border-bottom: solid rgb(61, 66, 87) 0.1em;
+      white-space: pre;
+
+    }
+
+    span {
+
+      &.highlight {
+        background-color: rgb(53, 53, 1);
+        color: white;
+      }
+
+      &.bold {
+        font-weight: bold;
+      }
+
+      &.italic {
+        font-style: italic;
+      }
+
+
+    }
+
+
+
+}

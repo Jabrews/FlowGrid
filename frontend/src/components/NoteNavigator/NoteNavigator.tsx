@@ -1,4 +1,3 @@
-import {motion} from 'framer-motion'
 
 // hooks
 import { useShowNavMenu } from "../stores/NoteNavigatorStore/NoteNavigatorStore" 

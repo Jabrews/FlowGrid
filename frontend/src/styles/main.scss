@@ -22,7 +22,9 @@
 @use './note_navigator/note_navigator_header' as *;
 @use './note_navigator/note_navigator_parts_headers' as *;
 @use './note_navigator/note_navigator_body_folder' as *;
-
+@use './note_navigator/note_editor/note_editor' as *;
+@use './note_navigator/note_editor/markup' as *;
+@use './note_navigator/note_editor/note-pannel' as *;
 
 // mobile item preview btns
 @use './mobile_item_preview_btns' as *;

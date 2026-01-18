@@ -1,31 +1,36 @@
 // hooks
 import { useActiveTextLineNum, useSetActiveTextLineNum } from "../../TextLine/hooks/ActiveTextLineStore"
 import { useSelectionStart, useSelectionEnd } from "../../hooks/useSelectedInputTextStore"
+import usePatchRawObjectText from "../../TextLine/hooks/mutation/usePatchRawObjectText"
 
 // util
 import type { RawObj } from "../../util/text_area_types"
 import text_heading_to_char_length from "../../TextLine/util/text_heading_to_char_length"
 
 type InsertSymbolAtChars = {
-    rawObjs: RawObj[]
+    rawObjs: RawObj[],
+    noteId : number,
+    rawObjectId : number,
+    symbol : string
 }
 
 
-export default function useInsertSymbolAtChars ({rawObjs} : InsertSymbolAtChars) {
+export default function useInsertSymbolAtChars () {
 
     // hook init    
     const activeTextLineNum = useActiveTextLineNum()
     const setActiveTextLineNum = useSetActiveTextLineNum()
     const selectionStart = useSelectionStart()
     const selectionEnd = useSelectionEnd()
+    const patchRawObjectText = usePatchRawObjectText()
 
-    const insertSymbolAtChars = (symbol : string) => {
+    const insertSymbolAtChars = ({rawObjs, noteId, rawObjectId, symbol} : InsertSymbolAtChars) => {
 
         // verify correct symbol type
         if (symbol == '**' || symbol == '==' || symbol == '""') {
 
             // possibly throw little tiny model error
-            if (selectionEnd == null || selectionStart == null) return rawObjs 
+            if (selectionEnd == null || selectionStart == null) return 
 
             // find active raw objs text             
             const activeRawObj = rawObjs.find((item : RawObj) => item.lineNum == activeTextLineNum)
@@ -44,24 +49,22 @@ export default function useInsertSymbolAtChars ({rawObjs} : InsertSymbolAtChars)
 
             // check if up to limit
             const maxCharLimit = text_heading_to_char_length(newActiveText)
-            if (!maxCharLimit) return rawObjs
-            if (newActiveText.length > maxCharLimit) return rawObjs
-
+            if (!maxCharLimit) return 
+            if (newActiveText.length > maxCharLimit) return 
 
             // set back to active raw obj
-            const newRawObjs : RawObj[] = rawObjs
-            newRawObjs.map((item : RawObj) => {
-                if (item.lineNum == activeRawObj.lineNum) {
-                    item.text = newActiveText
-                }
+            patchRawObjectText.mutate({
+                rawObjectId : rawObjectId,
+                noteId : noteId,
+                newText : newActiveText
             })
+
+
 
             setActiveTextLineNum(activeRawObj.lineNum + 1)
 
-            return newRawObjs
 
         }
-        else return rawObjs
     }
 
 

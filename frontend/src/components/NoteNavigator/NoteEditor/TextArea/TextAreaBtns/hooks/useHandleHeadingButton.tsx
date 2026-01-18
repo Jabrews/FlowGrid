@@ -1,23 +1,24 @@
 
 // hooks
 import { useActiveTextLineNum } from "../../TextLine/hooks/ActiveTextLineStore"
+import usePatchRawObjectText from "../../TextLine/hooks/mutation/usePatchRawObjectText"
 
 // utill
 import type { RawObj } from "../../util/text_area_types"
 import text_heading_to_char_length from "../../TextLine/util/text_heading_to_char_length"
-import { change_raw_text_obj } from "../../TextLine/util/change_raw_text_obj"
 
 
 type HandleHeadingButtonProps = {
     rawObjs : RawObj[]
-    setRawObjs: React.Dispatch<React.SetStateAction<RawObj[]>>
+    noteId : number,
 }
 
 
-export default function useHandleHeadingButton({rawObjs, setRawObjs} : HandleHeadingButtonProps) {
+export default function useHandleHeadingButton({rawObjs, noteId} : HandleHeadingButtonProps) {
 
     // hook init
     const activeTextLineNum = useActiveTextLineNum()
+    const patchRawObjectText = usePatchRawObjectText()
 
     const handleHeadingButton = () => {
 
@@ -35,14 +36,15 @@ export default function useHandleHeadingButton({rawObjs, setRawObjs} : HandleHea
     // check if enough room (use txt_heading_to_chark)
     const newHeadingLength = text_heading_to_char_length(activeText)
     if (!newHeadingLength) return
-    if (activeText.length > newHeadingLength) {
-        // DELETE
-        console.log('too much heading')
-        return
-    }
+    // if not enough room
+    if (activeText.length > newHeadingLength) return
+
     // change raw obj text with new length
-    change_raw_text_obj({rawObjs, setRawObjs, newText : activeText, lineNum : activeRawObj.lineNum})
-    // return new heading size to frontend (for btn)
+    patchRawObjectText.mutate({
+        noteId : noteId,
+        newText : activeText,
+        rawObjectId : activeRawObj.id,
+    })
 
     }
 

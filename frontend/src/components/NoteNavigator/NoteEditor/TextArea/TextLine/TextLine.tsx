@@ -5,12 +5,15 @@ import {
     useSetActiveTextLineNum,
     useActiveTextLineNum,
 } from "./hooks/ActiveTextLineStore";
+
 import useHandleInputTextChange from "./hooks/useHandleInputTextChange";
-import useHandleLineDelete from "./hooks/useHandleLineDelete";
+import useCreateRawObject from "./hooks/mutation/useCreateRawObject";
+import useCreateEnterRawObject from "./hooks/mutation/useCreateEnterRawObject";
+import useDeleteRawObject from "./hooks/mutation/useDeleteRawObject";
+import useDeletePopulatedRawObject from "./hooks/mutation/useDeletePopulatedRawObject";
 import useHandleHeadingEvent from "./hooks/useHandleHeadingEvent";
-import useCreateNewLine from "./hooks/useCreateNewLine";
-import useHandleIndentBackward from "../TextAreaBtns/hooks/useHandleIndentBackward";
-import useHandleIndentFoward from "../TextAreaBtns/hooks/useHandleIndentFoward";
+import useHandleIndentBackward from "./hooks/mutation/useHandleIndentBackward";
+import useHandleIndentFoward from "./hooks/mutation/useHandleIndentFoward";
 // selection store
 import {
     useSetEndIndex,
@@ -21,128 +24,171 @@ import {
 import type { RawObj } from "../util/text_area_types";
 
 type TextLineProps = {
-    initText: string;
-    lineNum: number;
-    rawObjs: RawObj[];
-    setRawObjs: React.Dispatch<React.SetStateAction<RawObj[]>>;
+    rawObject : RawObj
+    noteId : number
+    rawObjects : RawObj[]
 };
 
 export default function TextLine({
-    initText,
-    lineNum,
-    rawObjs,
-    setRawObjs,
+    rawObject,
+    noteId,
+    rawObjects,
 }: TextLineProps) {
-    // hook init
-    const [dummyText, setDummyText] = useState(initText);
+    // refs
     const inputRef = useRef<HTMLInputElement | null>(null);
     const maxCharLengthRef = useRef<number>(75);
-    const prevLineTextRef = useRef<string>(""); // for alz
-    const activeTextLineNum = useActiveTextLineNum();
+    const prevLineTextRef = useRef<string>("");
+    const enterCooldownRef = useRef(false)
+    const hasCreatedNextLineRef = useRef(false);
+    // hooks
+    const [dummyText, setDummyText] = useState(rawObject.text);
+    const activeLineNum = useActiveTextLineNum()
+    const setActiveTextLineNum = useSetActiveTextLineNum();
+    // text change
     const { handleInputTextChangeOverpopulated, handleInputTextChange } =
         useHandleInputTextChange({
-            rawObjs,
             setDummyText,
-            setRawObjs,
             inputRef,
             maxCharLengthRef,
         });
-    const setActiveTextLineNum = useSetActiveTextLineNum();
-    const { handleEmptyLineDelete, handlePopulatedLineDelete } =
-        useHandleLineDelete({ rawObjs, maxCharLengthRef });
+    const createRawObject = useCreateRawObject()
+    const createEnterRawObject = useCreateEnterRawObject()
+    const deleteRawObject = useDeleteRawObject() 
+    const deletePopulatedRawObject = useDeletePopulatedRawObject()
     const handleHeadingEvent = useHandleHeadingEvent({
         inputRef,
         maxCharLengthRef,
     });
+    const handleIndentFoward = useHandleIndentFoward()
+    const hanldeIndentBackward = useHandleIndentBackward()
     // hook init selection store
     const setStartIndex = useSetStartIndex();
     const setEndIndex = useSetEndIndex();
-    // key dwn listners
-    const createNewLine = useCreateNewLine({ rawObjs, setRawObjs });
-    const handleLineIndentFoward = useHandleIndentFoward({ rawObjs, setRawObjs });
-    const handleLineIndentBackward = useHandleIndentBackward({
-        rawObjs,
-        setRawObjs,
-    });
 
     // on startup see if focus
     useEffect(() => {
-        if (activeTextLineNum == lineNum) {
+        if (activeLineNum == rawObject.lineNum) {
             if (inputRef.current == null) return;
             inputRef.current.focus();
         }
-    }, [activeTextLineNum, lineNum]);
+    }, [activeLineNum, rawObject]);
 
     // update dummy text on
     useEffect(() => { 
-        setDummyText(initText);
-    }, [initText]);
+        setDummyText(rawObject.text);
+    }, [rawObject.text]);
 
 
+    // heading event
     useEffect(() => {
         if (!inputRef.current) return
-        handleHeadingEvent(inputRef.current?.value)
+        handleHeadingEvent(inputRef.current.value)
     }, [inputRef, handleHeadingEvent])
 
+    // updating dummy text of re fetch
     useEffect(() => {
         prevLineTextRef.current = dummyText;
     }, [dummyText]);
 
     // set active
     const handleInputClick = () => {
-        setActiveTextLineNum(lineNum);
+        setActiveTextLineNum(rawObject.lineNum);
     };
 
     // dekstop
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
 
-        // check for line delete event
+        //BACKSPACE
         if (e.key === "Backspace") {
             const input = inputRef.current
             if (!input) return
-
             const atStart = input.selectionStart === 0
             const noSelection = input.selectionStart === input.selectionEnd
 
-
             // never delete line 1
-            if (lineNum === 1) return
+            if (rawObject.lineNum === 1) return
 
             // empty line delete
             if (dummyText.length === 0) {
                 e.preventDefault()
-                const newRawObjs = handleEmptyLineDelete()
-                if (newRawObjs) setRawObjs(newRawObjs)
+                deleteRawObject.mutate({
+                    noteId : noteId,
+                    rawObjectId : rawObject.id,
+                    lineNum : rawObject.lineNum
+                })
                 return
             }
-
             // populated line delete (only at cursor start)
-            // if ((atStart && atEnd == dummyText.length) || (atStart && atEnd == 0 )) {
             if (atStart && noSelection && dummyText.length > 0) {
-            e.preventDefault()
-            const newRawObjs = handlePopulatedLineDelete()
-            if (newRawObjs) setRawObjs(newRawObjs)
-            return
+                e.preventDefault()
+                deletePopulatedRawObject.mutate({
+                    rawObject : rawObject,
+                    noteId : noteId,
+                    rawObjects : rawObjects,
+                    maxCharLengthRef : maxCharLengthRef,
+                })
+                return
             }
         }
+        // ENTER
+        if (e.key === "Enter") {
+            if (enterCooldownRef.current) return
 
-        
+            enterCooldownRef.current = true
 
+            createEnterRawObject.mutate({
+                noteId: noteId,
+                lineNum: rawObject.lineNum ,
+            })
 
-        // handle create new line
-        if (e.key == "Enter") {
-            createNewLine(lineNum);
+            setTimeout(() => {
+                enterCooldownRef.current = false
+            }, 500)
         }
-
-        // TAB
+                //TAB
         if (e.key == "Tab") {
             e.preventDefault();
             if (e.shiftKey) {
-                handleLineIndentBackward();
+                hanldeIndentBackward.mutate({
+                    text : dummyText,
+                    rawObjectId : String(rawObject.id),
+                    noteId : String(noteId),
+                })
             } else {
-                handleLineIndentFoward();
+                handleIndentFoward.mutate({
+                    text : dummyText,
+                    rawObjectId : String(rawObject.id),
+                    noteId : String(noteId),
+                    maxCharLengthRef : maxCharLengthRef,
+                })
             }
         }
+        //ARROWS LEFT AND RIGHT
+        if (e.key == 'ArrowLeft' || e.key == 'ArrowRight') {
+            // dont run if already the same
+            if (rawObject.text == dummyText) return
+            handleInputTextChange(dummyText, rawObject.id, noteId);
+        }
+
+        // arrow up
+        if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            setActiveTextLineNum(Math.max(1, rawObject.lineNum - 1));
+            if (dummyText == rawObject.text) return
+            handleInputTextChange(dummyText, rawObject.id, noteId);
+
+            return;
+        }
+
+        // arrow down
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            setActiveTextLineNum(rawObject.lineNum + 1);
+            if (dummyText == rawObject.text) return
+            handleInputTextChange(dummyText, rawObject.id, noteId);
+            return;
+        }
+
 
     };
 
@@ -151,38 +197,18 @@ export default function TextLine({
         const ie = e.nativeEvent as InputEvent; // no words lol
         if (ie.inputType !== "deleteContentBackward") return;
 
-        if (dummyText.length === 0 && lineNum !== 1) {
+        if (dummyText.length === 0 && rawObject.lineNum !== 1) {
             e.preventDefault();
-            handleEmptyLineDelete();
+            deleteRawObject.mutate({
+                noteId : noteId,
+                rawObjectId : rawObject.id,
+                lineNum : rawObject.lineNum
+            })
         }
     };
 
-    // onChange
-    const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.value.length > maxCharLengthRef.current) {
-            const newRawObj: RawObj[] = handleInputTextChangeOverpopulated(e);
-            setRawObjs(newRawObj);
-        } else {
-            const newRawObj: RawObj[] = handleInputTextChange(e);
-            setRawObjs(newRawObj);
-        }
-
-        handleHeadingEvent(e.target.value);
-    };
-
-    // handle create lastRawObj
-    useEffect(() => {
-        const lastLineNum = rawObjs.length;
-        // if value and last rawObj
-        if (dummyText.length != 0 && lineNum == lastLineNum) {
-            const newRawObj: RawObj = {
-                text: "",
-                lineNum: lastLineNum + 1,
-            };
-            setRawObjs((prev) => [...prev, newRawObj]);
-        }
-    }, [dummyText, rawObjs, setRawObjs, lineNum]);
-
+    
+    
     // handle selection on input (for insert btns)
     document.addEventListener("selectionchange", () => {
         const input = document.activeElement;
@@ -206,20 +232,51 @@ export default function TextLine({
         }
     });
 
+    // onBur
     const handleOnBlur = () => {
-        setTimeout(() => {
-            setActiveTextLineNum(0)        
-    }, 300);
-
-
+        if (dummyText == rawObject.text) return
+        handleInputTextChange(dummyText, rawObject.id, noteId);
     }
 
+    // onChange
+    const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (dummyText.length > maxCharLengthRef.current) {
+            const nextText = e.target.value
+            handleInputTextChangeOverpopulated(
+                nextText, // new text
+                rawObject.lineNum,
+                rawObject.id,
+                noteId,
+            )
+            handleHeadingEvent(e.target.value);
+        } else {
+            setDummyText(e.target.value)
+            handleHeadingEvent(e.target.value);
+        }
+
+    };
+
+    // handle create lastRawObj
+    useEffect(() => {
+        if (
+            hasCreatedNextLineRef.current ||
+            dummyText.length === 0 ||
+            rawObject.lineNum !== rawObjects.length
+        ) return;
+
+        hasCreatedNextLineRef.current = true;
+
+        createRawObject.mutate({
+            lineNum: rawObject.lineNum + 1,
+            noteId,
+        });
+    }, [dummyText.length, rawObject.lineNum, rawObjects, noteId, createRawObject]);
 
     return (
         <input
             className="text-line-input"
             ref={inputRef}
-            key={`line-input-${lineNum}`}
+            id={`line-input-${rawObject.lineNum}`}
             value={dummyText}
             onChange={handleOnChange}
             autoFocus={false}
@@ -228,6 +285,7 @@ export default function TextLine({
             onKeyDown={handleKeyDown}
             onBeforeInput={handleBeforeInput}
             onBlur={handleOnBlur}
+            autoComplete="off"
         />
     );
 }

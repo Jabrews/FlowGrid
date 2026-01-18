@@ -3,6 +3,7 @@ import { useMutation, useQueryClient} from "@tanstack/react-query";
 // hooks
 import useCsrf from "../../../../hooks/useCsrf";
 import { useGridId } from "../../../../stores/ProjectAndFolderStore/ProjectAndFolderStore";
+import { useChangeActiveNoteName } from "../../../../stores/ActiveNoteStore/ActiveNoteStore";
 
 // utill
 import { mutate_auth } from "../../../../util/mutate_auth";
@@ -10,7 +11,7 @@ import { mutate_auth } from "../../../../util/mutate_auth";
 type ChangeNoteNameForm = {
     note_directory_id : string
     folder_id : string
-    note_id : string,
+    note_id : number,
     newTitle? : string,
 }
 
@@ -21,6 +22,7 @@ export default function useChangeNoteName() {
     const csrf_token = useCsrf()
     const queryClient = useQueryClient()
     const grid_id = useGridId()
+    const changeActiveNoteName = useChangeActiveNoteName()
 
     return useMutation({
         mutationFn : async ({note_directory_id, folder_id, note_id,  newTitle} : ChangeNoteNameForm) => {
@@ -41,10 +43,12 @@ export default function useChangeNoteName() {
 
 
         },
-        onSuccess : () => {
-            queryClient.invalidateQueries({queryKey : [`NoteDir`,grid_id]})
+        onSuccess : (_data, variables) => {
+            queryClient.invalidateQueries({queryKey : ['raw-objs', variables.note_id]})
+            queryClient.invalidateQueries({queryKey: [`NoteDir`, grid_id]})
+            if (!variables.newTitle) return
+            changeActiveNoteName(variables.note_id, variables.newTitle)
         }
-
     })
 
 

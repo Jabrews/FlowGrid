@@ -16,6 +16,7 @@ export default function useQueryOrCreateNoteDirectory() {
         queryKey : [`NoteDir`, grid_id],
         queryFn : async () => {
 
+
             if (!csrf_token) throw new Error('no csrf token found')
             if (!grid_id) throw new Error('no grid id found')
 

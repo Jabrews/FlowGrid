@@ -18,7 +18,7 @@ export default function useHandleHeadingEvent({inputRef, maxCharLengthRef} : Han
             if (!inputRef.current) return
             inputRef.current.style.width = '75ch'
             inputRef.current.style.fontSize= '1em'
-            // max char is auto 75 
+            maxCharLengthRef.current = 75
             return
         } 
 

@@ -4,6 +4,7 @@ import { useEffect, useRef} from "react";
 import { useShowFolderPannel } from "../../stores/NoteNavigatorStore/NoteNavigatorStore";
 import useQueryOrCreateNoteDirectory from "./hooks/useQueryOrCreateNoteDirectory";
 import useCreateFolder from "./hooks/folder/useCreateFolder";
+import { useSetNoteDirectoryId } from "../../stores/NoteDirectoryInfoStore/NoteDirectoryInfoStore";
 
 // util
 import { get_svg_icons } from "../../util/get_svg_icons";
@@ -21,6 +22,7 @@ export default function FolderPannel() {
   const showFolderPannel = useShowFolderPannel();
   const { data, isLoading} = useQueryOrCreateNoteDirectory()
   const createFolder = useCreateFolder()
+  const setNoteDirectoryId = useSetNoteDirectoryId()
 
   // helper var
   const noteDirId = useRef<number | null>(null)
@@ -43,7 +45,9 @@ export default function FolderPannel() {
     if (isLoading) return
     if (!data[0].id) return
     noteDirId.current = data[0].id
-  }, [data, noteDirId, isLoading])
+    setNoteDirectoryId(data[0].id)
+
+  }, [data, noteDirId, isLoading, setNoteDirectoryId])
 
 
   return (
@@ -68,7 +72,7 @@ export default function FolderPannel() {
           {/* Body */}
           <div className="folder-pannel-body">
 
-            {data &&
+            {data && data.length > 0 && 
               data.map((noteDirectory: NoteDirectory) => (
                 noteDirectory.folders && noteDirectory.folders.length > 0 ? (
                   noteDirectory.folders.map((folder: FolderPartial) => (

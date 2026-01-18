@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import useCreateNote from "../hooks/note/useCreateNote";
 import useDeleteFolder from "../hooks/folder/useDeleteFolder";
 import useChangeFolderName from "../hooks/folder/useChangeFolderName";
+import { useDeleteByFolderId } from "../../../stores/ActiveNoteStore/ActiveNoteStore";
 
 // del modal hooks
 import { useToggleShowDeleteModal } from "../../../stores/ModalRendererStore/ModelRendererStore";
@@ -34,6 +35,7 @@ export default function Folder({
     const createNote = useCreateNote();
     const deleteFolder = useDeleteFolder();
     const changeFolderName = useChangeFolderName();
+    const deleteByFolderId = useDeleteByFolderId()
 
     const toggleShowDeleteModal = useToggleShowDeleteModal();
     const { ask } = useConfirmStore();
@@ -44,6 +46,7 @@ export default function Folder({
         if (!inputRef.current) return;
         inputRef.current.style.width = `${dummyFolderName.length + 1}ch`;
     }, [dummyFolderName]);
+
 
     const focusInput = () => {
         requestAnimationFrame(() => inputRef.current?.focus());
@@ -94,6 +97,7 @@ export default function Folder({
                 note_directory_id: String(note_directory_id),
                 folder_id: String(id),
             });
+            deleteByFolderId(id)
         }
     };
 

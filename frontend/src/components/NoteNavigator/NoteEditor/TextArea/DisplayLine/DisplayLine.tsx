@@ -9,8 +9,6 @@ import useParseTextSymbol from "./hooks/useParseTextSymbol";
 // utill
 import get_rid_of_symbols from "./util/get_rid_of_symbols";
 // utill for rendering logic
-import { find_text_before } from "./util/find_text_before";
-import { find_text_after } from "./util/find_text_after";
 import clear_text from "./util/clear_text";
 import type { ParsedText, Span } from "./util/display_line_types";
 // import get_span_text from "./util/get_span_text";
@@ -99,9 +97,8 @@ export default function DisplayLine({ text, lineNum }: DisplayLineProps) {
             // span itself
             parts.push(renderSpan(span, rawText))
 
-            cursor = hasWrapper
-                ? span.end + 1 + 2
-                : span.end + 1
+            cursor = span.end + 1
+ 
         })
 
         // remaining text

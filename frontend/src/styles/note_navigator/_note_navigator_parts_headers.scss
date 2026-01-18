@@ -3,15 +3,32 @@
     .note-nav-body {
         z-index: 1000;
         position: fixed;
-        top: 8.1%;
+        top: 7%;
         width: 100%;
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        grid-template-columns: 1fr;
         height: 100%;
+
+        @media (max-width: 700px) {
+            & {
+                top : 8%
+            }
+        }
+
+        @media (max-width : 400px) {
+            & {
+                top: 10%;
+            }
+        }
+
+
+        /* when there is more than one item */
+        &:has(> *:nth-child(2)) {
+            grid-template-columns: 1fr 4fr;
+        }
 
         // FOLDER PANEL
         .folder-pannel-container {
-            grid-column: 1/3;
             border: solid black 0.1em;
             background-color: rgb(24, 20, 24);
 
@@ -62,11 +79,13 @@
 
         // NOTE PANEL
         .note-editor-container {
-            grid-column: 3/5;
             border: solid black 0.1em;
             transition: grid-column 0.5s ease;
             background-color: rgb(17, 14, 17);
             color: white;
+            display: flex;
+            flex-direction: column;
+            max-width: 100vw;
 
             // NOTE HEADER
             .note-editor-header {

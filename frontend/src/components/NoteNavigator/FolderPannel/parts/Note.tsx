@@ -1,4 +1,4 @@
-import { useRef, useState, useLayoutEffect } from "react";
+import { useRef, useState, useLayoutEffect, useEffect} from "react";
 import { motion } from "framer-motion";
 import { get_svg_icons } from "../../../util/get_svg_icons";
 
@@ -8,6 +8,11 @@ import useChangeNoteName from "../hooks/note/useChangeNoteName";
 // del modal hooks
 import { useConfirmStore } from "../../../stores/ConfirmStore/ConfirmStore";
 import { useToggleShowDeleteModal } from "../../../stores/ModalRendererStore/ModelRendererStore";
+import { useFindActiveStatus } from "../../../stores/ActiveNoteStore/ActiveNoteStore";
+import { useChangeActiveNoteName } from "../../../stores/ActiveNoteStore/ActiveNoteStore";
+// util
+import type { ActiveNote } from "../../../stores/ActiveNoteStore/ActiveNoteStore";
+import { useAddActiveNote, useDeleteActiveNote, useActiveNotes} from "../../../stores/ActiveNoteStore/ActiveNoteStore";
 
 export type NoteProps = {
     title: string;
@@ -20,12 +25,20 @@ export default function Note({ title, id, folder_id, note_directory_id}: NotePro
 
     // hook init
     const [dummyTitle, setDummyTitle] = useState(title);
-    const [isActive, setIsActive] = useState(false);
+    const findActiveStatus = useFindActiveStatus()
+    const [isActive, setIsActive] = useState(() => {
+        return findActiveStatus(id)
+        
+    });
     const [isEditing, setIsEditing] = useState(false);
     const deleteNote = useDeleteNote()
     const changeNoteName = useChangeNoteName()
     const toggleShowDeleteModal = useToggleShowDeleteModal()
     const {ask} = useConfirmStore()
+    const addActiveNote = useAddActiveNote()
+    const deleteActiveNote = useDeleteActiveNote()
+    const activeNotes = useActiveNotes()    
+    const changeActiveNoteName = useChangeActiveNoteName()
 
 
     // help refs
@@ -36,6 +49,10 @@ export default function Note({ title, id, folder_id, note_directory_id}: NotePro
     const focusInput = () => {
         requestAnimationFrame(() => inputRef.current?.focus());
     };
+
+    useEffect(() => {
+        setDummyTitle(title)
+    }, [title])
 
     const startEditing = () => {
         setIsActive(true);
@@ -55,15 +72,26 @@ export default function Note({ title, id, folder_id, note_directory_id}: NotePro
             note_directory_id: String(note_directory_id),
             folder_id: String(folder_id),
             newTitle: dummyTitle,
-            note_id : String(id)
+            note_id : id
         })
-
-
+        changeActiveNoteName(id, dummyTitle)
     };
 
+    // this is what creates activeNotr
     const handleContainerClick = () => {
         if (isEditing) return;
         setIsActive((prev) => !prev);
+        if (isActive == false) {
+            const newActiveNote : ActiveNote = {
+                title : title,
+                noteId : id,
+                parentFolderId : folder_id,
+            }
+            addActiveNote(newActiveNote)
+        }
+        if (isActive == true) {
+           deleteActiveNote(id)
+        }
     };
 
     const handleInputClick = (e: React.MouseEvent) => {
@@ -81,6 +109,7 @@ export default function Note({ title, id, folder_id, note_directory_id}: NotePro
                 note_directory_id: String(note_directory_id),
                 note_id : String(id),
             })
+            deleteActiveNote(id)
         }
 
     }
@@ -97,6 +126,11 @@ export default function Note({ title, id, folder_id, note_directory_id}: NotePro
         const MIN_WIDTH = 18;
         input.style.width = `${Math.max(MIN_WIDTH, Math.ceil(width))}px`;
     }, [dummyTitle]);
+
+    // handle active status change
+    useEffect(() => {
+        setIsActive(findActiveStatus(id))
+    }, [activeNotes, findActiveStatus, id])
 
     return (
         <motion.div

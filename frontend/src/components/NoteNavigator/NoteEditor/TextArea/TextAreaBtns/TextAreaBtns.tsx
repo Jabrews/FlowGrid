@@ -1,34 +1,43 @@
-import { useMemo } from "react"
+import { useMemo, useRef} from "react"
 
 // utill
 import type { RawObj } from "../util/text_area_types"
-import { get_svg_icons } from "../../util/get_svg_icons"
+import { get_svg_icons } from "../../../../util/get_svg_icons"
 import text_heading_to_char_length from "../TextLine/util/text_heading_to_char_length"
 
 // hooks
-import useHandleIndentFoward from "./hooks/useHandleIndentFoward"
-import useHandleIndentBackward from "./hooks/useHandleIndentBackward"
+import useHandleIndentFoward from "../TextLine/hooks/mutation/useHandleIndentFoward"
+import useHandleIndentBackward from "../TextLine/hooks/mutation/useHandleIndentBackward"
 import useInsertSymbolAtChars from "./hooks/useInsertSymbolAtChars"
 import { useActiveTextLineNum } from "../TextLine/hooks/ActiveTextLineStore"
 import useHandleHeadingButton from "./hooks/useHandleHeadingButton"
 
 type TextAreaBtnsProps = {
     rawObjs: RawObj[]
-    setRawObjs: React.Dispatch<React.SetStateAction<RawObj[]>>
+    noteId : number,
 }
 
-export default function TextAreaBtns({ rawObjs, setRawObjs }: TextAreaBtnsProps) {
+export default function TextAreaBtns({ rawObjs, noteId}: TextAreaBtnsProps) {
 
     // hook init
-    const handleIndentFoward = useHandleIndentFoward({ rawObjs, setRawObjs })
-    const handleIndentBackward = useHandleIndentBackward({ rawObjs, setRawObjs })
-    const insetSymbolAtChars = useInsertSymbolAtChars({ rawObjs })
+    const handleIndentFoward = useHandleIndentFoward()
+    const handleIndentBackward = useHandleIndentBackward()
+    const insetSymbolAtChars = useInsertSymbolAtChars()
     const activeTextLineNum = useActiveTextLineNum()
-    const handleHeadingButton = useHandleHeadingButton({rawObjs, setRawObjs})
+    const handleHeadingButton = useHandleHeadingButton({rawObjs, noteId})
+    const max_length_ref = useRef(75)
 
     const handleInsertBtnDown = (symbol: string) => {
-        const newRawObjs: RawObj[] = insetSymbolAtChars(symbol)
-        setRawObjs(newRawObjs)
+        const activeRawObj = rawObjs.find(
+            (item: RawObj) => item.lineNum === activeTextLineNum
+        )
+        if (!activeRawObj) return
+        insetSymbolAtChars({
+            rawObjs, 
+            noteId,
+            rawObjectId : activeRawObj.id,
+            symbol
+        })
     }
 
 
@@ -57,6 +66,35 @@ export default function TextAreaBtns({ rawObjs, setRawObjs }: TextAreaBtnsProps)
     }, [activeTextLineNum, rawObjs])
 
 
+    const handleIndentFowardBtn = () => {
+
+        // find active raw objs
+        const rawObj = rawObjs.find((rawObj : RawObj) => rawObj.lineNum == activeTextLineNum)
+
+        if (!rawObj) return
+
+        handleIndentFoward.mutate({
+            text : rawObj.text,
+            maxCharLengthRef : max_length_ref,
+            noteId : String(noteId),
+            rawObjectId : String(rawObj.id)
+        })
+    }
+
+    const handleIndentBackwardBtn = () => {
+
+        // find active raw objs
+        const rawObj = rawObjs.find((rawObj : RawObj) => rawObj.lineNum == activeTextLineNum)
+
+        if (!rawObj) return
+
+        handleIndentBackward.mutate({
+            text : rawObj.text,
+            noteId : String(noteId),
+            rawObjectId : String(rawObj.id)
+        })
+    }
+
 
 
 
@@ -67,12 +105,12 @@ export default function TextAreaBtns({ rawObjs, setRawObjs }: TextAreaBtnsProps)
         >
             {/* indent */}
             <button
-                onClick={() => handleIndentFoward()}
+                onClick={handleIndentFowardBtn}
             >
                 {get_svg_icons({ icon: 'indent-right', size: 24 })}
             </button>
             <button
-                onClick={() => handleIndentBackward()}
+                onClick={handleIndentBackwardBtn}
             >
                 {get_svg_icons({ icon: 'indent-left', size: 24 })}
 
