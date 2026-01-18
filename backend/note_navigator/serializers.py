@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 # models 
-from .models import NoteDirectory, NoteFolder, Note
+from .models import NoteDirectory, NoteFolder, Note, RawObject
 
 
 
@@ -42,7 +42,7 @@ class NoteSerializer(serializers.ModelSerializer) :
 
     class Meta :
         model = Note
-        fields = ['id', 'note_folder_id', 'title', 'last_used', 'raw_text']
+        fields = ['id', 'note_folder_id', 'title', 'last_used']
         read_only_fields = ['id', 'note_folder_id',  'last_used']
         
 
@@ -56,3 +56,15 @@ class NotePartialSerializer(serializers.ModelSerializer):
         fields = ['id', 'note_folder_id', 'title']
         read_only_fields = ['id', 'note_folder_id']
 
+class RawObjectSerializer(serializers.ModelSerializer) :
+    note_id = serializers.CharField(source='note.id', read_only=True)    
+    text = serializers.CharField(
+        required=False,
+        allow_blank=True,
+        trim_whitespace=False,
+    )    
+    
+    class Meta :
+        model = RawObject
+        fields = ['id', 'lineNum', 'text', 'note_id']
+        read_only_fields = ['note_id', 'id'] 
