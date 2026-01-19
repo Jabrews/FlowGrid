@@ -31,7 +31,6 @@ export default function FolderPannel() {
   const handleAddFolder = () => {
 
     if (noteDirId.current == null) {
-      console.log('dir id : ', noteDirId)
       return
     }
 
@@ -43,7 +42,8 @@ export default function FolderPannel() {
   // hacky, but since only one note_directory should work
   useEffect(() => {
     if (isLoading) return
-    if (!data[0].id) return
+    if (!data[0])
+    if (!data[0]?.id) return
     noteDirId.current = data[0].id
     setNoteDirectoryId(data[0].id)
 

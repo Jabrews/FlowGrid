@@ -183,6 +183,8 @@ export default function TextLine({
         // arrow down
         if (e.key === 'ArrowDown') {
             e.preventDefault();
+            // prevent setting active line num on bottom
+            if (rawObject.lineNum == rawObjects.length) return
             setActiveTextLineNum(rawObject.lineNum + 1);
             if (dummyText == rawObject.text) return
             handleInputTextChange(dummyText, rawObject.id, noteId);

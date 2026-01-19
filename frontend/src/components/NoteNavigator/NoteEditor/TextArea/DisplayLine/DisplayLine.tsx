@@ -117,17 +117,17 @@ export default function DisplayLine({ text, lineNum }: DisplayLineProps) {
     return (
 
         <div ref={divRef} className="display-line-item" onClick={() => setActiveTextLineNum(lineNum)}>
-
         {parsedText.spans.length > 0 ? (
             <span className="display-line-inline">
                 {renderLine(parsedText.rawText, parsedText.spans.map(s => ({ ...s })))}
             </span>
         ) : (
-            text.length > 0 ? (
-            <span > {text} </span>
-            ) : (<span style={{opacity : '40%'}}> type to start </span>)
-
-        )
+            parsedText.text.length > 0 ? (
+                <span>{parsedText.text}</span>
+            ) : (
+                <span style={{ opacity: "40%" }}>type to start</span>
+            )
+            )
         }
         </div>
 

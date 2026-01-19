@@ -1,8 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery} from "@tanstack/react-query";
 
 // hooks
 import useCsrf from "../../../hooks/useCsrf";
 import { useGridId } from "../../../stores/ProjectAndFolderStore/ProjectAndFolderStore";
+import { useToggleShowNavMenu } from "../../../stores/NoteNavigatorStore/NoteNavigatorStore";
 
 
 export default function useQueryOrCreateNoteDirectory() {
@@ -11,6 +12,7 @@ export default function useQueryOrCreateNoteDirectory() {
     const csrf_token = useCsrf()
     const grid_id = useGridId()
     const api_url = import.meta.env.VITE_API_URL;
+    const toggleShowNavMenu = useToggleShowNavMenu()
 
     return useQuery({
         queryKey : [`NoteDir`, grid_id],
@@ -40,10 +42,11 @@ export default function useQueryOrCreateNoteDirectory() {
                 },
                 body: JSON.stringify({grid_id}),
                 });
+                toggleShowNavMenu(false)
             }
 
             if(!res.ok) {
-                throw new Error(`request failed: ${res.status}`)
+                return
             }
 
             return res.json()
