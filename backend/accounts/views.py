@@ -4,7 +4,12 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from django.contrib.auth.models import User
+from django.utils import timezone
+from datetime import timedelta
 from django.contrib.auth import login, authenticate, logout
+
+# models
+from .models import GuestProfile
 
 # serializers
 from .serializer import SignupSerializer, LoginSerializer
@@ -78,3 +83,20 @@ def logout_view(request):
         return Response({'message': 'User logged out successfully'}, status=status.HTTP_200_OK)
     except Exception as e:
         return Response({'error': 'Logout failed'}, status=status.HTTP_400_BAD_REQUEST)
+    
+@requires_csrf_token
+@api_view(["POST"])
+@permission_classes([AllowAny])
+def guest_login(request):
+    user = User.objects.create_user(
+        username=f"guest_{User.objects.count()}",
+        password=None,
+    )
+
+    GuestProfile.objects.create(
+        user=user,
+        expires_at=timezone.now() + timedelta(hours=1)
+    )
+
+    login(request, user)
+    return Response({"status": "guest_logged_in"})

@@ -15,13 +15,12 @@ import Home from './components/Home/Home'
 import WorkSpace from './components/WorkSpace/WorkSpace'
 
 // hooks
-import { useIsAuth, useIsGuest } from './components/stores/AccountsStore/AccountsStore'
+import { useIsAuth} from './components/stores/AccountsStore/AccountsStore'
 
 function App() {
   
   // hook init
   const isAuth = useIsAuth()
-  const isGuest = useIsGuest()
 
 
 
@@ -31,7 +30,7 @@ function App() {
       <Routes>
 
         {/* Redirect guests (not logged in) to login/signup */}
-        {!isAuth && !isGuest && (
+        {!isAuth && (
           <>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
@@ -49,17 +48,6 @@ function App() {
             <Route path="*" element={<p>404 Not Found</p>} />
           </>
         )}
-
-        {/* Guest users */}
-        {isGuest && (
-          <>
-            <Route path="/home" element={<p>Home Page</p>} />
-            <Route path="/whiteboard" element={<p>Whiteboard Page</p>} />
-            <Route path="/" element={<Navigate to="/home" replace />} />
-            <Route path="*" element={<p>404 Not Found</p>} />
-          </>
-        )}
-
       </Routes>
     </Router>
   )

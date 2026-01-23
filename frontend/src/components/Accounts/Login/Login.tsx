@@ -3,7 +3,8 @@ import {useNavigate } from "react-router-dom";
 
 // hooks
 import useLoginHook from "./hooks/useLoginHook";
-import { useToggleIsAuth, useSetUserName, useToggleIsGuest} from '../../stores/AccountsStore/AccountsStore'
+import useGuestHook from "./hooks/useGuestHook";
+import { useToggleIsAuth, useSetUserName} from '../../stores/AccountsStore/AccountsStore'
 
 export default function Login() {
   const navigate = useNavigate();
@@ -12,9 +13,9 @@ export default function Login() {
   const [error, setError] = useState("");
 
   const loginHook = useLoginHook();
+  const guestHook = useGuestHook()
   const toggleIsAuth = useToggleIsAuth();
   const setUserName = useSetUserName();
-  const toggleIsGuest = useToggleIsGuest()
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,7 +32,6 @@ export default function Login() {
         console.log("Login successful:", data);
         toggleIsAuth(true);
         setUserName(username);
-        toggleIsGuest(false)
         navigate("/");
       },
       onError: (error) => {
@@ -42,11 +42,18 @@ export default function Login() {
   };
 
   const handleGuestContinue = () => {
-    toggleIsGuest(true)
-    toggleIsAuth(false)
-    navigate('/')
-  }
-
+    guestHook.mutate(undefined, {
+      onSuccess: () => {
+        toggleIsAuth(true);
+        setUserName("Guest");
+        navigate("/");
+      },
+      onError: (error) => {
+        console.error("Login failed:", error);
+        setError(error?.message || "Login failed. Please try again.");
+      },
+    });
+  };
 
   return (
     <div className="auth-container">

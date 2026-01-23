@@ -1,9 +1,16 @@
 import { useMutation } from "@tanstack/react-query";
 import { getCookie } from '../../util/get_cookie';
 
+// hooks
+import { useSetActiveFolderId } from "../../stores/ProjectAndFolderStore/ProjectAndFolderStore";
+
 const api_url = import.meta.env.VITE_API_URL;
 
 export default function useLogout() {
+
+    // hook init
+    const setActiveFolderId = useSetActiveFolderId()
+
     return useMutation({
         mutationFn: async () => {
             // Get CSRF token from cookie
@@ -28,6 +35,9 @@ export default function useLogout() {
 
             const data = await res.json();
             return data;
+        },
+        onSuccess : () => {
+            setActiveFolderId('')
         }
     });
 }
