@@ -8,9 +8,6 @@ from django.utils import timezone
 from datetime import timedelta
 from django.contrib.auth import login, authenticate, logout
 
-# models
-from .models import GuestProfile
-
 # serializers
 from .serializer import SignupSerializer, LoginSerializer
 
@@ -91,11 +88,6 @@ def guest_login(request):
     user = User.objects.create_user(
         username=f"guest_{User.objects.count()}",
         password=None,
-    )
-
-    GuestProfile.objects.create(
-        user=user,
-        expires_at=timezone.now() + timedelta(hours=1)
     )
 
     login(request, user)
