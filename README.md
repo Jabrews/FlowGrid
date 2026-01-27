@@ -6,7 +6,8 @@ An Obsidian-inspired markdown note app with a drag-and-drop editor for note-taki
 - Drag and Drop Editor
 - Premade Components to make your work easier
 - Trackable components
-- Note Taking Interface : 
+- Note Taking Interface
+- Markdown Note Format
 
 # Tech Stack
 - **Frontend:** React, Zustand, React-Query, Sass(css), Vitest, React-Testing-Library
