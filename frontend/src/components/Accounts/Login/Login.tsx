@@ -36,7 +36,12 @@ export default function Login() {
       },
       onError: (error) => {
         console.error("Login failed:", error);
-        setError(error.message || "Login failed. Please try again.");
+        // CSRF ERROR CUSTOM
+        if (error.message == "CSRF token not available") {
+          setError('CSRF token not found, Server is warming up. 1-2 min wait')
+        } else {
+          setError(error.message || "Login failed. Please try again.");
+        }
       },
     });
   };
@@ -48,9 +53,8 @@ export default function Login() {
         setUserName("Guest");
         navigate("/");
       },
-      onError: (error) => {
-        console.error("Login failed:", error);
-        setError(error?.message || "Login failed. Please try again.");
+      onError: () => {
+          setError('CSRF token not found, Server is likely warming up. 1-2 min wait')
       },
     });
   };

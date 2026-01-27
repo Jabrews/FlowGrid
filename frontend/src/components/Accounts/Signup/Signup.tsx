@@ -37,12 +37,16 @@ export default function Signup() {
     }
 
     if (!CSRFTOKEN) {
-      setError('invalid session')
+      setError('CSRF token not found, Server is warming up. 1-2 min wait')
       return
     }
 
     setError('')
 
+
+
+
+    
     signupHook.mutate({username, password, email, },
       {
         onSuccess: (data) => {
@@ -55,6 +59,7 @@ export default function Signup() {
         onError: (error) => {
           toggleIsAuth(false) 
           setUserName("")
+          
           console.error("Signup failed:", error);
           setError(error.message || "Signup failed. Please try again.");
         },

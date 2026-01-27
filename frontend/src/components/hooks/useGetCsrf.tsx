@@ -56,6 +56,11 @@ export default function useGetCsrf() {
     refetchOnMount: true,
     refetchOnWindowFocus: false,
     staleTime: 0, 
+    // keep retrying forever
+    retry: true,
+    // delay
+    retryDelay: attemptIndex =>
+      Math.min(1000 * 2 ** attemptIndex, 10000),
   });
 
 }

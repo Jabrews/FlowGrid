@@ -14,7 +14,7 @@ const api_url = import.meta.env.VITE_API_URL
 export default function useLoginHook() {
 
     // hook init
-    const { data: csrfData } = useGetCsrf();
+    const { data: csrfData} = useGetCsrf();
     const queryClient = useQueryClient()
 
     return useMutation({
@@ -24,7 +24,6 @@ export default function useLoginHook() {
                 throw new Error("CSRF token not available");
             }
 
-            console.log('csrf for login : ', csrfData.csrfToken)
         
             const res = await fetch(`${api_url}api/login/`, {
                 credentials: 'include',
