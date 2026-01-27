@@ -56,51 +56,55 @@ export default function Login() {
   };
 
   return (
-    <div className="auth-container">
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          autoSave={'on'}
-          autoFocus={true}
-          autoComplete={'nickname'}
+    <div className='accounts-container'>
+      <div className="auth-container">
+        <h2>Login</h2>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            autoSave={'on'}
+            autoFocus={true}
+            autoComplete={'nickname'}
 
-        />
+          />
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          autoComplete={'current-password'}
-          autoSave={'on'}
-        />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            autoComplete={'current-password'}
+            autoSave={'on'}
+          />
 
-        {error && <p className="error">{error}</p>}
+          {error && <p className="error">{error}</p>}
 
-        <button type="submit" disabled={loginHook.isPending}>
-          {loginHook.isPending ? "Logging in..." : "Login"}
-        </button>
-      </form>
+          <button type="submit" disabled={loginHook.isPending}>
+            {loginHook.isPending ? "Logging in..." : "Login"}
+          </button>
+        </form>
 
-      <p>
-        Don’t have an account?{" "}
-        <span className="link" onClick={() => navigate("/signup")}>
-          Sign up here
-        </span>
-      </p>
+        <p>
+          Don’t have an account?{" "}
+          <span className="link" onClick={() => navigate("/signup")}>
+            Sign up here
+          </span>
+        </p>
 
-      <p 
-        className='guest-text'
-        onClick={handleGuestContinue}
-      > 
-        Continue as a guest
-      </p>
+        <p 
+          className='guest-text'
+          onClick={handleGuestContinue}
+        > 
+          Continue as a guest
+        </p>
 
+      </div>
     </div>
+
+
   );
 }
 

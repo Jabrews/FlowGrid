@@ -1,4 +1,4 @@
-import { useState, useEffect} from "react"
+import { useState, useEffect } from "react"
 
 // hooks
 // import useQueryTracker from "./hooks/useQueryTracker"
@@ -6,35 +6,38 @@ import useQueryTrackObjByTrackerI from "./hooks/useQueryTrackObjByTrackerI"
 import useRenderTrackerMenus from "./hooks/useRenderTrackMenus"
 import useMutateTrackObjName from "./hooks/useMutateTrackObjName"
 
+// components
+import { TailSpin } from "react-loader-spinner"
+
 
 type TrackerProps = {
-    i : string
+    i: string
 }
 
-export default function Tracker({i} : TrackerProps) {
-    
-    const [selectedIndex, incrementSelectedIndex] = useState(0) 
-    const [customNameDummy , setCustomNameDummy] = useState(' ')
+export default function Tracker({ i }: TrackerProps) {
+
+    const [selectedIndex, incrementSelectedIndex] = useState(0)
+    const [customNameDummy, setCustomNameDummy] = useState(' ')
 
     // hook init
-    const {data : trackObjs} = useQueryTrackObjByTrackerI({trackerI : i})
-    const renderTrackerMenus = useRenderTrackerMenus({index : selectedIndex, trackObjects : trackObjs})
+    const { data: trackObjs, isLoading } = useQueryTrackObjByTrackerI({ trackerI: i })
+    const renderTrackerMenus = useRenderTrackerMenus({ index: selectedIndex, trackObjects: trackObjs })
     const mutateTrackObjName = useMutateTrackObjName()
     const lastTrackObjsLength = trackObjs?.length || undefined
 
 
     useEffect(() => {
-        if (!trackObjs || trackObjs.length === 0) return 
+        if (!trackObjs || trackObjs.length === 0) return
         const customName: string | undefined = trackObjs[selectedIndex]?.customName
         if (!customName) {
             return
-        } 
+        }
 
         setCustomNameDummy(customName)
     }, [trackObjs, selectedIndex, lastTrackObjsLength])
-    
+
     // handlers //
-    const handleFowardBtn = () => { 
+    const handleFowardBtn = () => {
         if (selectedIndex == trackObjs.length - 1 || trackObjs.length == 0) {
             return
         }
@@ -59,61 +62,76 @@ export default function Tracker({i} : TrackerProps) {
         e.preventDefault()
         if (customNameDummy.length > 0) {
             mutateTrackObjName.mutate({
-                newCustomName : customNameDummy,
-                selectedTrackObj : trackObjs[selectedIndex]
+                newCustomName: customNameDummy,
+                selectedTrackObj: trackObjs[selectedIndex]
             })
         }
     }
 
 
     return (
-    <div className='tracker-container highlight-content'>
-        {/* Tracker Header */}
-        <div className='tracker-header'>
-            <button onClick={handleBackBtn}> &lt; </button>
-                <form className='header-form' onSubmit={handleInputSubmit}>
-                    {!trackObjs || trackObjs.length == 0 
+        <>
+            {isLoading && (
+                <TailSpin
+                    height="80"
+                    width="80"
+                    color="#4fa94d"
+                    ariaLabel="tail-spin-loading"
+                    visible={isLoading}
+                />
+            )}
 
-                    ? (
-                        <p> none </p>
-                    )
-                    : (
-                        <input value={customNameDummy} onChange={handleInputChange} />
-                    )
-                    }
+            {trackObjs && (
+                <div className='tracker-container highlight-content'>
+                    {/* Tracker Header */}
+                    <div className='tracker-header'>
+                        <button onClick={handleBackBtn}> &lt; </button>
+                        <form className='header-form' onSubmit={handleInputSubmit}>
+                            {!trackObjs || trackObjs.length == 0
+
+                                ? (
+                                    <p> none </p>
+                                )
+                                : (
+                                    <input value={customNameDummy} onChange={handleInputChange} />
+                                )
+                            }
 
 
 
-                </form>
-            <button onClick={handleFowardBtn}> &gt; </button>
-        </div>
+                        </form>
+                        <button onClick={handleFowardBtn}> &gt; </button>
+                    </div>
 
-        {/* Tracker Content */}
-        <div className='tracker-menu-container'>
-            <div className='tracker-menu-header' style={{overflow: 'visible'}}>
-                    {!trackObjs || trackObjs.length == 0 || !trackObjs[selectedIndex]
+                    {/* Tracker Content */}
+                    <div className='tracker-menu-container'>
+                        <div className='tracker-menu-header' style={{ overflow: 'visible' }}>
+                            {!trackObjs || trackObjs.length == 0 || !trackObjs[selectedIndex]
 
-                    ? (
-                        <p> nothing connected yet</p>
-                    )
-                    : (
-                        <p> connected to : {trackObjs[selectedIndex].gridItemI } </p>
-                    )
-                    }
-            </div>
-            <div className="tracker-menu-content"> 
-                    {!trackObjs || trackObjs.length == 0
+                                ? (
+                                    <p> nothing connected yet</p>
+                                )
+                                : (
+                                    <p> connected to : {trackObjs[selectedIndex].gridItemI} </p>
+                                )
+                            }
+                        </div>
+                        <div className="tracker-menu-content">
+                            {!trackObjs || trackObjs.length == 0
 
-                    ? (
-                        <p> no connected item</p>
-                    )
-                    : (
-                        renderTrackerMenus
-                    )
-                    }
-           </div>
-        </div>
-    </div>
+                                ? (
+                                    <p> no connected item</p>
+                                )
+                                : (
+                                    renderTrackerMenus
+                                )
+                            }
+                        </div>
+                    </div>
+                </div>
+
+            )}
+        </>
     )
 
 }

@@ -12,6 +12,7 @@ import { sort_cells } from "./util/sort_cell";
 
 // components
 import Cell from "./Cell/Cell";
+import { TailSpin } from "react-loader-spinner";
 
 type TableProps = {
   parentElementI: string;
@@ -19,7 +20,7 @@ type TableProps = {
 
 export default function Table({ parentElementI }: TableProps) {
   // hook init
-  const { data: Table } = useQueryTable({ parentElementI: parentElementI });
+  const { data: Table, isLoading} = useQueryTable({ parentElementI: parentElementI });
   const { data: CellData } = useQueryCells({
     parentElementI: parentElementI,
     tableId: Table?.id,
@@ -86,62 +87,84 @@ export default function Table({ parentElementI }: TableProps) {
   };
 
   return (
-    <div className="table-container">
-      <div className="table-header">
-        <input
-          onChange={(e) => setDummyTableTitle(e.target.value)}
-          value={dummyTableTitle}
-          onBlur={handleTableNameChange}
+    <>
+      {isLoading && (
+        <TailSpin
+            height="80"
+            width="80"
+            color="#4fa94d"
+            ariaLabel="tail-spin-loading"
+            visible={isLoading}
         />
-      </div>
+        )}
 
-      <div className="table-body">
-        {!hasCells ? (
-          /* INITIAL STATE */
-          <button
-            className="table-btn add-initial-btn"
-            onClick={handleInitialAdd}
-          >
-            +
-          </button>
-        ) : (
-          <>
-            {/* TABLE */}
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: `repeat(${columnCount}, 1fr)`,
-                gap: "8px",
-              }}
-            >
-              {sortedCells.map((cell) => (
-                <Cell
-                  key={`cell-${cell.id}`}
-                  id={cell.id}
-                  rowIndex={cell.rowIndex}
-                  columnIndex={cell.columnIndex}
-                  text={cell.text}
-                  tableId={String(Table?.id)}
-                  parentElementI={parentElementI}
-                />
-              ))}
+        {Table && (
+          <div className="table-container">
+            <div className="table-header">
+              <input
+                onChange={(e) => setDummyTableTitle(e.target.value)}
+                value={dummyTableTitle}
+                onBlur={handleTableNameChange}
+              />
             </div>
 
-            {/* ADD COLUMN */}
-            <button
-              className="add-column-btn table-btn"
-              onClick={handleColumnAdd}
-            >
-              +
-            </button>
+            <div className="table-body">
+              {!hasCells ? (
+                /* INITIAL STATE */
+                <button
+                  className="table-btn add-initial-btn"
+                  onClick={handleInitialAdd}
+                >
+                  +
+                </button>
+              ) : (
+                <>
+                  {/* TABLE */}
+                  <div
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: `repeat(${columnCount}, 1fr)`,
+                      gap: "8px",
+                    }}
+                  >
+                    {sortedCells.map((cell) => (
+                      <Cell
+                        key={`cell-${cell.id}`}
+                        id={cell.id}
+                        rowIndex={cell.rowIndex}
+                        columnIndex={cell.columnIndex}
+                        text={cell.text}
+                        tableId={String(Table?.id)}
+                        parentElementI={parentElementI}
+                      />
+                    ))}
+                  </div>
 
-            {/* ADD ROW */}
-            <button className="add-row-btn table-btn" onClick={handleRowAdd}>
-              +
-            </button>
-          </>
+                  {/* ADD COLUMN */}
+                  <button
+                    className="add-column-btn table-btn"
+                    onClick={handleColumnAdd}
+                  >
+                    +
+                  </button>
+
+                  {/* ADD ROW */}
+                  <button className="add-row-btn table-btn" onClick={handleRowAdd}>
+                    +
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
+
+
         )}
-      </div>
-    </div>
+
+ 
+    </>
+
+   
+
+
   );
 }

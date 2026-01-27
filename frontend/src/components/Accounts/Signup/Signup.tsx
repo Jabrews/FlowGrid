@@ -65,49 +65,51 @@ export default function Signup() {
   };
 
   return (
-    <div className="auth-container">
-      <h2>Signup</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
+    <div className='accounts-container'>
+      <div className="auth-container">
+        <h2>Signup</h2>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
 
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
-        <input
-          type="password"
-          placeholder="Re-enter Password"
-          value={rePassword}
-          onChange={(e) => setRePassword(e.target.value)}
-        />
+          <input
+            type="password"
+            placeholder="Re-enter Password"
+            value={rePassword}
+            onChange={(e) => setRePassword(e.target.value)}
+          />
 
-        <input
-          type="test"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+          <input
+            type="test"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
 
-        {error && <p className="error">{error}</p>}
+          {error && <p className="error">{error}</p>}
 
-        <button type="submit">Signup</button>
-      </form>
+          <button type="submit">Signup</button>
+        </form>
 
-      <p>
-        Already have an account?{" "}
-        <span className="link" onClick={() => navigate("/login")}>
-          Login here
-        </span>
-      </p>
+        <p>
+          Already have an account?{" "}
+          <span className="link" onClick={() => navigate("/login")}>
+            Login here
+          </span>
+        </p>
+      </div>
     </div>
   );
 }
