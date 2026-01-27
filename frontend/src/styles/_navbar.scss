@@ -38,8 +38,11 @@
         /* Each icon container must be relative */
         .user,
         .settings {
+            border-radius: 1em;
             position: relative;
             cursor: pointer;
+            background-color: #6a99a1;
+
 
         }
 

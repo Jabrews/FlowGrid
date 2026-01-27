@@ -36,7 +36,7 @@ import { Pen } from 'lucide-react';
 
 // Navbar
 import {User} from 'lucide-react'
-import { Settings } from 'lucide-react';
+import { Lightbulb } from 'lucide-react';
 
 // Note Menu
 import { NotebookPen } from 'lucide-react'; 
@@ -83,8 +83,8 @@ export function get_svg_icons({ icon, size }: UseSvgIconArguments) {
     // Navbar
     case 'User-Logo' :
         return React.createElement(User, { size });    
-    case 'Settings' :
-        return React.createElement(Settings, {size})
+    case 'tutorial-btn' :
+        return React.createElement(Lightbulb, {size})
 
     // zoom btns
     case 'zoom-in' :

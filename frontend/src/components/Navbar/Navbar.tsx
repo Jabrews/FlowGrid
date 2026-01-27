@@ -11,13 +11,17 @@ import { useToggleIsAuth, useSetUserName } from "../stores/AccountsStore/Account
 import useIsMobileScreen from "../hooks/useIsMobileScreen"
 import { useItemPreviewEventActive } from "../stores/ItemPreviewStore/ItemPreviewStore"
 import useResetMobileWorkSpace from "./hooks/useResetMobileWorkspace"
+// tutorial modal
+import { useToggleShowTutorialModal} from "../stores/ModalRendererStore/ModelRendererStore"
 
 // util
 import { get_svg_icons } from "../util/get_svg_icons"
 
 export default function Navbar() {
 
-    const [settingsMenuOpen, toggleSettingsMenuOpen] = useState(false)
+    // tutorial modal
+    const toggleShowTutorialModal = useToggleShowTutorialModal()
+
     const [accountMenuOpen, toggleAccountMenuOpen] = useState(false)
 
     const navigate = useNavigate()
@@ -79,7 +83,7 @@ export default function Navbar() {
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.97 }}
                 >
-                    {get_svg_icons({ icon: "User-Logo", size: 24 })}
+                    {get_svg_icons({ icon: "User-Logo", size: 20 })}
                     <div className="user-menu" style={{ display: accountMenuOpen ? "block" : "none" }}>
                         <p>user: {userName}</p>
                         <p onClick={handleLogoutBtnDown}>logout</p>
@@ -88,17 +92,13 @@ export default function Navbar() {
 
                 {/* ------------------ SETTINGS ------------------ */}
                 <motion.div
-                    className={`settings ${settingsMenuOpen ? "active" : ""}`}
-                    onClick={() => toggleSettingsMenuOpen(prev => !prev)}
+                    className='settings'
+                    onClick={() => toggleShowTutorialModal(true)}
+                    onTouchStart={() => toggleShowTutorialModal(true)}
                     whileHover={{ scale: 1.03 }}
                     whileTap={{ scale: 0.97 }}
                 >
-                    {get_svg_icons({ icon: "Settings", size: 24 })}
-                    <div className="settings-menu" style={{ display: settingsMenuOpen ? "block" : "none" }}>
-                        <p>theme</p>
-                        <p>preferences</p>
-                        <p>shortcuts</p>
-                    </div>
+                    {get_svg_icons({ icon: "tutorial-btn", size: 20 })}
                 </motion.div>
 
             </div>

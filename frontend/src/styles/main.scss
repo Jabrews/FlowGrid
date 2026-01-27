@@ -2,6 +2,8 @@
 @use './home' as *;
 @use './scrollbar';
 @use './modals' as *;
+// tutorial modal
+@use './tutorial_modal' as *;
 @use './navbar' as *;
 @use './workspace' as *;
 
