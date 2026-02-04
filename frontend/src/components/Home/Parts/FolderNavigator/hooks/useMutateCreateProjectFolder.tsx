@@ -21,7 +21,7 @@ export default function useMutateCreateProjectFolder() {
                 method: 'Post',
             }
 
-            mutate_auth({
+            return mutate_auth({
                 queryUrl : 'api/project_folders/',
                 init: CreateProjectFolderInit,
                 csrf_token : csrfToken, 
