@@ -1,7 +1,8 @@
 /* FULLSCREEN OVERLAY */
 .center-modal {
   position: fixed;
-  inset: 0;                 /* top:0, left:0, width:100vw, height:100vh */
+  inset: 0;
+  /* top:0, left:0, width:100vw, height:100vh */
   background: rgba(0, 0, 0, 0.6);
   color: black;
 
@@ -95,13 +96,13 @@
     align-self: flex-start;
     display: flex;
     flex-direction: column;
-    
+
     .connection-li {
       margin-top: 0.4em;
       margin-bottom: 0.4em;
       text-align: start;
       list-style: none;
-      text-wrap-mode:wrap;
+      text-wrap-mode: wrap;
 
       .connection-li-container {
         font-size: 1.0em;
@@ -114,7 +115,7 @@
         }
 
         button {
-          color : white;
+          color: white;
           font-weight: bold;
           width: fit-content;
           padding: 0.2em;
@@ -124,27 +125,78 @@
           background-color: red;
 
           &:hover {
-            scale : 1.2
+            scale: 1.2
           }
 
 
         }
 
-        
+
       }
 
 
     }
-        
+
 
 
   }
-      .note {
-          margin-top: 2em;
-          margin-bottom: 1em;
-          font-size: 1em;
-          color : rgb(151, 151, 151);
 
-        }
+  .note {
+    margin-top: 2em;
+    margin-bottom: 1em;
+    font-size: 1em;
+    color: rgb(151, 151, 151);
+
+  }
+
+}
+
+// view tutorial modal
+.view-tutorial-modal {
+  background-color: gray;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1em;
+  width: 50vw;
+
+  .text {
+
+    margin-bottom: 2em;
+
+    p {
+      font-size: 1.2em;
+
+    }
+
+    .note {
+      font-size: 0.8em;
+      opacity: 50%;
+    }
+
+  }
+
+  button {
+    font-size: 1.2em;
+    color: black;
+    font-weight: bold;
+    width: fit-content;
+    padding: 0.2em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    border-radius: 1em;
+    border: none;
+    cursor: pointer;
+    background-color: white;
+
+    &:hover {
+      scale: 1.2
+    }
+
+
+  }
+
+
 
 }

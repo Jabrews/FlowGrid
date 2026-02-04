@@ -5,6 +5,7 @@ type ModalRendererStoreActions = {
     toggleShowDeleteModal : (bool : boolean) => void
     toggleShowConnectionModal : (bool : boolean) => void
     toggleShowTutorialModal : (bool : boolean) => void
+    toggleShowViewTutorialModal : (bool : boolean) => void
 }
 
 
@@ -12,6 +13,7 @@ type ModalRendererStore = {
     showDeleteModal : boolean
     showConnectionModal : boolean
     showTutorialModal : boolean
+    showViewTutorialModal : boolean
     actions : ModalRendererStoreActions
 }
 
@@ -20,6 +22,7 @@ export const useModelRendererStore = create<ModalRendererStore>((set) => ({
     showDeleteModal: false,
     showConnectionModal : false,
     showTutorialModal : false,
+    showViewTutorialModal : false,
     actions: {
         toggleShowDeleteModal: (bool: boolean) =>
             set((s) => ({
@@ -36,6 +39,12 @@ export const useModelRendererStore = create<ModalRendererStore>((set) => ({
                 ...s,
                 showTutorialModal : bool
         })),
+        toggleShowViewTutorialModal: (bool : boolean) =>
+            set((s) => ({
+                ...s,
+                showViewTutorialModal: bool
+        })),
+
        },
 }));
 
@@ -49,6 +58,9 @@ export const useShowConnectionModal = ( ) =>
 export const useShowTutorialModal = () => 
     useModelRendererStore((s) => s.showTutorialModal)
 
+export const useShowViewTutorialModal = () =>
+    useModelRendererStore((s) => s.showViewTutorialModal)
+
 // hook actions
 export const useToggleShowDeleteModal = () =>
     useModelRendererStore((s) => s.actions.toggleShowDeleteModal)
@@ -58,5 +70,8 @@ export const useToggleShowConnectionModal = () =>
 
 export const useToggleShowTutorialModal = () =>
     useModelRendererStore((s) => s.actions.toggleShowTutorialModal)
+
+export const useToggleShowViewTutorialModal = () =>
+    useModelRendererStore((s) => s.actions.toggleShowViewTutorialModal)
 
 
